@@ -1,65 +1,150 @@
-import Image from "next/image";
+'use client';
+
+import React, { useState, useMemo, useEffect, Suspense } from 'react';
+import { Header } from '../components/Header';
+import { HeroSection } from '../components/HeroSection';
+import { PlannerControls } from '../components/PlannerControls';
+import { ContributionGraph } from '../components/ContributionGraph';
+import { StatisticsPanel } from '../components/StatisticsPanel';
+import { ExportPanel } from '../components/ExportPanel';
+import { Footer } from '../components/Footer';
+import {
+  PlannerSettings,
+  ContributionCell,
+  IntensityLevel,
+} from '../types/calendar';
+import {
+  createYearlyCalendarGrid,
+  applyPatternToCalendar,
+} from '../lib/calendar-engine';
+import { calculateStrategyStats } from '../lib/commit-planner';
+
+function AppContent() {
+  const currentYear = new Date().getFullYear();
+
+  const [settings, setSettings] = useState<PlannerSettings>({
+    text: 'LORD SUKHMAN',
+    year: currentYear,
+    intensityMaxCommits: 5,
+    letterSpacing: 1,
+    alignment: 'center',
+    themeId: 'github-dark',
+    drawingMode: 'select',
+    drawIntensityLevel: 4,
+  });
+
+  const [customOverrides, setCustomOverrides] = useState<
+    Record<string, { commitCount: number; level: IntensityLevel }>
+  >({});
+
+  // Parse URL search params on mount
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const textParam = params.get('text');
+      const yearParam = params.get('year');
+      const intensityParam = params.get('intensity');
+      const themeParam = params.get('theme');
+      const alignParam = params.get('align');
+
+      if (textParam || yearParam || intensityParam || themeParam || alignParam) {
+        setSettings((prev) => ({
+          ...prev,
+          text: textParam || prev.text,
+          year: yearParam ? parseInt(yearParam, 10) : prev.year,
+          intensityMaxCommits: intensityParam ? parseInt(intensityParam, 10) : prev.intensityMaxCommits,
+          themeId: themeParam || prev.themeId,
+          alignment: (alignParam as any) || prev.alignment,
+        }));
+      }
+    }
+  }, []);
+
+  // Update settings handler
+  const handleUpdateSettings = (updated: Partial<PlannerSettings>) => {
+    setSettings((prev) => ({ ...prev, ...updated }));
+  };
+
+  // Reset custom drawing grid
+  const handleResetGrid = () => {
+    setCustomOverrides({});
+    setSettings((prev) => ({ ...prev, text: 'LORD SUKHMAN', drawingMode: 'select' }));
+  };
+
+  // Cell click handler for drawing / erasing studio
+  const handleCellClick = (cell: ContributionCell) => {
+    if (settings.drawingMode === 'select') return;
+
+    setCustomOverrides((prev) => {
+      const next = { ...prev };
+      if (settings.drawingMode === 'draw') {
+        next[cell.date] = {
+          commitCount: settings.intensityMaxCommits,
+          level: 4,
+        };
+      } else if (settings.drawingMode === 'erase') {
+        next[cell.date] = {
+          commitCount: 0,
+          level: 0,
+        };
+      }
+      return next;
+    });
+  };
+
+  // Compute 53-week calendar grid
+  const calendarGrid = useMemo(() => {
+    const rawGrid = createYearlyCalendarGrid(settings.year);
+    return applyPatternToCalendar(rawGrid, settings, customOverrides);
+  }, [settings, customOverrides]);
+
+  // Compute commit strategy statistics
+  const strategyStats = useMemo(() => {
+    return calculateStrategyStats(calendarGrid);
+  }, [calendarGrid]);
+
+  return (
+    <div className="min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-emerald-500 selection:text-slate-950 flex flex-col">
+      <Header />
+
+      <main className="flex-1">
+        <HeroSection
+          activeText={settings.text}
+          onSelectPreset={(text) => handleUpdateSettings({ text })}
+        />
+
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 space-y-8 pb-12">
+          {/* Planner Controls Form */}
+          <PlannerControls
+            settings={settings}
+            onChangeSettings={handleUpdateSettings}
+            onResetGrid={handleResetGrid}
+          />
+
+          {/* Interactive GitHub Graph Preview */}
+          <ContributionGraph
+            grid={calendarGrid}
+            settings={settings}
+            onCellClick={handleCellClick}
+          />
+
+          {/* Commit Analytics Panel */}
+          <StatisticsPanel stats={strategyStats} />
+
+          {/* Export Panel */}
+          <ExportPanel grid={calendarGrid} settings={settings} />
+        </div>
+      </main>
+
+      <Footer />
+    </div>
+  );
+}
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+    <Suspense fallback={<div className="min-h-screen bg-slate-950 text-white flex items-center justify-center">Loading GitLegacy...</div>}>
+      <AppContent />
+    </Suspense>
   );
 }
