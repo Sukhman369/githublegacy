@@ -3,7 +3,22 @@
 import React from 'react';
 import { PlannerSettings, AlignmentMode } from '../types/calendar';
 import { THEMES } from '../lib/theme-config';
-import { Type, Calendar as CalendarIcon, Flame, AlignLeft, AlignCenter, AlignRight, Palette, Edit3, MousePointer, Eraser, RotateCcw } from 'lucide-react';
+import {
+  Type,
+  Calendar as CalendarIcon,
+  Flame,
+  AlignLeft,
+  AlignCenter,
+  AlignRight,
+  Palette,
+  Edit3,
+  MousePointer,
+  Eraser,
+  RotateCcw,
+  MoveLeft,
+  MoveRight,
+  Sliders,
+} from 'lucide-react';
 
 interface PlannerControlsProps {
   settings: PlannerSettings;
@@ -21,6 +36,8 @@ export const PlannerControls: React.FC<PlannerControlsProps> = ({
   const currentYear = new Date().getFullYear();
   const yearOptions = Array.from({ length: 11 }, (_, i) => currentYear - 2 + i);
 
+  const columnOffset = settings.columnOffset || 0;
+
   return (
     <div
       className={`rounded-2xl border p-5 shadow-xl transition-colors space-y-6 ${
@@ -29,14 +46,16 @@ export const PlannerControls: React.FC<PlannerControlsProps> = ({
           : 'bg-white border-slate-200 text-slate-900 shadow-sm'
       }`}
     >
-      <div className={`flex flex-wrap items-center justify-between gap-3 border-b pb-4 ${
-        isDarkMode ? 'border-slate-800' : 'border-slate-200'
-      }`}>
+      <div
+        className={`flex flex-wrap items-center justify-between gap-3 border-b pb-4 ${
+          isDarkMode ? 'border-slate-800' : 'border-slate-200'
+        }`}
+      >
         <h2 className="text-lg font-bold flex items-center gap-2">
           <Type className="h-5 w-5 text-emerald-500" />
           <span>Planner & Strategy Configuration</span>
         </h2>
-        
+
         <div className="flex items-center gap-2">
           <button
             onClick={onResetGrid}
@@ -56,9 +75,11 @@ export const PlannerControls: React.FC<PlannerControlsProps> = ({
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
         {/* Text Input */}
         <div className="space-y-1.5">
-          <label className={`text-xs font-semibold uppercase tracking-wider flex items-center justify-between ${
-            isDarkMode ? 'text-slate-300' : 'text-slate-600'
-          }`}>
+          <label
+            className={`text-xs font-semibold uppercase tracking-wider flex items-center justify-between ${
+              isDarkMode ? 'text-slate-300' : 'text-slate-600'
+            }`}
+          >
             <span>Text Pattern</span>
             <span className="text-[10px] font-mono opacity-80">
               {settings.text.length} chars
@@ -82,9 +103,11 @@ export const PlannerControls: React.FC<PlannerControlsProps> = ({
 
         {/* Year Selector */}
         <div className="space-y-1.5">
-          <label className={`text-xs font-semibold uppercase tracking-wider flex items-center gap-1.5 ${
-            isDarkMode ? 'text-slate-300' : 'text-slate-600'
-          }`}>
+          <label
+            className={`text-xs font-semibold uppercase tracking-wider flex items-center gap-1.5 ${
+              isDarkMode ? 'text-slate-300' : 'text-slate-600'
+            }`}
+          >
             <CalendarIcon className="h-3.5 w-3.5 text-emerald-500" />
             <span>Target Year</span>
           </label>
@@ -107,15 +130,19 @@ export const PlannerControls: React.FC<PlannerControlsProps> = ({
 
         {/* Commit Intensity */}
         <div className="space-y-1.5">
-          <label className={`text-xs font-semibold uppercase tracking-wider flex items-center gap-1.5 ${
-            isDarkMode ? 'text-slate-300' : 'text-slate-600'
-          }`}>
+          <label
+            className={`text-xs font-semibold uppercase tracking-wider flex items-center gap-1.5 ${
+              isDarkMode ? 'text-slate-300' : 'text-slate-600'
+            }`}
+          >
             <Flame className="h-3.5 w-3.5 text-amber-500" />
             <span>Max Commits/Day</span>
           </label>
-          <div className={`flex items-center gap-1 p-1 rounded-xl border ${
-            isDarkMode ? 'bg-slate-950 border-slate-800' : 'bg-slate-100 border-slate-300'
-          }`}>
+          <div
+            className={`flex items-center gap-1 p-1 rounded-xl border ${
+              isDarkMode ? 'bg-slate-950 border-slate-800' : 'bg-slate-100 border-slate-300'
+            }`}
+          >
             {[1, 2, 5, 10].map((intVal) => (
               <button
                 key={intVal}
@@ -136,14 +163,18 @@ export const PlannerControls: React.FC<PlannerControlsProps> = ({
 
         {/* Alignment */}
         <div className="space-y-1.5">
-          <label className={`text-xs font-semibold uppercase tracking-wider ${
-            isDarkMode ? 'text-slate-300' : 'text-slate-600'
-          }`}>
+          <label
+            className={`text-xs font-semibold uppercase tracking-wider ${
+              isDarkMode ? 'text-slate-300' : 'text-slate-600'
+            }`}
+          >
             Grid Alignment
           </label>
-          <div className={`flex items-center gap-1 p-1 rounded-xl border ${
-            isDarkMode ? 'bg-slate-950 border-slate-800' : 'bg-slate-100 border-slate-300'
-          }`}>
+          <div
+            className={`flex items-center gap-1 p-1 rounded-xl border ${
+              isDarkMode ? 'bg-slate-950 border-slate-800' : 'bg-slate-100 border-slate-300'
+            }`}
+          >
             {[
               { id: 'left', icon: AlignLeft, label: 'Left' },
               { id: 'center', icon: AlignCenter, label: 'Center' },
@@ -169,14 +200,67 @@ export const PlannerControls: React.FC<PlannerControlsProps> = ({
       </div>
 
       {/* Secondary Controls Row */}
-      <div className={`pt-2 border-t grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 ${
-        isDarkMode ? 'border-slate-800/60' : 'border-slate-200'
-      }`}>
+      <div
+        className={`pt-2 border-t grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 ${
+          isDarkMode ? 'border-slate-800/60' : 'border-slate-200'
+        }`}
+      >
+        {/* Column Nudge / Shift Feature */}
+        <div className="space-y-1.5">
+          <label
+            className={`text-xs font-semibold uppercase tracking-wider flex items-center gap-1.5 ${
+              isDarkMode ? 'text-slate-300' : 'text-slate-600'
+            }`}
+          >
+            <Sliders className="h-3.5 w-3.5 text-emerald-500" />
+            <span>Nudge Column Position</span>
+          </label>
+          <div
+            className={`flex items-center gap-1 p-1 rounded-xl border ${
+              isDarkMode ? 'bg-slate-950 border-slate-800' : 'bg-slate-100 border-slate-300'
+            }`}
+          >
+            <button
+              onClick={() => onChangeSettings({ columnOffset: Math.max(-10, columnOffset - 1) })}
+              className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold flex items-center justify-center transition-all ${
+                isDarkMode
+                  ? 'bg-slate-900 text-slate-300 hover:text-white hover:bg-slate-800'
+                  : 'bg-white text-slate-700 hover:text-slate-900 shadow-sm'
+              }`}
+              title="Shift left 1 column"
+            >
+              <MoveLeft className="h-3.5 w-3.5" />
+            </button>
+
+            <div className="flex-1 text-center font-mono text-xs font-bold text-emerald-500">
+              {columnOffset === 0
+                ? '0 (Default)'
+                : columnOffset > 0
+                ? `+${columnOffset} col${columnOffset > 1 ? 's' : ''}`
+                : `${columnOffset} col${columnOffset < -1 ? 's' : ''}`}
+            </div>
+
+            <button
+              onClick={() => onChangeSettings({ columnOffset: Math.min(10, columnOffset + 1) })}
+              className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold flex items-center justify-center transition-all ${
+                isDarkMode
+                  ? 'bg-slate-900 text-slate-300 hover:text-white hover:bg-slate-800'
+                  : 'bg-white text-slate-700 hover:text-slate-900 shadow-sm'
+              }`}
+              title="Shift right 1 column"
+            >
+              <MoveRight className="h-3.5 w-3.5" />
+            </button>
+          </div>
+        </div>
+
         {/* Theme Picker */}
         <div className="space-y-1.5">
-          <label className={`text-xs font-semibold uppercase tracking-wider flex items-center gap-1.5 ${
-            isDarkMode ? 'text-slate-300' : 'text-slate-600'
-          }`}>
+          <label
+            className={`text-xs font-semibold uppercase tracking-wider flex items-center gap-1.5 ${
+              isDarkMode ? 'text-slate-300' : 'text-slate-600'
+            }`}
+          >
             <Palette className="h-3.5 w-3.5 text-purple-500" />
             <span>Theme Palette</span>
           </label>
@@ -199,18 +283,22 @@ export const PlannerControls: React.FC<PlannerControlsProps> = ({
 
         {/* Freehand Pixel Studio Mode */}
         <div className="space-y-1.5">
-          <label className={`text-xs font-semibold uppercase tracking-wider flex items-center gap-1.5 ${
-            isDarkMode ? 'text-slate-300' : 'text-slate-600'
-          }`}>
+          <label
+            className={`text-xs font-semibold uppercase tracking-wider flex items-center gap-1.5 ${
+              isDarkMode ? 'text-slate-300' : 'text-slate-600'
+            }`}
+          >
             <Edit3 className="h-3.5 w-3.5 text-cyan-500" />
-            <span>Grid Interaction Mode</span>
+            <span>Interaction Mode</span>
           </label>
-          <div className={`flex items-center gap-1 p-1 rounded-xl border ${
-            isDarkMode ? 'bg-slate-950 border-slate-800' : 'bg-slate-100 border-slate-300'
-          }`}>
+          <div
+            className={`flex items-center gap-1 p-1 rounded-xl border ${
+              isDarkMode ? 'bg-slate-950 border-slate-800' : 'bg-slate-100 border-slate-300'
+            }`}
+          >
             <button
               onClick={() => onChangeSettings({ drawingMode: 'select' })}
-              className={`flex-1 py-1.5 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 transition-all ${
+              className={`flex-1 py-1.5 rounded-lg text-xs font-semibold flex items-center justify-center gap-1 transition-all ${
                 settings.drawingMode === 'select'
                   ? isDarkMode
                     ? 'bg-slate-800 text-white font-bold'
@@ -225,7 +313,7 @@ export const PlannerControls: React.FC<PlannerControlsProps> = ({
             </button>
             <button
               onClick={() => onChangeSettings({ drawingMode: 'draw' })}
-              className={`flex-1 py-1.5 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 transition-all ${
+              className={`flex-1 py-1.5 rounded-lg text-xs font-semibold flex items-center justify-center gap-1 transition-all ${
                 settings.drawingMode === 'draw'
                   ? 'bg-emerald-500 text-slate-950 font-bold'
                   : isDarkMode
@@ -238,7 +326,7 @@ export const PlannerControls: React.FC<PlannerControlsProps> = ({
             </button>
             <button
               onClick={() => onChangeSettings({ drawingMode: 'erase' })}
-              className={`flex-1 py-1.5 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 transition-all ${
+              className={`flex-1 py-1.5 rounded-lg text-xs font-semibold flex items-center justify-center gap-1 transition-all ${
                 settings.drawingMode === 'erase'
                   ? 'bg-rose-500 text-white font-bold'
                   : isDarkMode
@@ -254,14 +342,18 @@ export const PlannerControls: React.FC<PlannerControlsProps> = ({
 
         {/* Letter Spacing */}
         <div className="space-y-1.5">
-          <label className={`text-xs font-semibold uppercase tracking-wider ${
-            isDarkMode ? 'text-slate-300' : 'text-slate-600'
-          }`}>
+          <label
+            className={`text-xs font-semibold uppercase tracking-wider ${
+              isDarkMode ? 'text-slate-300' : 'text-slate-600'
+            }`}
+          >
             Letter Spacing
           </label>
-          <div className={`flex items-center gap-1 p-1 rounded-xl border ${
-            isDarkMode ? 'bg-slate-950 border-slate-800' : 'bg-slate-100 border-slate-300'
-          }`}>
+          <div
+            className={`flex items-center gap-1 p-1 rounded-xl border ${
+              isDarkMode ? 'bg-slate-950 border-slate-800' : 'bg-slate-100 border-slate-300'
+            }`}
+          >
             {[1, 2, 3].map((spacing) => (
               <button
                 key={spacing}

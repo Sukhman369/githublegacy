@@ -19,10 +19,7 @@ export function createYearlyCalendarGrid(year: number): CalendarGrid {
 
   // Create empty 53 weeks x 7 days structure
   const weeks: ContributionWeek[] = [];
-  let currentDate = new Date(startDate);
   
-  // Pad week 0 days prior to Jan 1 with null/out-of-bounds or inactive cells if needed,
-  // or align Jan 1 at `startDayOfWeek`.
   // In GitHub calendar, week 0 day 0 is the Sunday on or preceding Jan 1.
   const calendarFirstSunday = new Date(startDate);
   calendarFirstSunday.setUTCDate(startDate.getUTCDate() - startDayOfWeek);
@@ -33,7 +30,6 @@ export function createYearlyCalendarGrid(year: number): CalendarGrid {
     const days: ContributionCell[] = [];
     for (let dayIdx = 0; dayIdx < 7; dayIdx++) {
       const dateStr = currentLoopDate.toISOString().split('T')[0];
-      const isSameYear = currentLoopDate.getUTCFullYear() === year;
 
       days.push({
         date: dateStr,
@@ -72,7 +68,7 @@ export function applyPatternToCalendar(
   settings: PlannerSettings,
   customOverrides: Record<string, { commitCount: number; level: IntensityLevel }> = {}
 ): CalendarGrid {
-  const { text, intensityMaxCommits, letterSpacing, alignment } = settings;
+  const { text, intensityMaxCommits, letterSpacing, alignment, columnOffset = 0 } = settings;
   const { matrix, charMap } = textToMatrix(text, letterSpacing);
 
   const matrixCols = matrix[0]?.length || 0;
@@ -85,6 +81,9 @@ export function applyPatternToCalendar(
   } else if (alignment === 'right') {
     startWeekIdx = Math.max(0, totalWeeksAvailable - matrixCols);
   }
+
+  // Add column offset nudge
+  startWeekIdx += columnOffset;
 
   // Clone weeks grid
   const updatedWeeks: ContributionWeek[] = grid.weeks.map((week) => ({
@@ -113,7 +112,6 @@ export function applyPatternToCalendar(
         const pixelInfo = charMap[d]?.[colInMatrix] || undefined;
 
         if (isPixelActive) {
-          // Calculate commits for active pixel
           const commits = intensityMaxCommits;
           cell.commitCount = commits;
           cell.level = calculateLevel(commits, intensityMaxCommits);

@@ -41,6 +41,7 @@ export interface PlannerSettings {
   intensityMaxCommits: number; // Max commits for level 4 (e.g. 5, 10, 20)
   letterSpacing: number; // 1 to 3 columns gap
   alignment: AlignmentMode;
+  columnOffset: number; // Column shift nudge (-10 to +10)
   themeId: string;
   drawingMode: 'select' | 'draw' | 'erase';
   drawIntensityLevel: IntensityLevel;
