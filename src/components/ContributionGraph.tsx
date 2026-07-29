@@ -1,10 +1,10 @@
 'use client';
 
 import React, { useState, useRef } from 'react';
-import { CalendarGrid, ContributionCell, PlannerSettings, IntensityLevel } from '../types/calendar';
+import { CalendarGrid, ContributionCell, PlannerSettings } from '../types/calendar';
 import { getThemeById } from '../lib/theme-config';
 import { CellTooltip } from './CellTooltip';
-import { Sparkles, Info } from 'lucide-react';
+import { Sparkles, Info, MoveHorizontal } from 'lucide-react';
 
 interface ContributionGraphProps {
   grid: CalendarGrid;
@@ -31,7 +31,6 @@ export const ContributionGraph: React.FC<ContributionGraphProps> = ({
   let lastMonth = -1;
 
   grid.weeks.forEach((week, weekIdx) => {
-    // Check first day of week or middle day
     const firstDayInYear = week.days.find((d) => d.year === grid.year);
     if (firstDayInYear && firstDayInYear.month !== lastMonth) {
       monthLabels.push({
@@ -53,7 +52,6 @@ export const ContributionGraph: React.FC<ContributionGraphProps> = ({
     }
     setHoveredCell(cell);
 
-    // If mouse dragging in draw/erase mode
     if (isMouseDown && settings.drawingMode !== 'select') {
       onCellClick(cell);
     }
@@ -76,21 +74,21 @@ export const ContributionGraph: React.FC<ContributionGraphProps> = ({
         setIsMouseDown(false);
         setHoveredCell(null);
       }}
-      className={`relative w-full overflow-hidden rounded-2xl p-5 border shadow-2xl transition-all ${theme.bgCard}`}
+      className={`relative w-full overflow-hidden rounded-2xl p-4 sm:p-6 border shadow-2xl transition-all ${theme.bgCard}`}
     >
       <CellTooltip cell={hoveredCell} x={tooltipPos.x} y={tooltipPos.y} />
 
       {/* Header Info Bar */}
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800/80 pb-4 mb-4">
         <div>
-          <h3 className={`text-base font-extrabold ${theme.textColor} flex items-center gap-2`}>
+          <h3 className={`text-base sm:text-lg font-extrabold ${theme.textColor} flex flex-wrap items-center gap-2`}>
             <span>{grid.year} Contribution Art Calendar</span>
-            <span className="text-xs font-mono font-semibold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+            <span className="text-xs font-mono font-semibold text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded-full border border-emerald-500/20">
               53 Weeks • {grid.totalDays} Days
             </span>
           </h3>
           <p className={`text-xs ${theme.subtextColor}`}>
-            Interactive GitHub contribution layout preview for '{settings.text || 'Pattern'}'
+            Interactive GitHub contribution layout preview for &apos;{settings.text || 'Pattern'}&apos;
           </p>
         </div>
 
@@ -103,15 +101,21 @@ export const ContributionGraph: React.FC<ContributionGraphProps> = ({
         )}
       </div>
 
+      {/* Mobile Swipe Hint */}
+      <div className="flex sm:hidden items-center justify-center gap-1.5 py-1.5 mb-2 rounded-lg bg-slate-800/60 text-slate-400 text-[11px] font-medium border border-slate-700/50">
+        <MoveHorizontal className="h-3.5 w-3.5 text-emerald-400 animate-pulse" />
+        <span>Swipe horizontally to view full 53-week graph</span>
+      </div>
+
       {/* Graph Scroll Container */}
-      <div className="w-full overflow-x-auto pb-2 select-none scrollbar-thin scrollbar-thumb-slate-700">
-        <div className="min-w-[800px] space-y-2">
+      <div className="w-full overflow-x-auto pb-3 select-none scrollbar-thin scrollbar-thumb-slate-700 touch-pan-x">
+        <div className="min-w-[780px] space-y-2">
           {/* Month Header Row */}
           <div className="flex items-center text-[11px] font-mono text-slate-400 pl-8">
             {grid.weeks.map((week, idx) => {
               const label = monthLabels.find((m) => m.col === idx);
               return (
-                <div key={idx} className="w-[15px] flex-shrink-0 text-left">
+                <div key={idx} className="w-[14.5px] flex-shrink-0 text-left">
                   {label ? label.name : ''}
                 </div>
               );
@@ -123,16 +127,16 @@ export const ContributionGraph: React.FC<ContributionGraphProps> = ({
             {/* Day Labels Column */}
             <div className="flex flex-col justify-between pr-2 text-[10px] font-mono text-slate-400 py-[2px] w-8 flex-shrink-0">
               {DAY_LABELS.map((dayLabel, i) => (
-                <div key={i} className="h-[13px] flex items-center">
+                <div key={i} className="h-[12px] flex items-center">
                   {dayLabel}
                 </div>
               ))}
             </div>
 
             {/* Weeks Matrix */}
-            <div className="flex gap-[3px]">
+            <div className="flex gap-[2.5px]">
               {grid.weeks.map((week) => (
-                <div key={week.weekIndex} className="flex flex-col gap-[3px]">
+                <div key={week.weekIndex} className="flex flex-col gap-[2.5px]">
                   {week.days.map((cell) => {
                     const isYearCell = cell.year === grid.year;
                     const colorHex = theme.levels[cell.level];
@@ -142,11 +146,12 @@ export const ContributionGraph: React.FC<ContributionGraphProps> = ({
                         key={cell.date}
                         onMouseEnter={(e) => handleCellMouseEnter(cell, e)}
                         onMouseDown={() => handleCellMouseDown(cell)}
+                        onTouchStart={() => handleCellMouseDown(cell)}
                         style={{
                           backgroundColor: isYearCell ? colorHex : 'transparent',
                           opacity: isYearCell ? 1 : 0.2,
                         }}
-                        className={`h-[13px] w-[13px] rounded-[2.5px] cursor-pointer transition-transform hover:scale-125 hover:z-10 ${
+                        className={`h-[12px] w-[12px] rounded-[2px] cursor-pointer transition-transform hover:scale-125 hover:z-10 ${
                           cell.commitCount > 0 ? 'ring-1 ring-white/10' : ''
                         } ${cell.isCustomDrawn ? 'ring-2 ring-cyan-400' : ''}`}
                       />
@@ -163,7 +168,7 @@ export const ContributionGraph: React.FC<ContributionGraphProps> = ({
       <div className="flex flex-wrap items-center justify-between gap-3 border-t border-slate-800/80 pt-4 mt-2 text-xs">
         <div className="flex items-center gap-2 text-slate-400">
           <Info className="h-3.5 w-3.5 text-slate-500" />
-          <span>Click any cell to inspect date & commit count</span>
+          <span>Click/tap any cell to inspect date & commit count</span>
         </div>
 
         <div className="flex items-center gap-2">
