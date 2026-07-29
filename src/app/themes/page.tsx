@@ -1,14 +1,15 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { Header } from '../../components/Header';
 import { Footer } from '../../components/Footer';
 import { THEMES } from '../../lib/theme-config';
+import { useTheme } from '../../context/ThemeContext';
 import { Palette, Play } from 'lucide-react';
 
 export default function ThemesPage() {
-  const [isDarkMode, setIsDarkMode] = useState(true);
+  const { isDarkMode } = useTheme();
 
   return (
     <div
@@ -16,7 +17,7 @@ export default function ThemesPage() {
         isDarkMode ? 'bg-slate-950 text-slate-100' : 'bg-slate-50 text-slate-900'
       }`}
     >
-      <Header isDarkMode={isDarkMode} onToggleDarkMode={() => setIsDarkMode((prev) => !prev)} />
+      <Header />
 
       <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 py-10 w-full space-y-10">
         <div className="text-center max-w-3xl mx-auto space-y-4">
@@ -52,14 +53,16 @@ export default function ThemesPage() {
             >
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <h3 className="text-lg font-bold text-white">{theme.name}</h3>
+                  <h3 className={`text-lg font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{theme.name}</h3>
                   <span className="text-[10px] font-mono font-semibold uppercase px-2 py-0.5 rounded-full bg-slate-800 text-slate-300">
                     {theme.id}
                   </span>
                 </div>
 
                 {/* Color Swatch Bar */}
-                <div className="flex items-center gap-2 p-2 rounded-xl bg-slate-950 border border-slate-800 justify-between">
+                <div className={`flex items-center gap-2 p-2 rounded-xl border justify-between ${
+                  isDarkMode ? 'bg-slate-950 border-slate-800' : 'bg-slate-50 border-slate-200'
+                }`}>
                   {theme.levels.map((color, idx) => (
                     <div
                       key={idx}
@@ -79,7 +82,9 @@ export default function ThemesPage() {
                 </div>
               </div>
 
-              <div className="mt-6 pt-4 border-t border-slate-800/60 flex items-center justify-between">
+              <div className={`mt-6 pt-4 border-t flex items-center justify-between ${
+                isDarkMode ? 'border-slate-800/60' : 'border-slate-100'
+              }`}>
                 <span className="text-xs text-slate-400 font-mono">5 Intensity Levels</span>
                 <Link
                   href={`/?theme=${theme.id}`}
@@ -94,7 +99,7 @@ export default function ThemesPage() {
         </div>
       </main>
 
-      <Footer isDarkMode={isDarkMode} />
+      <Footer />
     </div>
   );
 }

@@ -4,11 +4,12 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { Header } from '../../components/Header';
 import { Footer } from '../../components/Footer';
-import { Terminal, Copy, Check, Sparkles, Code, Play } from 'lucide-react';
+import { useTheme } from '../../context/ThemeContext';
+import { Terminal, Copy, Check, Sparkles } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 export default function ScriptGeneratorPage() {
-  const [isDarkMode, setIsDarkMode] = useState(true);
+  const { isDarkMode } = useTheme();
   const [tab, setTab] = useState<'bash' | 'python'>('bash');
   const [copied, setCopied] = useState(false);
 
@@ -74,7 +75,7 @@ if __name__ == "__main__":
         isDarkMode ? 'bg-slate-950 text-slate-100' : 'bg-slate-50 text-slate-900'
       }`}
     >
-      <Header isDarkMode={isDarkMode} onToggleDarkMode={() => setIsDarkMode((prev) => !prev)} />
+      <Header />
 
       <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 py-10 w-full space-y-10">
         <div className="text-center max-w-3xl mx-auto space-y-4">
@@ -149,7 +150,7 @@ if __name__ == "__main__":
         </div>
       </main>
 
-      <Footer isDarkMode={isDarkMode} />
+      <Footer />
     </div>
   );
 }

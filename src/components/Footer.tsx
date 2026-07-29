@@ -1,8 +1,9 @@
 'use client';
 
 import React from 'react';
-import { Heart, Code2, Sparkles } from 'lucide-react';
+import { Heart } from 'lucide-react';
 import { GitLegacyLogo } from './GitLegacyLogo';
+import { useTheme } from '../context/ThemeContext';
 
 const GithubIcon: React.FC<{ className?: string }> = ({ className }) => (
   <svg className={className} fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -10,11 +11,9 @@ const GithubIcon: React.FC<{ className?: string }> = ({ className }) => (
   </svg>
 );
 
-interface FooterProps {
-  isDarkMode?: boolean;
-}
+export const Footer: React.FC = () => {
+  const { isDarkMode } = useTheme();
 
-export const Footer: React.FC<FooterProps> = ({ isDarkMode = true }) => {
   return (
     <footer
       className={`mt-16 border-t py-10 px-4 sm:px-6 transition-colors ${

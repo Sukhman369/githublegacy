@@ -1,14 +1,15 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { Header } from '../../components/Header';
 import { Footer } from '../../components/Footer';
 import { PRESET_PATTERNS } from '../../lib/font-matrix';
-import { Sparkles, ArrowRight, Play, Check } from 'lucide-react';
+import { useTheme } from '../../context/ThemeContext';
+import { Sparkles, Play } from 'lucide-react';
 
 export default function PresetsPage() {
-  const [isDarkMode, setIsDarkMode] = useState(true);
+  const { isDarkMode } = useTheme();
 
   return (
     <div
@@ -16,7 +17,7 @@ export default function PresetsPage() {
         isDarkMode ? 'bg-slate-950 text-slate-100' : 'bg-slate-50 text-slate-900'
       }`}
     >
-      <Header isDarkMode={isDarkMode} onToggleDarkMode={() => setIsDarkMode((prev) => !prev)} />
+      <Header />
 
       <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 py-10 w-full space-y-10">
         <div className="text-center max-w-3xl mx-auto space-y-4">
@@ -60,7 +61,9 @@ export default function PresetsPage() {
                   </span>
                 </div>
 
-                <h3 className="text-xl font-extrabold font-mono text-white tracking-wider">
+                <h3 className={`text-xl font-extrabold font-mono tracking-wider ${
+                  isDarkMode ? 'text-white' : 'text-slate-900'
+                }`}>
                   &quot;{preset.text}&quot;
                 </h3>
 
@@ -69,7 +72,9 @@ export default function PresetsPage() {
                 </p>
               </div>
 
-              <div className="mt-6 pt-4 border-t border-slate-800/60 flex items-center justify-between">
+              <div className={`mt-6 pt-4 border-t flex items-center justify-between ${
+                isDarkMode ? 'border-slate-800/60' : 'border-slate-100'
+              }`}>
                 <span className="text-xs text-slate-400 font-mono">Ready to load</span>
                 <Link
                   href={`/?text=${encodeURIComponent(preset.text)}`}
@@ -84,7 +89,7 @@ export default function PresetsPage() {
         </div>
       </main>
 
-      <Footer isDarkMode={isDarkMode} />
+      <Footer />
     </div>
   );
 }

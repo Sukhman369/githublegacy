@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Sparkles, Code2, ShieldCheck, Sun, Moon, BookOpen, LayoutGrid, Palette, Terminal } from 'lucide-react';
 import { GitLegacyLogo } from './GitLegacyLogo';
+import { useTheme } from '../context/ThemeContext';
 
 const GithubIcon: React.FC<{ className?: string }> = ({ className }) => (
   <svg className={className} fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -13,12 +14,13 @@ const GithubIcon: React.FC<{ className?: string }> = ({ className }) => (
 );
 
 interface HeaderProps {
-  isDarkMode: boolean;
-  onToggleDarkMode: () => void;
+  isDarkMode?: boolean;
+  onToggleDarkMode?: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ isDarkMode, onToggleDarkMode }) => {
+export const Header: React.FC<HeaderProps> = () => {
   const pathname = usePathname();
+  const { isDarkMode, toggleDarkMode } = useTheme();
 
   const navItems = [
     { label: 'Studio', href: '/', icon: LayoutGrid },
@@ -89,7 +91,7 @@ export const Header: React.FC<HeaderProps> = ({ isDarkMode, onToggleDarkMode }) 
         <div className="flex items-center gap-2">
           {/* Dark / Light Mode Switch */}
           <button
-            onClick={onToggleDarkMode}
+            onClick={toggleDarkMode}
             className={`flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-semibold border transition-all ${
               isDarkMode
                 ? 'bg-slate-900 border-slate-800 text-amber-400 hover:bg-slate-800'
@@ -124,9 +126,11 @@ export const Header: React.FC<HeaderProps> = ({ isDarkMode, onToggleDarkMode }) 
       </div>
 
       {/* Mobile Sub-Navigation Bar */}
-      <div className={`flex lg:hidden overflow-x-auto border-t px-4 py-2 gap-2 text-xs font-medium scrollbar-none ${
-        isDarkMode ? 'border-slate-800 bg-slate-950/90' : 'border-slate-200 bg-slate-50'
-      }`}>
+      <div
+        className={`flex lg:hidden overflow-x-auto border-t px-4 py-2 gap-2 text-xs font-medium scrollbar-none ${
+          isDarkMode ? 'border-slate-800 bg-slate-950/90' : 'border-slate-200 bg-slate-50'
+        }`}
+      >
         {navItems.map(({ label, href, icon: Icon }) => {
           const isActive = pathname === href || (href !== '/' && pathname?.startsWith(href));
           return (

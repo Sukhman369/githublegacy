@@ -8,6 +8,7 @@ import { ContributionGraph } from '../components/ContributionGraph';
 import { StatisticsPanel } from '../components/StatisticsPanel';
 import { ExportPanel } from '../components/ExportPanel';
 import { Footer } from '../components/Footer';
+import { useTheme } from '../context/ThemeContext';
 import {
   PlannerSettings,
   ContributionCell,
@@ -21,7 +22,7 @@ import { calculateStrategyStats } from '../lib/commit-planner';
 
 function AppContent() {
   const currentYear = new Date().getFullYear();
-  const [isDarkMode, setIsDarkMode] = useState<boolean>(true);
+  const { isDarkMode, setDarkMode } = useTheme();
 
   const [settings, setSettings] = useState<PlannerSettings>({
     text: 'LORD SUKHMAN',
@@ -38,15 +39,6 @@ function AppContent() {
     Record<string, { commitCount: number; level: IntensityLevel }>
   >({});
 
-  // Synchronize HTML dark mode class
-  useEffect(() => {
-    if (isDarkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, [isDarkMode]);
-
   // Parse URL search params on mount
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -59,7 +51,9 @@ function AppContent() {
       const modeParam = params.get('mode');
 
       if (modeParam === 'light') {
-        setIsDarkMode(false);
+        setDarkMode(false);
+      } else if (modeParam === 'dark') {
+        setDarkMode(true);
       }
 
       if (textParam || yearParam || intensityParam || themeParam || alignParam) {
@@ -73,21 +67,7 @@ function AppContent() {
         }));
       }
     }
-  }, []);
-
-  // Dark/Light mode toggle handler
-  const handleToggleDarkMode = () => {
-    setIsDarkMode((prev) => {
-      const next = !prev;
-      // Auto-switch graph palette if default github theme is selected
-      if (settings.themeId === 'github-dark' && !next) {
-        setSettings((s) => ({ ...s, themeId: 'github-light' }));
-      } else if (settings.themeId === 'github-light' && next) {
-        setSettings((s) => ({ ...s, themeId: 'github-dark' }));
-      }
-      return next;
-    });
-  };
+  }, [setDarkMode]);
 
   // Update settings handler
   const handleUpdateSettings = (updated: Partial<PlannerSettings>) => {
@@ -143,7 +123,7 @@ function AppContent() {
         isDarkMode ? 'bg-slate-950 text-slate-100' : 'bg-slate-50 text-slate-900'
       }`}
     >
-      <Header isDarkMode={isDarkMode} onToggleDarkMode={handleToggleDarkMode} />
+      <Header />
 
       <main className="flex-1">
         <HeroSection
@@ -176,7 +156,7 @@ function AppContent() {
         </div>
       </main>
 
-      <Footer isDarkMode={isDarkMode} />
+      <Footer />
     </div>
   );
 }

@@ -6,13 +6,14 @@ import { useParams } from 'next/navigation';
 import { Header } from '../../../components/Header';
 import { Footer } from '../../../components/Footer';
 import { BLOG_POSTS } from '../../../lib/blog-data';
-import { ArrowLeft, Clock, Calendar, Share2, Check, User, Sparkles, BookOpen } from 'lucide-react';
+import { useTheme } from '../../../context/ThemeContext';
+import { ArrowLeft, Clock, Calendar, Share2, Check, Sparkles } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 export default function BlogPostPage() {
   const params = useParams();
   const slug = params?.slug as string;
-  const [isDarkMode, setIsDarkMode] = useState(true);
+  const { isDarkMode } = useTheme();
   const [copied, setCopied] = useState(false);
 
   const post = BLOG_POSTS.find((p) => p.slug === slug);
@@ -41,7 +42,7 @@ export default function BlogPostPage() {
         isDarkMode ? 'bg-slate-950 text-slate-100' : 'bg-slate-50 text-slate-900'
       }`}
     >
-      <Header isDarkMode={isDarkMode} onToggleDarkMode={() => setIsDarkMode((prev) => !prev)} />
+      <Header />
 
       <main className="flex-1 max-w-4xl mx-auto px-4 sm:px-6 py-10 w-full space-y-8">
         {/* Back Link */}
@@ -83,7 +84,7 @@ export default function BlogPostPage() {
               </div>
             </div>
 
-            <div className="flex items-center gap-4 text-slate-400">
+            <div className="flex items-center gap-4 opacity-80">
               <span className="flex items-center gap-1.5">
                 <Calendar className="h-3.5 w-3.5" />
                 {post.publishedAt}
@@ -156,7 +157,7 @@ export default function BlogPostPage() {
         </div>
       </main>
 
-      <Footer isDarkMode={isDarkMode} />
+      <Footer />
     </div>
   );
 }

@@ -5,10 +5,11 @@ import Link from 'next/link';
 import { Header } from '../../components/Header';
 import { Footer } from '../../components/Footer';
 import { BLOG_POSTS } from '../../lib/blog-data';
+import { useTheme } from '../../context/ThemeContext';
 import { BookOpen, Search, Sparkles, Clock, ArrowRight, Tag, User } from 'lucide-react';
 
 export default function BlogIndexPage() {
-  const [isDarkMode, setIsDarkMode] = useState(true);
+  const { isDarkMode } = useTheme();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
 
@@ -32,7 +33,7 @@ export default function BlogIndexPage() {
         isDarkMode ? 'bg-slate-950 text-slate-100' : 'bg-slate-50 text-slate-900'
       }`}
     >
-      <Header isDarkMode={isDarkMode} onToggleDarkMode={() => setIsDarkMode((prev) => !prev)} />
+      <Header />
 
       <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 py-10 w-full space-y-10">
         {/* Header Hero */}
@@ -208,7 +209,7 @@ export default function BlogIndexPage() {
         </div>
       </main>
 
-      <Footer isDarkMode={isDarkMode} />
+      <Footer />
     </div>
   );
 }
