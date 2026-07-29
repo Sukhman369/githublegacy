@@ -1,7 +1,8 @@
 'use client';
 
 import React from 'react';
-import { Calendar, Sparkles, Code2, ShieldCheck, GitBranch } from 'lucide-react';
+import { Sparkles, Code2, ShieldCheck, GitBranch } from 'lucide-react';
+import { GitLegacyLogo } from './GitLegacyLogo';
 
 const GithubIcon: React.FC<{ className?: string }> = ({ className }) => (
   <svg className={className} fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -14,8 +15,8 @@ export const Header: React.FC = () => {
     <header className="sticky top-0 z-50 w-full border-b border-slate-800 bg-slate-950/80 backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-emerald-500 via-teal-400 to-cyan-500 shadow-lg shadow-emerald-500/20">
-            <Calendar className="h-5 w-5 text-slate-950 stroke-[2.5]" />
+          <div className="flex items-center justify-center rounded-xl p-0.5 bg-gradient-to-tr from-emerald-500/20 to-teal-400/20 border border-slate-800 shadow-md">
+            <GitLegacyLogo className="h-10 w-10" size={40} />
           </div>
           <div>
             <div className="flex items-center gap-2">

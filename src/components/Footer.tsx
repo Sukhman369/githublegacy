@@ -1,7 +1,8 @@
 'use client';
 
 import React from 'react';
-import { Calendar, Heart, Code2, Sparkles } from 'lucide-react';
+import { Heart, Code2, Sparkles } from 'lucide-react';
+import { GitLegacyLogo } from './GitLegacyLogo';
 
 const GithubIcon: React.FC<{ className?: string }> = ({ className }) => (
   <svg className={className} fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -14,9 +15,7 @@ export const Footer: React.FC = () => {
     <footer className="mt-16 border-t border-slate-800 bg-slate-950 py-10 px-4 sm:px-6">
       <div className="mx-auto max-w-7xl flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-            <Calendar className="h-4 w-4" />
-          </div>
+          <GitLegacyLogo className="h-9 w-9" size={36} />
           <div>
             <div className="font-mono text-base font-extrabold text-white">
               Git<span className="text-emerald-400">Legacy</span>

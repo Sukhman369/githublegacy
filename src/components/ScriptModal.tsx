@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { Terminal, Copy, Check, X, Download, Code, Play } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import { GitLegacyLogo } from './GitLegacyLogo';
 
 interface ScriptModalProps {
   isOpen: boolean;
@@ -50,9 +51,7 @@ export const ScriptModal: React.FC<ScriptModalProps> = ({
         {/* Modal Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800 bg-slate-950/50">
           <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-              <Terminal className="h-5 w-5" />
-            </div>
+            <GitLegacyLogo className="h-9 w-9" size={36} />
             <div>
               <h3 className="text-base font-bold text-white">Automated Commit Script</h3>
               <p className="text-xs text-slate-400">Run this locally to generate backdated commits for your repository</p>
