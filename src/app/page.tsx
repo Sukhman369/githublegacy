@@ -29,6 +29,7 @@ function AppContent() {
     year: currentYear,
     intensityMaxCommits: 5,
     letterSpacing: 1,
+    wordSpacing: 4,
     alignment: 'center',
     columnOffset: 0,
     themeId: 'github-dark',
@@ -50,6 +51,7 @@ function AppContent() {
       const themeParam = params.get('theme');
       const alignParam = params.get('align');
       const offsetParam = params.get('offset');
+      const wordGapParam = params.get('wordgap');
       const modeParam = params.get('mode');
 
       if (modeParam === 'light') {
@@ -58,7 +60,7 @@ function AppContent() {
         setDarkMode(true);
       }
 
-      if (textParam || yearParam || intensityParam || themeParam || alignParam || offsetParam) {
+      if (textParam || yearParam || intensityParam || themeParam || alignParam || offsetParam || wordGapParam) {
         setSettings((prev) => ({
           ...prev,
           text: textParam || prev.text,
@@ -67,6 +69,7 @@ function AppContent() {
           themeId: themeParam || prev.themeId,
           alignment: (alignParam as any) || prev.alignment,
           columnOffset: offsetParam ? parseInt(offsetParam, 10) : prev.columnOffset,
+          wordSpacing: wordGapParam ? parseInt(wordGapParam, 10) : prev.wordSpacing,
         }));
       }
     }
@@ -85,6 +88,7 @@ function AppContent() {
       text: 'LORD SUKHMAN',
       drawingMode: 'select',
       columnOffset: 0,
+      wordSpacing: 4,
       themeId: isDarkMode ? 'github-dark' : 'github-light',
     }));
   };

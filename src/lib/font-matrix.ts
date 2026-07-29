@@ -326,15 +326,6 @@ const FONT_MAP: Record<string, number[][]> = {
     [1, 0, 0, 0, 1],
     [0, 1, 1, 1, 0],
   ],
-  ' ': [
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0],
-  ],
   '!': [
     [0, 0, 1, 0, 0],
     [0, 0, 1, 0, 0],
@@ -401,14 +392,20 @@ const BLANK_CHAR = [
   [0, 0, 0, 0, 0],
 ];
 
-export function getCharMatrix(char: string): number[][] {
+export function getCharMatrix(char: string, wordSpacing: number = 4): number[][] {
   const upper = char.toUpperCase();
+  if (upper === ' ') {
+    // Space character width = wordSpacing - 1 (since 1 letterSpacing is appended after it)
+    const spaceCols = Math.max(1, wordSpacing - 1);
+    return Array(7).fill(0).map(() => Array(spaceCols).fill(0));
+  }
   return FONT_MAP[upper] || BLANK_CHAR;
 }
 
 export function textToMatrix(
   text: string,
-  spacing: number = 1
+  spacing: number = 1,
+  wordSpacing: number = 4
 ): { matrix: number[][]; charMap: (PixelCoord | null)[][] } {
   const chars = text.toUpperCase().split('');
   if (chars.length === 0) {
@@ -418,16 +415,16 @@ export function textToMatrix(
     };
   }
 
-  // Each char is 5 cols wide. Between chars we add `spacing` empty columns.
   const numRows = 7;
   const matrix: number[][] = Array(numRows).fill(0).map(() => []);
   const charMap: (PixelCoord | null)[][] = Array(numRows).fill(null).map(() => []);
 
   chars.forEach((ch, charIdx) => {
-    const charMatrix = getCharMatrix(ch);
+    const charMatrix = getCharMatrix(ch, wordSpacing);
+    const charCols = charMatrix[0]?.length || 5;
 
     for (let row = 0; row < numRows; row++) {
-      for (let col = 0; col < 5; col++) {
+      for (let col = 0; col < charCols; col++) {
         const val = charMatrix[row][col];
         matrix[row].push(val);
         if (val === 1) {

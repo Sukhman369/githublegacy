@@ -68,8 +68,16 @@ export function applyPatternToCalendar(
   settings: PlannerSettings,
   customOverrides: Record<string, { commitCount: number; level: IntensityLevel }> = {}
 ): CalendarGrid {
-  const { text, intensityMaxCommits, letterSpacing, alignment, columnOffset = 0 } = settings;
-  const { matrix, charMap } = textToMatrix(text, letterSpacing);
+  const {
+    text,
+    intensityMaxCommits,
+    letterSpacing,
+    wordSpacing = 4,
+    alignment,
+    columnOffset = 0,
+  } = settings;
+
+  const { matrix, charMap } = textToMatrix(text, letterSpacing, wordSpacing);
 
   const matrixCols = matrix[0]?.length || 0;
   const totalWeeksAvailable = 53;

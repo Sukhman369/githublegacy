@@ -39,7 +39,8 @@ export interface PlannerSettings {
   text: string;
   year: number;
   intensityMaxCommits: number; // Max commits for level 4 (e.g. 5, 10, 20)
-  letterSpacing: number; // 1 to 3 columns gap
+  letterSpacing: number; // 1 to 3 columns gap between letters
+  wordSpacing: number; // 2 to 6 columns gap between words (default 4)
   alignment: AlignmentMode;
   columnOffset: number; // Column shift nudge (-10 to +10)
   themeId: string;

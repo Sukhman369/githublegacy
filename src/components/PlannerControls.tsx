@@ -18,6 +18,7 @@ import {
   MoveLeft,
   MoveRight,
   Sliders,
+  Space,
 } from 'lucide-react';
 
 interface PlannerControlsProps {
@@ -37,6 +38,7 @@ export const PlannerControls: React.FC<PlannerControlsProps> = ({
   const yearOptions = Array.from({ length: 11 }, (_, i) => currentYear - 2 + i);
 
   const columnOffset = settings.columnOffset || 0;
+  const wordSpacing = settings.wordSpacing || 4;
 
   return (
     <div
@@ -201,7 +203,7 @@ export const PlannerControls: React.FC<PlannerControlsProps> = ({
 
       {/* Secondary Controls Row */}
       <div
-        className={`pt-2 border-t grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 ${
+        className={`pt-2 border-t grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 ${
           isDarkMode ? 'border-slate-800/60' : 'border-slate-200'
         }`}
       >
@@ -213,7 +215,7 @@ export const PlannerControls: React.FC<PlannerControlsProps> = ({
             }`}
           >
             <Sliders className="h-3.5 w-3.5 text-emerald-500" />
-            <span>Nudge Column Position</span>
+            <span>Nudge Column</span>
           </label>
           <div
             className={`flex items-center gap-1 p-1 rounded-xl border ${
@@ -222,7 +224,7 @@ export const PlannerControls: React.FC<PlannerControlsProps> = ({
           >
             <button
               onClick={() => onChangeSettings({ columnOffset: Math.max(-10, columnOffset - 1) })}
-              className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold flex items-center justify-center transition-all ${
+              className={`px-2 py-1.5 rounded-lg text-xs font-semibold flex items-center justify-center transition-all ${
                 isDarkMode
                   ? 'bg-slate-900 text-slate-300 hover:text-white hover:bg-slate-800'
                   : 'bg-white text-slate-700 hover:text-slate-900 shadow-sm'
@@ -233,16 +235,12 @@ export const PlannerControls: React.FC<PlannerControlsProps> = ({
             </button>
 
             <div className="flex-1 text-center font-mono text-xs font-bold text-emerald-500">
-              {columnOffset === 0
-                ? '0 (Default)'
-                : columnOffset > 0
-                ? `+${columnOffset} col${columnOffset > 1 ? 's' : ''}`
-                : `${columnOffset} col${columnOffset < -1 ? 's' : ''}`}
+              {columnOffset === 0 ? '0' : columnOffset > 0 ? `+${columnOffset}` : `${columnOffset}`}
             </div>
 
             <button
               onClick={() => onChangeSettings({ columnOffset: Math.min(10, columnOffset + 1) })}
-              className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold flex items-center justify-center transition-all ${
+              className={`px-2 py-1.5 rounded-lg text-xs font-semibold flex items-center justify-center transition-all ${
                 isDarkMode
                   ? 'bg-slate-900 text-slate-300 hover:text-white hover:bg-slate-800'
                   : 'bg-white text-slate-700 hover:text-slate-900 shadow-sm'
@@ -251,6 +249,71 @@ export const PlannerControls: React.FC<PlannerControlsProps> = ({
             >
               <MoveRight className="h-3.5 w-3.5" />
             </button>
+          </div>
+        </div>
+
+        {/* Word Gap Spacing */}
+        <div className="space-y-1.5">
+          <label
+            className={`text-xs font-semibold uppercase tracking-wider flex items-center gap-1.5 ${
+              isDarkMode ? 'text-slate-300' : 'text-slate-600'
+            }`}
+          >
+            <Space className="h-3.5 w-3.5 text-cyan-400" />
+            <span>Word Gap</span>
+          </label>
+          <div
+            className={`flex items-center gap-1 p-1 rounded-xl border ${
+              isDarkMode ? 'bg-slate-950 border-slate-800' : 'bg-slate-100 border-slate-300'
+            }`}
+          >
+            {[2, 3, 4, 5].map((wGap) => (
+              <button
+                key={wGap}
+                onClick={() => onChangeSettings({ wordSpacing: wGap })}
+                className={`flex-1 py-1.5 rounded-lg text-xs font-mono font-bold transition-all ${
+                  wordSpacing === wGap
+                    ? 'bg-cyan-500 text-slate-950 shadow-sm'
+                    : isDarkMode
+                    ? 'text-slate-400 hover:text-white'
+                    : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                {wGap}c
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Letter Spacing */}
+        <div className="space-y-1.5">
+          <label
+            className={`text-xs font-semibold uppercase tracking-wider ${
+              isDarkMode ? 'text-slate-300' : 'text-slate-600'
+            }`}
+          >
+            Letter Gap
+          </label>
+          <div
+            className={`flex items-center gap-1 p-1 rounded-xl border ${
+              isDarkMode ? 'bg-slate-950 border-slate-800' : 'bg-slate-100 border-slate-300'
+            }`}
+          >
+            {[1, 2, 3].map((spacing) => (
+              <button
+                key={spacing}
+                onClick={() => onChangeSettings({ letterSpacing: spacing })}
+                className={`flex-1 py-1.5 rounded-lg text-xs font-mono font-bold transition-all ${
+                  settings.letterSpacing === spacing
+                    ? 'bg-emerald-500 text-slate-950 shadow-sm'
+                    : isDarkMode
+                    ? 'text-slate-400 hover:text-white'
+                    : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                {spacing}c
+              </button>
+            ))}
           </div>
         </div>
 
@@ -289,7 +352,7 @@ export const PlannerControls: React.FC<PlannerControlsProps> = ({
             }`}
           >
             <Edit3 className="h-3.5 w-3.5 text-cyan-500" />
-            <span>Interaction Mode</span>
+            <span>Studio Mode</span>
           </label>
           <div
             className={`flex items-center gap-1 p-1 rounded-xl border ${
@@ -337,38 +400,6 @@ export const PlannerControls: React.FC<PlannerControlsProps> = ({
               <Eraser className="h-3.5 w-3.5" />
               <span>Erase</span>
             </button>
-          </div>
-        </div>
-
-        {/* Letter Spacing */}
-        <div className="space-y-1.5">
-          <label
-            className={`text-xs font-semibold uppercase tracking-wider ${
-              isDarkMode ? 'text-slate-300' : 'text-slate-600'
-            }`}
-          >
-            Letter Spacing
-          </label>
-          <div
-            className={`flex items-center gap-1 p-1 rounded-xl border ${
-              isDarkMode ? 'bg-slate-950 border-slate-800' : 'bg-slate-100 border-slate-300'
-            }`}
-          >
-            {[1, 2, 3].map((spacing) => (
-              <button
-                key={spacing}
-                onClick={() => onChangeSettings({ letterSpacing: spacing })}
-                className={`flex-1 py-1.5 rounded-lg text-xs font-mono font-bold transition-all ${
-                  settings.letterSpacing === spacing
-                    ? 'bg-emerald-500 text-slate-950 shadow-sm'
-                    : isDarkMode
-                    ? 'text-slate-400 hover:text-white'
-                    : 'text-slate-600 hover:text-slate-900'
-                }`}
-              >
-                {spacing} col{spacing > 1 ? 's' : ''}
-              </button>
-            ))}
           </div>
         </div>
       </div>
