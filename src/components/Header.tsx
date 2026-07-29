@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Sparkles, Code2, ShieldCheck, Sun, Moon, BookOpen, LayoutGrid, Palette, Terminal } from 'lucide-react';
+import { Sparkles, Sun, Moon, BookOpen, LayoutGrid, Palette, Terminal, Coffee } from 'lucide-react';
 import { GitLegacyLogo } from './GitLegacyLogo';
 import { useTheme } from '../context/ThemeContext';
 
@@ -13,12 +13,7 @@ const GithubIcon: React.FC<{ className?: string }> = ({ className }) => (
   </svg>
 );
 
-interface HeaderProps {
-  isDarkMode?: boolean;
-  onToggleDarkMode?: () => void;
-}
-
-export const Header: React.FC<HeaderProps> = () => {
+export const Header: React.FC = () => {
   const pathname = usePathname();
   const { isDarkMode, toggleDarkMode } = useTheme();
 
@@ -109,18 +104,32 @@ export const Header: React.FC<HeaderProps> = () => {
             </span>
           </button>
 
+          {/* GitHub Repo Link */}
           <a
             href="https://github.com/Sukhman369/githublegacy.git"
             target="_blank"
             rel="noopener noreferrer"
-            className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold border transition-all ${
+            className={`inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-semibold border transition-all ${
               isDarkMode
                 ? 'bg-slate-900 border-slate-800 text-slate-200 hover:bg-slate-800 hover:text-white'
                 : 'bg-slate-100 border-slate-300 text-slate-700 hover:bg-slate-200 hover:text-slate-900'
             }`}
+            title="GitHub Repository"
           >
             <GithubIcon className="h-4 w-4" />
             <span className="hidden sm:inline">GitHub</span>
+          </a>
+
+          {/* Buy Me a Coffee Button */}
+          <a
+            href="https://buymeacoffee.com/sukhman"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 shadow-md hover:scale-105 transition-all"
+            title="Support GitLegacy on Buy Me a Coffee"
+          >
+            <Coffee className="h-4 w-4 fill-slate-950" />
+            <span className="hidden sm:inline">Buy me a coffee</span>
           </a>
         </div>
       </div>

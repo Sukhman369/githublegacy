@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Heart } from 'lucide-react';
+import { Heart, Coffee } from 'lucide-react';
 import { GitLegacyLogo } from './GitLegacyLogo';
 import { useTheme } from '../context/ThemeContext';
 
@@ -33,7 +33,7 @@ export const Footer: React.FC = () => {
           </div>
         </div>
 
-        <div className="flex items-center gap-6 text-xs">
+        <div className="flex flex-wrap items-center gap-6 text-xs">
           <span className="flex items-center gap-1.5">
             Crafted with <Heart className="h-3.5 w-3.5 text-rose-500 fill-rose-500" /> for Developers
           </span>
@@ -46,6 +46,16 @@ export const Footer: React.FC = () => {
           >
             <GithubIcon className="h-3.5 w-3.5" />
             <span>GitHub Repository</span>
+          </a>
+          <span>•</span>
+          <a
+            href="https://buymeacoffee.com/sukhman"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1 text-amber-500 font-bold hover:text-amber-400 transition-colors"
+          >
+            <Coffee className="h-3.5 w-3.5 fill-amber-500" />
+            <span>Buy Me a Coffee</span>
           </a>
         </div>
       </div>
