@@ -21,6 +21,7 @@ import { calculateStrategyStats } from '../lib/commit-planner';
 
 function AppContent() {
   const currentYear = new Date().getFullYear();
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(true);
 
   const [settings, setSettings] = useState<PlannerSettings>({
     text: 'LORD SUKHMAN',
@@ -37,6 +38,15 @@ function AppContent() {
     Record<string, { commitCount: number; level: IntensityLevel }>
   >({});
 
+  // Synchronize HTML dark mode class
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [isDarkMode]);
+
   // Parse URL search params on mount
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -46,6 +56,11 @@ function AppContent() {
       const intensityParam = params.get('intensity');
       const themeParam = params.get('theme');
       const alignParam = params.get('align');
+      const modeParam = params.get('mode');
+
+      if (modeParam === 'light') {
+        setIsDarkMode(false);
+      }
 
       if (textParam || yearParam || intensityParam || themeParam || alignParam) {
         setSettings((prev) => ({
@@ -60,6 +75,20 @@ function AppContent() {
     }
   }, []);
 
+  // Dark/Light mode toggle handler
+  const handleToggleDarkMode = () => {
+    setIsDarkMode((prev) => {
+      const next = !prev;
+      // Auto-switch graph palette if default github theme is selected
+      if (settings.themeId === 'github-dark' && !next) {
+        setSettings((s) => ({ ...s, themeId: 'github-light' }));
+      } else if (settings.themeId === 'github-light' && next) {
+        setSettings((s) => ({ ...s, themeId: 'github-dark' }));
+      }
+      return next;
+    });
+  };
+
   // Update settings handler
   const handleUpdateSettings = (updated: Partial<PlannerSettings>) => {
     setSettings((prev) => ({ ...prev, ...updated }));
@@ -68,7 +97,12 @@ function AppContent() {
   // Reset custom drawing grid
   const handleResetGrid = () => {
     setCustomOverrides({});
-    setSettings((prev) => ({ ...prev, text: 'LORD SUKHMAN', drawingMode: 'select' }));
+    setSettings((prev) => ({
+      ...prev,
+      text: 'LORD SUKHMAN',
+      drawingMode: 'select',
+      themeId: isDarkMode ? 'github-dark' : 'github-light',
+    }));
   };
 
   // Cell click handler for drawing / erasing studio
@@ -104,13 +138,18 @@ function AppContent() {
   }, [calendarGrid]);
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-emerald-500 selection:text-slate-950 flex flex-col">
-      <Header />
+    <div
+      className={`min-h-screen font-sans selection:bg-emerald-500 selection:text-slate-950 flex flex-col transition-colors duration-300 ${
+        isDarkMode ? 'bg-slate-950 text-slate-100' : 'bg-slate-50 text-slate-900'
+      }`}
+    >
+      <Header isDarkMode={isDarkMode} onToggleDarkMode={handleToggleDarkMode} />
 
       <main className="flex-1">
         <HeroSection
           activeText={settings.text}
           onSelectPreset={(text) => handleUpdateSettings({ text })}
+          isDarkMode={isDarkMode}
         />
 
         <div className="mx-auto max-w-7xl px-4 sm:px-6 space-y-8 pb-12">
@@ -119,6 +158,7 @@ function AppContent() {
             settings={settings}
             onChangeSettings={handleUpdateSettings}
             onResetGrid={handleResetGrid}
+            isDarkMode={isDarkMode}
           />
 
           {/* Interactive GitHub Graph Preview */}
@@ -129,21 +169,27 @@ function AppContent() {
           />
 
           {/* Commit Analytics Panel */}
-          <StatisticsPanel stats={strategyStats} />
+          <StatisticsPanel stats={strategyStats} isDarkMode={isDarkMode} />
 
           {/* Export Panel */}
-          <ExportPanel grid={calendarGrid} settings={settings} />
+          <ExportPanel grid={calendarGrid} settings={settings} isDarkMode={isDarkMode} />
         </div>
       </main>
 
-      <Footer />
+      <Footer isDarkMode={isDarkMode} />
     </div>
   );
 }
 
 export default function Home() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-slate-950 text-white flex items-center justify-center">Loading GitLegacy...</div>}>
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-slate-950 text-white flex items-center justify-center font-mono text-sm">
+          Loading GitLegacy Studio...
+        </div>
+      }
+    >
       <AppContent />
     </Suspense>
   );

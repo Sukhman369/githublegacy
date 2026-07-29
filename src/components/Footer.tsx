@@ -10,23 +10,31 @@ const GithubIcon: React.FC<{ className?: string }> = ({ className }) => (
   </svg>
 );
 
-export const Footer: React.FC = () => {
+interface FooterProps {
+  isDarkMode?: boolean;
+}
+
+export const Footer: React.FC<FooterProps> = ({ isDarkMode = true }) => {
   return (
-    <footer className="mt-16 border-t border-slate-800 bg-slate-950 py-10 px-4 sm:px-6">
+    <footer
+      className={`mt-16 border-t py-10 px-4 sm:px-6 transition-colors ${
+        isDarkMode ? 'border-slate-800 bg-slate-950 text-slate-400' : 'border-slate-200 bg-slate-100 text-slate-600'
+      }`}
+    >
       <div className="mx-auto max-w-7xl flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="flex items-center gap-3">
           <GitLegacyLogo className="h-9 w-9" size={36} />
           <div>
-            <div className="font-mono text-base font-extrabold text-white">
-              Git<span className="text-emerald-400">Legacy</span>
+            <div className={`font-mono text-base font-extrabold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+              Git<span className="text-emerald-500">Legacy</span>
             </div>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs opacity-80">
               Interactive GitHub Contribution Graph Art & Strategy Planner
             </p>
           </div>
         </div>
 
-        <div className="flex items-center gap-6 text-xs text-slate-400">
+        <div className="flex items-center gap-6 text-xs">
           <span className="flex items-center gap-1.5">
             Crafted with <Heart className="h-3.5 w-3.5 text-rose-500 fill-rose-500" /> for Developers
           </span>
@@ -35,7 +43,7 @@ export const Footer: React.FC = () => {
             href="https://github.com/Sukhman369/githublegacy.git"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1 hover:text-emerald-400 transition-colors"
+            className="flex items-center gap-1 hover:text-emerald-500 transition-colors"
           >
             <GithubIcon className="h-3.5 w-3.5" />
             <span>GitHub Repository</span>

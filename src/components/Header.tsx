@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Sparkles, Code2, ShieldCheck, GitBranch } from 'lucide-react';
+import { Sparkles, Code2, ShieldCheck, Sun, Moon } from 'lucide-react';
 import { GitLegacyLogo } from './GitLegacyLogo';
 
 const GithubIcon: React.FC<{ className?: string }> = ({ className }) => (
@@ -10,42 +10,88 @@ const GithubIcon: React.FC<{ className?: string }> = ({ className }) => (
   </svg>
 );
 
-export const Header: React.FC = () => {
+interface HeaderProps {
+  isDarkMode: boolean;
+  onToggleDarkMode: () => void;
+}
+
+export const Header: React.FC<HeaderProps> = ({ isDarkMode, onToggleDarkMode }) => {
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-slate-800 bg-slate-950/80 backdrop-blur-xl">
+    <header
+      className={`sticky top-0 z-50 w-full border-b transition-colors ${
+        isDarkMode
+          ? 'border-slate-800 bg-slate-950/80 text-slate-100 backdrop-blur-xl'
+          : 'border-slate-200 bg-white/80 text-slate-900 backdrop-blur-xl shadow-sm'
+      }`}
+    >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6">
         <div className="flex items-center gap-3">
-          <div className="flex items-center justify-center rounded-xl p-0.5 bg-gradient-to-tr from-emerald-500/20 to-teal-400/20 border border-slate-800 shadow-md">
+          <div className={`flex items-center justify-center rounded-xl p-0.5 border shadow-sm ${
+            isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-100 border-slate-200'
+          }`}>
             <GitLegacyLogo className="h-10 w-10" size={40} />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-mono text-xl font-extrabold tracking-tight text-white">
-                Git<span className="text-emerald-400">Legacy</span>
+              <span className={`font-mono text-xl font-extrabold tracking-tight ${
+                isDarkMode ? 'text-white' : 'text-slate-900'
+              }`}>
+                Git<span className="text-emerald-500">Legacy</span>
               </span>
-              <span className="rounded-full bg-emerald-500/10 px-2 py-0.5 text-xs font-semibold text-emerald-400 border border-emerald-500/20">
+              <span className="rounded-full bg-emerald-500/10 px-2 py-0.5 text-xs font-semibold text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
                 v1.0 MVP
               </span>
             </div>
-            <p className="text-xs text-slate-400 font-sans hidden sm:block">
+            <p className={`text-xs font-sans hidden sm:block ${
+              isDarkMode ? 'text-slate-400' : 'text-slate-500'
+            }`}>
               Design your GitHub legacy before you write code
             </p>
           </div>
         </div>
 
         <div className="flex items-center gap-3">
-          <div className="hidden md:flex items-center gap-2 text-xs font-medium text-slate-400 bg-slate-900 border border-slate-800 rounded-lg px-3 py-1.5">
-            <ShieldCheck className="h-4 w-4 text-emerald-400" />
+          <div className={`hidden md:flex items-center gap-2 text-xs font-medium border rounded-lg px-3 py-1.5 ${
+            isDarkMode ? 'text-slate-400 bg-slate-900 border-slate-800' : 'text-slate-600 bg-slate-100 border-slate-200'
+          }`}>
+            <ShieldCheck className="h-4 w-4 text-emerald-500" />
             <span>Zero Backend Required • Instant Generation</span>
           </div>
+
+          {/* Dark / Light Mode Switch Button */}
+          <button
+            onClick={onToggleDarkMode}
+            className={`flex items-center gap-2 rounded-lg px-3 py-1.5 text-xs font-semibold border transition-all ${
+              isDarkMode
+                ? 'bg-slate-900 border-slate-800 text-amber-400 hover:bg-slate-800 hover:text-amber-300'
+                : 'bg-slate-100 border-slate-300 text-slate-800 hover:bg-slate-200 hover:text-slate-950'
+            }`}
+            title={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+          >
+            {isDarkMode ? (
+              <>
+                <Sun className="h-4 w-4 text-amber-400" />
+                <span className="hidden sm:inline">Light Mode</span>
+              </>
+            ) : (
+              <>
+                <Moon className="h-4 w-4 text-slate-700" />
+                <span className="hidden sm:inline">Dark Mode</span>
+              </>
+            )}
+          </button>
 
           <a
             href="https://github.com/Sukhman369/githublegacy.git"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-lg bg-slate-900 px-3.5 py-2 text-xs font-semibold text-slate-200 border border-slate-800 transition-all hover:bg-slate-800 hover:text-white hover:border-slate-700"
+            className={`inline-flex items-center gap-2 rounded-lg px-3.5 py-1.5 text-xs font-semibold border transition-all ${
+              isDarkMode
+                ? 'bg-slate-900 border-slate-800 text-slate-200 hover:bg-slate-800 hover:text-white'
+                : 'bg-slate-100 border-slate-300 text-slate-700 hover:bg-slate-200 hover:text-slate-900'
+            }`}
           >
-            <GithubIcon className="h-4 w-4 text-slate-300" />
+            <GithubIcon className="h-4 w-4" />
             <span className="hidden sm:inline">GitHub Repository</span>
           </a>
         </div>
