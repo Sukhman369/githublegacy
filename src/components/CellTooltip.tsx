@@ -23,15 +23,12 @@ export const CellTooltip: React.FC<CellTooltipProps> = ({ cell, x, y }) => {
     timeZone: 'UTC',
   });
 
-  // If the cell is near the top (y < 80), flip the tooltip to render below instead of above
-  const isNearTop = y < 80;
-
   return (
     <div
       style={{
         left: `${x}px`,
-        top: isNearTop ? `${y + 24}px` : `${y - 12}px`,
-        transform: isNearTop ? 'translate(-50%, 0)' : 'translate(-50%, -100%)',
+        top: `${y - 12}px`,
+        transform: 'translate(-50%, -100%)',
       }}
       className="pointer-events-none absolute z-50 rounded-xl bg-slate-950/95 border border-slate-700/80 p-3 shadow-2xl backdrop-blur-md min-w-[200px] space-y-2 text-xs"
     >
