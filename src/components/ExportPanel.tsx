@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { CalendarGrid, PlannerSettings } from '../types/calendar';
 import { generateCSV, generateJSON, generateBashScript, generatePythonScript } from '../lib/export-engine';
 import { ScriptModal } from './ScriptModal';
@@ -64,8 +64,8 @@ export const ExportPanel: React.FC<ExportPanelProps> = ({ grid, settings, isDark
     });
   };
 
-  const bashScript = generateBashScript(grid, 'githublegacy');
-  const pythonScript = generatePythonScript(grid);
+  const bashScript = useMemo(() => generateBashScript(grid, 'githublegacy'), [grid]);
+  const pythonScript = useMemo(() => generatePythonScript(grid), [grid]);
 
   return (
     <>

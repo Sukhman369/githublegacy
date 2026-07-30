@@ -45,12 +45,11 @@ export function calculateStrategyStats(grid: CalendarGrid): StrategyStats {
       if (tempStreak > longestStreak) {
         longestStreak = tempStreak;
       }
+      currentStreak = tempStreak; // update every time we hit an active day
     } else {
       tempStreak = 0;
     }
   });
-
-  currentStreak = tempStreak;
 
   const avgCommitsPerActiveDay = activeDays > 0 ? Math.round((totalCommits / activeDays) * 10) / 10 : 0;
   const completionRate = totalYearDays > 0 ? Math.round((activeDays / totalYearDays) * 1000) / 10 : 0;

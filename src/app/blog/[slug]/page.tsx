@@ -106,36 +106,76 @@ export default function BlogPostPage() {
         </div>
 
         {/* Article Body Content */}
-        <article className={`prose max-w-none space-y-6 text-base leading-relaxed ${
-          isDarkMode ? 'prose-invert text-slate-200' : 'text-slate-800'
+        <article className={`max-w-none space-y-5 text-base leading-relaxed ${
+          isDarkMode ? 'text-slate-200' : 'text-slate-800'
         }`}>
           {post.content.split('\n\n').map((paragraph, index) => {
-            if (paragraph.startsWith('### ')) {
+            const trimmed = paragraph.trim();
+
+            // Horizontal rule
+            if (trimmed === '---') {
+              return (
+                <hr key={index} className={`my-6 border-t ${
+                  isDarkMode ? 'border-slate-700/60' : 'border-slate-300'
+                }`} />
+              );
+            }
+
+            // Heading h3
+            if (trimmed.startsWith('### ')) {
               return (
                 <h3 key={index} className="text-xl font-bold text-emerald-500 mt-8 mb-3">
-                  {paragraph.replace('### ', '')}
+                  {trimmed.replace('### ', '')}
                 </h3>
               );
             }
-            if (paragraph.startsWith('- ')) {
-              const listItems = paragraph.split('\n- ');
+
+            // Numbered list (1. 2. 3. etc.)
+            if (/^\d+\.\s/.test(trimmed)) {
+              const listItems = trimmed.split('\n').filter((line) => /^\d+\.\s/.test(line.trim()));
+              return (
+                <ol key={index} className="list-decimal pl-6 space-y-1.5 my-3">
+                  {listItems.map((item, i) => (
+                    <li key={i}>{item.replace(/^\d+\.\s/, '')}</li>
+                  ))}
+                </ol>
+              );
+            }
+
+            // Unordered list
+            if (trimmed.startsWith('- ')) {
+              const listItems = trimmed.split('\n').filter((l) => l.trim().startsWith('- '));
               return (
                 <ul key={index} className="list-disc pl-6 space-y-1.5 my-3">
                   {listItems.map((item, i) => (
-                    <li key={i}>{item.replace('- ', '')}</li>
+                    <li key={i}>{item.replace(/^\s*-\s/, '')}</li>
                   ))}
                 </ul>
               );
             }
-            if (paragraph.startsWith('```')) {
-              const codeText = paragraph.replace(/```[a-z]*/g, '').trim();
+
+            // Code block
+            if (trimmed.startsWith('```')) {
+              const codeText = trimmed.replace(/```[a-z]*/g, '').trim();
               return (
                 <pre key={index} className="p-4 rounded-xl bg-slate-900 text-emerald-400 font-mono text-xs overflow-x-auto border border-slate-800 my-4">
                   <code>{codeText}</code>
                 </pre>
               );
             }
-            return <p key={index}>{paragraph}</p>;
+
+            // Bare code line (no markdown fences, just a long command)
+            if (trimmed.startsWith('GIT_AUTHOR_DATE') || trimmed.startsWith('git ') || trimmed.startsWith('chmod') || trimmed.startsWith('./')) {
+              return (
+                <pre key={index} className="p-4 rounded-xl bg-slate-900 text-emerald-400 font-mono text-xs overflow-x-auto border border-slate-800 my-4">
+                  <code>{trimmed}</code>
+                </pre>
+              );
+            }
+
+            if (!trimmed) return null;
+
+            return <p key={index}>{trimmed}</p>;
           })}
         </article>
 

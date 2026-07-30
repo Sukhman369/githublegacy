@@ -1,0 +1,826 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "label": "eslint.config.mjs",
+      "file_type": "code",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\eslint.config.mjs",
+      "source_location": "L1",
+      "id": "c_users_harma_documents_repos_githublegacy_eslint_config_mjs",
+      "community": 10,
+      "norm_label": "eslint.config.mjs"
+    },
+    {
+      "label": "next-env.d.ts",
+      "file_type": "code",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\next-env.d.ts",
+      "source_location": "L1",
+      "id": "c_users_harma_documents_repos_githublegacy_next_env_d_ts",
+      "community": 11,
+      "norm_label": "next-env.d.ts"
+    },
+    {
+      "label": "next.config.ts",
+      "file_type": "code",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\next.config.ts",
+      "source_location": "L1",
+      "id": "c_users_harma_documents_repos_githublegacy_next_config_ts",
+      "community": 12,
+      "norm_label": "next.config.ts"
+    },
+    {
+      "label": "postcss.config.mjs",
+      "file_type": "code",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\postcss.config.mjs",
+      "source_location": "L1",
+      "id": "c_users_harma_documents_repos_githublegacy_postcss_config_mjs",
+      "community": 13,
+      "norm_label": "postcss.config.mjs"
+    },
+    {
+      "label": "layout.tsx",
+      "file_type": "code",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\app\\layout.tsx",
+      "source_location": "L1",
+      "id": "c_users_harma_documents_repos_githublegacy_src_app_layout_tsx",
+      "community": 4,
+      "norm_label": "layout.tsx"
+    },
+    {
+      "label": "RootLayout()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\app\\layout.tsx",
+      "source_location": "L47",
+      "id": "layout_rootlayout",
+      "community": 4,
+      "norm_label": "rootlayout()"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\app\\page.tsx",
+      "source_location": "L1",
+      "id": "c_users_harma_documents_repos_githublegacy_src_app_page_tsx",
+      "community": 0,
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "AppContent()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\app\\page.tsx",
+      "source_location": "L23",
+      "id": "page_appcontent",
+      "community": 0,
+      "norm_label": "appcontent()"
+    },
+    {
+      "label": "Home()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\app\\page.tsx",
+      "source_location": "L172",
+      "id": "page_home",
+      "community": 0,
+      "norm_label": "home()"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\app\\blog\\page.tsx",
+      "source_location": "L1",
+      "id": "c_users_harma_documents_repos_githublegacy_src_app_blog_page_tsx",
+      "community": 14,
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\app\\blog\\[slug]\\page.tsx",
+      "source_location": "L1",
+      "id": "c_users_harma_documents_repos_githublegacy_src_app_blog_slug_page_tsx",
+      "community": 5,
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "handleShare()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\app\\blog\\[slug]\\page.tsx",
+      "source_location": "L32",
+      "id": "page_handleshare",
+      "community": 5,
+      "norm_label": "handleshare()"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\app\\presets\\page.tsx",
+      "source_location": "L1",
+      "id": "c_users_harma_documents_repos_githublegacy_src_app_presets_page_tsx",
+      "community": 15,
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\app\\script-generator\\page.tsx",
+      "source_location": "L1",
+      "id": "c_users_harma_documents_repos_githublegacy_src_app_script_generator_page_tsx",
+      "community": 0,
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "ScriptGeneratorPage()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\app\\script-generator\\page.tsx",
+      "source_location": "L11",
+      "id": "page_scriptgeneratorpage",
+      "community": 0,
+      "norm_label": "scriptgeneratorpage()"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\app\\themes\\page.tsx",
+      "source_location": "L1",
+      "id": "c_users_harma_documents_repos_githublegacy_src_app_themes_page_tsx",
+      "community": 16,
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "CellTooltip.tsx",
+      "file_type": "code",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\components\\CellTooltip.tsx",
+      "source_location": "L1",
+      "id": "c_users_harma_documents_repos_githublegacy_src_components_celltooltip_tsx",
+      "community": 17,
+      "norm_label": "celltooltip.tsx"
+    },
+    {
+      "label": "ContributionGraph.tsx",
+      "file_type": "code",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\components\\ContributionGraph.tsx",
+      "source_location": "L1",
+      "id": "c_users_harma_documents_repos_githublegacy_src_components_contributiongraph_tsx",
+      "community": 3,
+      "norm_label": "contributiongraph.tsx"
+    },
+    {
+      "label": "handleCellMouseEnter()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\components\\ContributionGraph.tsx",
+      "source_location": "L44",
+      "id": "contributiongraph_handlecellmouseenter",
+      "community": 3,
+      "norm_label": "handlecellmouseenter()"
+    },
+    {
+      "label": "handleCellMouseDown()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\components\\ContributionGraph.tsx",
+      "source_location": "L60",
+      "id": "contributiongraph_handlecellmousedown",
+      "community": 3,
+      "norm_label": "handlecellmousedown()"
+    },
+    {
+      "label": "handleMouseUp()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\components\\ContributionGraph.tsx",
+      "source_location": "L65",
+      "id": "contributiongraph_handlemouseup",
+      "community": 3,
+      "norm_label": "handlemouseup()"
+    },
+    {
+      "label": "ExportPanel.tsx",
+      "file_type": "code",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\components\\ExportPanel.tsx",
+      "source_location": "L1",
+      "id": "c_users_harma_documents_repos_githublegacy_src_components_exportpanel_tsx",
+      "community": 1,
+      "norm_label": "exportpanel.tsx"
+    },
+    {
+      "label": "ExportPanel()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\components\\ExportPanel.tsx",
+      "source_location": "L16",
+      "id": "exportpanel_exportpanel",
+      "community": 1,
+      "norm_label": "exportpanel()"
+    },
+    {
+      "label": "Footer.tsx",
+      "file_type": "code",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\components\\Footer.tsx",
+      "source_location": "L1",
+      "id": "c_users_harma_documents_repos_githublegacy_src_components_footer_tsx",
+      "community": 18,
+      "norm_label": "footer.tsx"
+    },
+    {
+      "label": "GitLegacyLogo.tsx",
+      "file_type": "code",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\components\\GitLegacyLogo.tsx",
+      "source_location": "L1",
+      "id": "c_users_harma_documents_repos_githublegacy_src_components_gitlegacylogo_tsx",
+      "community": 6,
+      "norm_label": "gitlegacylogo.tsx"
+    },
+    {
+      "label": "GitLegacyLogo()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\components\\GitLegacyLogo.tsx",
+      "source_location": "L10",
+      "id": "gitlegacylogo_gitlegacylogo",
+      "community": 6,
+      "norm_label": "gitlegacylogo()"
+    },
+    {
+      "label": "Header.tsx",
+      "file_type": "code",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\components\\Header.tsx",
+      "source_location": "L1",
+      "id": "c_users_harma_documents_repos_githublegacy_src_components_header_tsx",
+      "community": 19,
+      "norm_label": "header.tsx"
+    },
+    {
+      "label": "HeroSection.tsx",
+      "file_type": "code",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\components\\HeroSection.tsx",
+      "source_location": "L1",
+      "id": "c_users_harma_documents_repos_githublegacy_src_components_herosection_tsx",
+      "community": 7,
+      "norm_label": "herosection.tsx"
+    },
+    {
+      "label": "HeroSection()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\components\\HeroSection.tsx",
+      "source_location": "L13",
+      "id": "herosection_herosection",
+      "community": 7,
+      "norm_label": "herosection()"
+    },
+    {
+      "label": "PlannerControls.tsx",
+      "file_type": "code",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\components\\PlannerControls.tsx",
+      "source_location": "L1",
+      "id": "c_users_harma_documents_repos_githublegacy_src_components_plannercontrols_tsx",
+      "community": 20,
+      "norm_label": "plannercontrols.tsx"
+    },
+    {
+      "label": "ScriptModal.tsx",
+      "file_type": "code",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\components\\ScriptModal.tsx",
+      "source_location": "L1",
+      "id": "c_users_harma_documents_repos_githublegacy_src_components_scriptmodal_tsx",
+      "community": 21,
+      "norm_label": "scriptmodal.tsx"
+    },
+    {
+      "label": "StatisticsPanel.tsx",
+      "file_type": "code",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\components\\StatisticsPanel.tsx",
+      "source_location": "L1",
+      "id": "c_users_harma_documents_repos_githublegacy_src_components_statisticspanel_tsx",
+      "community": 22,
+      "norm_label": "statisticspanel.tsx"
+    },
+    {
+      "label": "ThemeContext.tsx",
+      "file_type": "code",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\context\\ThemeContext.tsx",
+      "source_location": "L1",
+      "id": "c_users_harma_documents_repos_githublegacy_src_context_themecontext_tsx",
+      "community": 0,
+      "norm_label": "themecontext.tsx"
+    },
+    {
+      "label": "useTheme()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\context\\ThemeContext.tsx",
+      "source_location": "L66",
+      "id": "themecontext_usetheme",
+      "community": 0,
+      "norm_label": "usetheme()"
+    },
+    {
+      "label": "blog-data.ts",
+      "file_type": "code",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\lib\\blog-data.ts",
+      "source_location": "L1",
+      "id": "c_users_harma_documents_repos_githublegacy_src_lib_blog_data_ts",
+      "community": 23,
+      "norm_label": "blog-data.ts"
+    },
+    {
+      "label": "calendar-engine.ts",
+      "file_type": "code",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\lib\\calendar-engine.ts",
+      "source_location": "L1",
+      "id": "c_users_harma_documents_repos_githublegacy_src_lib_calendar_engine_ts",
+      "community": 2,
+      "norm_label": "calendar-engine.ts"
+    },
+    {
+      "label": "createYearlyCalendarGrid()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\lib\\calendar-engine.ts",
+      "source_location": "L13",
+      "id": "calendar_engine_createyearlycalendargrid",
+      "community": 2,
+      "norm_label": "createyearlycalendargrid()"
+    },
+    {
+      "label": "applyPatternToCalendar()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\lib\\calendar-engine.ts",
+      "source_location": "L66",
+      "id": "calendar_engine_applypatterntocalendar",
+      "community": 2,
+      "norm_label": "applypatterntocalendar()"
+    },
+    {
+      "label": "calculateLevel()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\lib\\calendar-engine.ts",
+      "source_location": "L148",
+      "id": "calendar_engine_calculatelevel",
+      "community": 2,
+      "norm_label": "calculatelevel()"
+    },
+    {
+      "label": "commit-planner.ts",
+      "file_type": "code",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\lib\\commit-planner.ts",
+      "source_location": "L1",
+      "id": "c_users_harma_documents_repos_githublegacy_src_lib_commit_planner_ts",
+      "community": 8,
+      "norm_label": "commit-planner.ts"
+    },
+    {
+      "label": "calculateStrategyStats()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\lib\\commit-planner.ts",
+      "source_location": "L11",
+      "id": "commit_planner_calculatestrategystats",
+      "community": 8,
+      "norm_label": "calculatestrategystats()"
+    },
+    {
+      "label": "export-engine.ts",
+      "file_type": "code",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\lib\\export-engine.ts",
+      "source_location": "L1",
+      "id": "c_users_harma_documents_repos_githublegacy_src_lib_export_engine_ts",
+      "community": 1,
+      "norm_label": "export-engine.ts"
+    },
+    {
+      "label": "generateCSV()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\lib\\export-engine.ts",
+      "source_location": "L6",
+      "id": "export_engine_generatecsv",
+      "community": 1,
+      "norm_label": "generatecsv()"
+    },
+    {
+      "label": "generateJSON()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\lib\\export-engine.ts",
+      "source_location": "L25",
+      "id": "export_engine_generatejson",
+      "community": 1,
+      "norm_label": "generatejson()"
+    },
+    {
+      "label": "generateBashScript()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\lib\\export-engine.ts",
+      "source_location": "L56",
+      "id": "export_engine_generatebashscript",
+      "community": 1,
+      "norm_label": "generatebashscript()"
+    },
+    {
+      "label": "generatePythonScript()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\lib\\export-engine.ts",
+      "source_location": "L103",
+      "id": "export_engine_generatepythonscript",
+      "community": 1,
+      "norm_label": "generatepythonscript()"
+    },
+    {
+      "label": "font-matrix.ts",
+      "file_type": "code",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\lib\\font-matrix.ts",
+      "source_location": "L1",
+      "id": "c_users_harma_documents_repos_githublegacy_src_lib_font_matrix_ts",
+      "community": 2,
+      "norm_label": "font-matrix.ts"
+    },
+    {
+      "label": "getCharMatrix()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\lib\\font-matrix.ts",
+      "source_location": "L395",
+      "id": "font_matrix_getcharmatrix",
+      "community": 2,
+      "norm_label": "getcharmatrix()"
+    },
+    {
+      "label": "textToMatrix()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\lib\\font-matrix.ts",
+      "source_location": "L405",
+      "id": "font_matrix_texttomatrix",
+      "community": 2,
+      "norm_label": "texttomatrix()"
+    },
+    {
+      "label": "theme-config.ts",
+      "file_type": "code",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\lib\\theme-config.ts",
+      "source_location": "L1",
+      "id": "c_users_harma_documents_repos_githublegacy_src_lib_theme_config_ts",
+      "community": 9,
+      "norm_label": "theme-config.ts"
+    },
+    {
+      "label": "getThemeById()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\lib\\theme-config.ts",
+      "source_location": "L72",
+      "id": "theme_config_getthemebyid",
+      "community": 9,
+      "norm_label": "getthemebyid()"
+    },
+    {
+      "label": "calendar.ts",
+      "file_type": "code",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\types\\calendar.ts",
+      "source_location": "L1",
+      "id": "c_users_harma_documents_repos_githublegacy_src_types_calendar_ts",
+      "community": 24,
+      "norm_label": "calendar.ts"
+    }
+  ],
+  "links": [
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\app\\layout.tsx",
+      "source_location": "L47",
+      "weight": 1.0,
+      "_src": "c_users_harma_documents_repos_githublegacy_src_app_layout_tsx",
+      "_tgt": "layout_rootlayout",
+      "source": "c_users_harma_documents_repos_githublegacy_src_app_layout_tsx",
+      "target": "layout_rootlayout",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\app\\page.tsx",
+      "source_location": "L23",
+      "weight": 1.0,
+      "_src": "c_users_harma_documents_repos_githublegacy_src_app_page_tsx",
+      "_tgt": "page_appcontent",
+      "source": "c_users_harma_documents_repos_githublegacy_src_app_page_tsx",
+      "target": "page_appcontent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\app\\page.tsx",
+      "source_location": "L172",
+      "weight": 1.0,
+      "_src": "c_users_harma_documents_repos_githublegacy_src_app_page_tsx",
+      "_tgt": "page_home",
+      "source": "c_users_harma_documents_repos_githublegacy_src_app_page_tsx",
+      "target": "page_home",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\app\\page.tsx",
+      "source_location": "L25",
+      "weight": 1.0,
+      "_src": "page_appcontent",
+      "_tgt": "themecontext_usetheme",
+      "source": "page_appcontent",
+      "target": "themecontext_usetheme"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\app\\blog\\[slug]\\page.tsx",
+      "source_location": "L32",
+      "weight": 1.0,
+      "_src": "c_users_harma_documents_repos_githublegacy_src_app_blog_slug_page_tsx",
+      "_tgt": "page_handleshare",
+      "source": "c_users_harma_documents_repos_githublegacy_src_app_blog_slug_page_tsx",
+      "target": "page_handleshare",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\app\\script-generator\\page.tsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "_src": "c_users_harma_documents_repos_githublegacy_src_app_script_generator_page_tsx",
+      "_tgt": "page_scriptgeneratorpage",
+      "source": "c_users_harma_documents_repos_githublegacy_src_app_script_generator_page_tsx",
+      "target": "page_scriptgeneratorpage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\app\\script-generator\\page.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "_src": "page_scriptgeneratorpage",
+      "_tgt": "themecontext_usetheme",
+      "source": "page_scriptgeneratorpage",
+      "target": "themecontext_usetheme"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\components\\ContributionGraph.tsx",
+      "source_location": "L44",
+      "weight": 1.0,
+      "_src": "c_users_harma_documents_repos_githublegacy_src_components_contributiongraph_tsx",
+      "_tgt": "contributiongraph_handlecellmouseenter",
+      "source": "c_users_harma_documents_repos_githublegacy_src_components_contributiongraph_tsx",
+      "target": "contributiongraph_handlecellmouseenter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\components\\ContributionGraph.tsx",
+      "source_location": "L60",
+      "weight": 1.0,
+      "_src": "c_users_harma_documents_repos_githublegacy_src_components_contributiongraph_tsx",
+      "_tgt": "contributiongraph_handlecellmousedown",
+      "source": "c_users_harma_documents_repos_githublegacy_src_components_contributiongraph_tsx",
+      "target": "contributiongraph_handlecellmousedown",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\components\\ContributionGraph.tsx",
+      "source_location": "L65",
+      "weight": 1.0,
+      "_src": "c_users_harma_documents_repos_githublegacy_src_components_contributiongraph_tsx",
+      "_tgt": "contributiongraph_handlemouseup",
+      "source": "c_users_harma_documents_repos_githublegacy_src_components_contributiongraph_tsx",
+      "target": "contributiongraph_handlemouseup",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\components\\ExportPanel.tsx",
+      "source_location": "L16",
+      "weight": 1.0,
+      "_src": "c_users_harma_documents_repos_githublegacy_src_components_exportpanel_tsx",
+      "_tgt": "exportpanel_exportpanel",
+      "source": "c_users_harma_documents_repos_githublegacy_src_components_exportpanel_tsx",
+      "target": "exportpanel_exportpanel",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\components\\ExportPanel.tsx",
+      "source_location": "L67",
+      "weight": 1.0,
+      "_src": "exportpanel_exportpanel",
+      "_tgt": "export_engine_generatebashscript",
+      "source": "exportpanel_exportpanel",
+      "target": "export_engine_generatebashscript"
+    },
+    {
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\components\\ExportPanel.tsx",
+      "source_location": "L68",
+      "weight": 1.0,
+      "_src": "exportpanel_exportpanel",
+      "_tgt": "export_engine_generatepythonscript",
+      "source": "exportpanel_exportpanel",
+      "target": "export_engine_generatepythonscript"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\components\\GitLegacyLogo.tsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "_src": "c_users_harma_documents_repos_githublegacy_src_components_gitlegacylogo_tsx",
+      "_tgt": "gitlegacylogo_gitlegacylogo",
+      "source": "c_users_harma_documents_repos_githublegacy_src_components_gitlegacylogo_tsx",
+      "target": "gitlegacylogo_gitlegacylogo",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\components\\HeroSection.tsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "_src": "c_users_harma_documents_repos_githublegacy_src_components_herosection_tsx",
+      "_tgt": "herosection_herosection",
+      "source": "c_users_harma_documents_repos_githublegacy_src_components_herosection_tsx",
+      "target": "herosection_herosection",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\context\\ThemeContext.tsx",
+      "source_location": "L66",
+      "weight": 1.0,
+      "_src": "c_users_harma_documents_repos_githublegacy_src_context_themecontext_tsx",
+      "_tgt": "themecontext_usetheme",
+      "source": "c_users_harma_documents_repos_githublegacy_src_context_themecontext_tsx",
+      "target": "themecontext_usetheme",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\lib\\calendar-engine.ts",
+      "source_location": "L13",
+      "weight": 1.0,
+      "_src": "c_users_harma_documents_repos_githublegacy_src_lib_calendar_engine_ts",
+      "_tgt": "calendar_engine_createyearlycalendargrid",
+      "source": "c_users_harma_documents_repos_githublegacy_src_lib_calendar_engine_ts",
+      "target": "calendar_engine_createyearlycalendargrid",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\lib\\calendar-engine.ts",
+      "source_location": "L66",
+      "weight": 1.0,
+      "_src": "c_users_harma_documents_repos_githublegacy_src_lib_calendar_engine_ts",
+      "_tgt": "calendar_engine_applypatterntocalendar",
+      "source": "c_users_harma_documents_repos_githublegacy_src_lib_calendar_engine_ts",
+      "target": "calendar_engine_applypatterntocalendar",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\lib\\calendar-engine.ts",
+      "source_location": "L148",
+      "weight": 1.0,
+      "_src": "c_users_harma_documents_repos_githublegacy_src_lib_calendar_engine_ts",
+      "_tgt": "calendar_engine_calculatelevel",
+      "source": "c_users_harma_documents_repos_githublegacy_src_lib_calendar_engine_ts",
+      "target": "calendar_engine_calculatelevel",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\lib\\calendar-engine.ts",
+      "source_location": "L125",
+      "weight": 1.0,
+      "_src": "calendar_engine_applypatterntocalendar",
+      "_tgt": "calendar_engine_calculatelevel",
+      "source": "calendar_engine_applypatterntocalendar",
+      "target": "calendar_engine_calculatelevel",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\lib\\calendar-engine.ts",
+      "source_location": "L80",
+      "weight": 1.0,
+      "_src": "calendar_engine_applypatterntocalendar",
+      "_tgt": "font_matrix_texttomatrix",
+      "source": "calendar_engine_applypatterntocalendar",
+      "target": "font_matrix_texttomatrix"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\lib\\commit-planner.ts",
+      "source_location": "L11",
+      "weight": 1.0,
+      "_src": "c_users_harma_documents_repos_githublegacy_src_lib_commit_planner_ts",
+      "_tgt": "commit_planner_calculatestrategystats",
+      "source": "c_users_harma_documents_repos_githublegacy_src_lib_commit_planner_ts",
+      "target": "commit_planner_calculatestrategystats",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\lib\\export-engine.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_src": "c_users_harma_documents_repos_githublegacy_src_lib_export_engine_ts",
+      "_tgt": "export_engine_generatecsv",
+      "source": "c_users_harma_documents_repos_githublegacy_src_lib_export_engine_ts",
+      "target": "export_engine_generatecsv",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\lib\\export-engine.ts",
+      "source_location": "L25",
+      "weight": 1.0,
+      "_src": "c_users_harma_documents_repos_githublegacy_src_lib_export_engine_ts",
+      "_tgt": "export_engine_generatejson",
+      "source": "c_users_harma_documents_repos_githublegacy_src_lib_export_engine_ts",
+      "target": "export_engine_generatejson",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\lib\\export-engine.ts",
+      "source_location": "L56",
+      "weight": 1.0,
+      "_src": "c_users_harma_documents_repos_githublegacy_src_lib_export_engine_ts",
+      "_tgt": "export_engine_generatebashscript",
+      "source": "c_users_harma_documents_repos_githublegacy_src_lib_export_engine_ts",
+      "target": "export_engine_generatebashscript",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\lib\\export-engine.ts",
+      "source_location": "L103",
+      "weight": 1.0,
+      "_src": "c_users_harma_documents_repos_githublegacy_src_lib_export_engine_ts",
+      "_tgt": "export_engine_generatepythonscript",
+      "source": "c_users_harma_documents_repos_githublegacy_src_lib_export_engine_ts",
+      "target": "export_engine_generatepythonscript",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\lib\\font-matrix.ts",
+      "source_location": "L395",
+      "weight": 1.0,
+      "_src": "c_users_harma_documents_repos_githublegacy_src_lib_font_matrix_ts",
+      "_tgt": "font_matrix_getcharmatrix",
+      "source": "c_users_harma_documents_repos_githublegacy_src_lib_font_matrix_ts",
+      "target": "font_matrix_getcharmatrix",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\lib\\font-matrix.ts",
+      "source_location": "L405",
+      "weight": 1.0,
+      "_src": "c_users_harma_documents_repos_githublegacy_src_lib_font_matrix_ts",
+      "_tgt": "font_matrix_texttomatrix",
+      "source": "c_users_harma_documents_repos_githublegacy_src_lib_font_matrix_ts",
+      "target": "font_matrix_texttomatrix",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\harma\\Documents\\Repos\\githublegacy\\src\\lib\\theme-config.ts",
+      "source_location": "L72",
+      "weight": 1.0,
+      "_src": "c_users_harma_documents_repos_githublegacy_src_lib_theme_config_ts",
+      "_tgt": "theme_config_getthemebyid",
+      "source": "c_users_harma_documents_repos_githublegacy_src_lib_theme_config_ts",
+      "target": "theme_config_getthemebyid",
+      "confidence_score": 1.0
+    }
+  ],
+  "hyperedges": []
+}
