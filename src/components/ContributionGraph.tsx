@@ -154,7 +154,7 @@ export const ContributionGraph: React.FC<ContributionGraphProps> = ({
                         }}
                         className={`h-[12px] w-[12px] rounded-[2px] cursor-pointer transition-transform hover:scale-125 hover:z-10 ${
                           cell.commitCount > 0 ? 'ring-1 ring-white/10' : ''
-                        } ${cell.isCustomDrawn ? 'ring-2 ring-cyan-400' : ''}`}
+                        } ${cell.isCustomDrawn && cell.commitCount > 0 ? 'ring-2 ring-cyan-400' : ''}`}
                       />
                     );
                   })}

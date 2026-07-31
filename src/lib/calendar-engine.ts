@@ -111,7 +111,7 @@ export function applyPatternToCalendar(
       if (customOverrides[cell.date]) {
         cell.commitCount = customOverrides[cell.date].commitCount;
         cell.level = customOverrides[cell.date].level;
-        cell.isCustomDrawn = true;
+        cell.isCustomDrawn = customOverrides[cell.date].commitCount > 0;
         continue;
       }
 

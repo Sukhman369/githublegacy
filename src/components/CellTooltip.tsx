@@ -76,7 +76,7 @@ export const CellTooltip: React.FC<CellTooltipProps> = ({ cell, x, y }) => {
           </div>
         )}
 
-        {cell.isCustomDrawn && (
+        {cell.isCustomDrawn && cell.commitCount > 0 && (
           <div className="pt-1 text-[10px] text-cyan-400 font-sans italic">
             ✏️ Custom drawn cell
           </div>
