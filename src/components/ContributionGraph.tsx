@@ -134,7 +134,7 @@ export const ContributionGraph: React.FC<ContributionGraphProps> = ({
             </div>
 
             {/* Weeks Matrix */}
-            <div className="flex gap-[2.5px]">
+            <div className="flex gap-[2.5px]" onMouseLeave={() => setHoveredCell(null)}>
               {grid.weeks.map((week) => (
                 <div key={week.weekIndex} className="flex flex-col gap-[2.5px]">
                   {week.days.map((cell) => {
@@ -145,6 +145,7 @@ export const ContributionGraph: React.FC<ContributionGraphProps> = ({
                       <div
                         key={cell.date}
                         onMouseEnter={(e) => handleCellMouseEnter(cell, e)}
+                        onMouseLeave={() => setHoveredCell(null)}
                         onMouseDown={() => handleCellMouseDown(cell)}
                         onTouchStart={() => handleCellMouseDown(cell)}
                         style={{
