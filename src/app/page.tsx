@@ -85,7 +85,7 @@ function AppContent() {
     setCustomOverrides({});
     setSettings((prev) => ({
       ...prev,
-      text: 'LORD SUKHMAN',
+      text: 'LORD',
       drawingMode: 'select',
       columnOffset: 0,
       wordSpacing: 4,
