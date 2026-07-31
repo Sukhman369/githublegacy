@@ -104,7 +104,7 @@ export const Header: React.FC = () => {
             </span>
           </button>
 
-          {/* GitHub Repo Link */}
+          {/* Contribute / GitHub Repo Link */}
           <a
             href="https://github.com/Sukhman369/githublegacy.git"
             target="_blank"
@@ -114,10 +114,10 @@ export const Header: React.FC = () => {
                 ? 'bg-slate-900 border-slate-800 text-slate-200 hover:bg-slate-800 hover:text-white'
                 : 'bg-slate-100 border-slate-300 text-slate-700 hover:bg-slate-200 hover:text-slate-900'
             }`}
-            title="GitHub Repository"
+            title="Contribute on GitHub"
           >
             <GithubIcon className="h-4 w-4" />
-            <span className="hidden sm:inline">GitHub</span>
+            <span className="hidden sm:inline">Contribute</span>
           </a>
 
           {/* Buy Me a Chai Button */}

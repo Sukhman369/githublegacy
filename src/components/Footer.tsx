@@ -45,7 +45,7 @@ export const Footer: React.FC = () => {
             className="flex items-center gap-1 hover:text-emerald-500 transition-colors"
           >
             <GithubIcon className="h-3.5 w-3.5" />
-            <span>GitHub Repository</span>
+            <span>Contribute</span>
           </a>
           <span>•</span>
           <a
