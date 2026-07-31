@@ -10,6 +10,7 @@ interface ScriptModalProps {
   onClose: () => void;
   bashScript: string;
   pythonScript: string;
+  powerShellScript?: string;
   projectName: string;
 }
 
@@ -18,14 +19,15 @@ export const ScriptModal: React.FC<ScriptModalProps> = ({
   onClose,
   bashScript,
   pythonScript,
+  powerShellScript = '',
   projectName,
 }) => {
-  const [tab, setTab] = useState<'bash' | 'python'>('bash');
+  const [tab, setTab] = useState<'bash' | 'python' | 'powershell'>('powershell');
   const [copied, setCopied] = useState(false);
 
   if (!isOpen) return null;
 
-  const currentScript = tab === 'bash' ? bashScript : pythonScript;
+  const currentScript = tab === 'bash' ? bashScript : tab === 'python' ? pythonScript : powerShellScript;
 
   const handleCopy = () => {
     navigator.clipboard.writeText(currentScript);
@@ -35,7 +37,7 @@ export const ScriptModal: React.FC<ScriptModalProps> = ({
   };
 
   const handleDownload = () => {
-    const filename = tab === 'bash' ? 'git_legacy_art.sh' : 'git_legacy_art.py';
+    const filename = tab === 'bash' ? 'git_legacy_art.sh' : tab === 'python' ? 'git_legacy_art.py' : 'git_legacy_art.ps1';
     const blob = new Blob([currentScript], { type: 'text/plain;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
@@ -67,29 +69,40 @@ export const ScriptModal: React.FC<ScriptModalProps> = ({
         </div>
 
         {/* Tab switcher */}
-        <div className="flex items-center justify-between px-6 py-3 border-b border-slate-800/80 bg-slate-900">
-          <div className="flex gap-2">
+        <div className="flex flex-wrap items-center justify-between gap-3 px-6 py-3 border-b border-slate-800/80 bg-slate-900">
+          <div className="flex flex-wrap gap-2">
+            <button
+              onClick={() => setTab('powershell')}
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all ${
+                tab === 'powershell'
+                  ? 'bg-cyan-500 text-slate-950 font-bold'
+                  : 'bg-slate-800 text-slate-400 hover:text-white'
+              }`}
+            >
+              <Terminal className="h-3.5 w-3.5" />
+              <span>PowerShell (.ps1)</span>
+            </button>
             <button
               onClick={() => setTab('bash')}
-              className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-2 transition-all ${
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all ${
                 tab === 'bash'
                   ? 'bg-emerald-500 text-slate-950 font-bold'
                   : 'bg-slate-800 text-slate-400 hover:text-white'
               }`}
             >
               <Terminal className="h-3.5 w-3.5" />
-              <span>Bash Shell Script (.sh)</span>
+              <span>Bash Shell (.sh)</span>
             </button>
             <button
               onClick={() => setTab('python')}
-              className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-2 transition-all ${
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all ${
                 tab === 'python'
                   ? 'bg-emerald-500 text-slate-950 font-bold'
                   : 'bg-slate-800 text-slate-400 hover:text-white'
               }`}
             >
               <Code className="h-3.5 w-3.5" />
-              <span>Python Script (.py)</span>
+              <span>Python (.py)</span>
             </button>
           </div>
 
@@ -119,7 +132,12 @@ export const ScriptModal: React.FC<ScriptModalProps> = ({
               <Play className="h-3.5 w-3.5 text-emerald-400" />
               How to execute:
             </p>
-            {tab === 'bash' ? (
+            {tab === 'powershell' ? (
+              <ol className="list-decimal list-inside text-xs space-y-1 text-slate-300">
+                <li>Save file as <code className="text-cyan-400 bg-slate-950 px-1 py-0.5 rounded">git_legacy_art.ps1</code></li>
+                <li>Execute in PowerShell: <code className="text-cyan-400 bg-slate-950 px-1 py-0.5 rounded">.\git_legacy_art.ps1</code></li>
+              </ol>
+            ) : tab === 'bash' ? (
               <ol className="list-decimal list-inside text-xs space-y-1 text-slate-300">
                 <li>Save file as <code className="text-emerald-400 bg-slate-950 px-1 py-0.5 rounded">git_legacy_art.sh</code></li>
                 <li>Make executable: <code className="text-emerald-400 bg-slate-950 px-1 py-0.5 rounded">chmod +x git_legacy_art.sh</code></li>

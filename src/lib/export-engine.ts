@@ -140,3 +140,52 @@ print("Finished generating commits! Push to your repository to update GitHub con
 
   return script;
 }
+
+/**
+ * Generate PowerShell script for Windows users
+ */
+export function generatePowerShellScript(grid: CalendarGrid): string {
+  const activeCells = grid.weeks
+    .flatMap((w) => w.days)
+    .filter((d) => d.commitCount > 0 && d.year === grid.year);
+
+  const lines: string[] = [
+    '# =========================================================',
+    `# GitLegacy Automated Commit Script (PowerShell) for ${grid.year}`,
+    '# =========================================================',
+    '',
+    '$ErrorActionPreference = "Stop"',
+    'Write-Host "🚀 Starting GitLegacy commit generation..." -ForegroundColor Green',
+    '',
+    'New-Item -ItemType Directory -Force -Path "legacy_art_data" | Out-Null',
+    'Set-Location "legacy_art_data"',
+    'git init',
+    '',
+    '$schedule = @(',
+  ];
+
+  activeCells.forEach((c) => {
+    lines.push(`  @{ Date = "${c.date}"; Count = ${c.commitCount} }`);
+  });
+
+  lines.push(')');
+  lines.push('');
+  lines.push('foreach ($item in $schedule) {');
+  lines.push('  for ($i = 1; $i -le $item.Count; $i++) {');
+  lines.push('    $commitDate = "$($item.Date)T12:00:00"');
+  lines.push('    Add-Content -Path "activity.txt" -Value "GitLegacy contribution: $commitDate #$i"');
+  lines.push('    git add activity.txt');
+  lines.push('    $env:GIT_AUTHOR_DATE = $commitDate');
+  lines.push('    $env:GIT_COMMITTER_DATE = $commitDate');
+  lines.push('    git commit -m "feat(legacy): contribution art $($item.Date) #$i" --quiet');
+  lines.push('  }');
+  lines.push('}');
+  lines.push('');
+  lines.push('Remove-Item Env:\\GIT_AUTHOR_DATE -ErrorAction SilentlyContinue');
+  lines.push('Remove-Item Env:\\GIT_COMMITTER_DATE -ErrorAction SilentlyContinue');
+  lines.push('');
+  lines.push(`Write-Host "✅ Finished generating ${activeCells.reduce((a, b) => a + b.commitCount, 0)} commits!" -ForegroundColor Green`);
+  lines.push('Write-Host "👉 Now run: git remote add origin <YOUR_REPO_URL> && git push -u origin main --force" -ForegroundColor Yellow');
+
+  return lines.join('\n');
+}

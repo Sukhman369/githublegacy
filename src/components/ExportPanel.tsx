@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { CalendarGrid, PlannerSettings } from '../types/calendar';
-import { generateCSV, generateJSON, generateBashScript, generatePythonScript } from '../lib/export-engine';
+import { generateCSV, generateJSON, generateBashScript, generatePythonScript, generatePowerShellScript } from '../lib/export-engine';
 import { ScriptModal } from './ScriptModal';
 import { Download, FileSpreadsheet, FileCode, Terminal, Share2, Check, Sparkles } from 'lucide-react';
 import confetti from 'canvas-confetti';
@@ -66,6 +66,7 @@ export const ExportPanel: React.FC<ExportPanelProps> = ({ grid, settings, isDark
 
   const bashScript = generateBashScript(grid, 'githublegacy');
   const pythonScript = generatePythonScript(grid);
+  const powerShellScript = generatePowerShellScript(grid);
 
   return (
     <>
@@ -100,7 +101,7 @@ export const ExportPanel: React.FC<ExportPanelProps> = ({ grid, settings, isDark
               </div>
               <div className="text-left">
                 <p className={`text-sm font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>Git Commit Script</p>
-                <p className="text-[11px] text-emerald-500 dark:text-emerald-400 font-normal">Bash / Python script</p>
+                <p className="text-[11px] text-emerald-500 dark:text-emerald-400 font-normal">PowerShell / Bash / Python</p>
               </div>
             </div>
             <Sparkles className="h-4 w-4 text-emerald-500" />
@@ -184,6 +185,7 @@ export const ExportPanel: React.FC<ExportPanelProps> = ({ grid, settings, isDark
         onClose={() => setIsScriptModalOpen(false)}
         bashScript={bashScript}
         pythonScript={pythonScript}
+        powerShellScript={powerShellScript}
         projectName={settings.text}
       />
     </>
