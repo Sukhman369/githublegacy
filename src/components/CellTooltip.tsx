@@ -23,14 +23,19 @@ export const CellTooltip: React.FC<CellTooltipProps> = ({ cell, x, y }) => {
     timeZone: 'UTC',
   });
 
+  // If hovering top rows (Sun/Mon or y < 140), position tooltip BELOW the cell to prevent top clipping
+  const isTopRow = cell.dayOfWeek <= 1 || y < 140;
+  const topPos = isTopRow ? y + 24 : y - 12;
+  const transformStyle = isTopRow ? 'translate(-50%, 0%)' : 'translate(-50%, -100%)';
+
   return (
     <div
       style={{
         left: `${x}px`,
-        top: `${y - 12}px`,
-        transform: 'translate(-50%, -100%)',
+        top: `${topPos}px`,
+        transform: transformStyle,
       }}
-      className="pointer-events-none absolute z-50 rounded-xl bg-slate-950/95 border border-slate-700/80 p-3 shadow-2xl backdrop-blur-md min-w-[200px] space-y-2 text-xs"
+      className="pointer-events-none absolute z-50 rounded-xl bg-slate-950/95 border border-slate-700/80 p-3 shadow-2xl backdrop-blur-md min-w-[200px] space-y-2 text-xs transition-all duration-75"
     >
       <div className="flex items-center justify-between border-b border-slate-800 pb-1.5 font-semibold text-slate-200">
         <span className="flex items-center gap-1.5">

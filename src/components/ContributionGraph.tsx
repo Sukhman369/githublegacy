@@ -74,7 +74,7 @@ export const ContributionGraph: React.FC<ContributionGraphProps> = ({
         setIsMouseDown(false);
         setHoveredCell(null);
       }}
-      className={`relative w-full overflow-hidden rounded-2xl p-4 sm:p-6 border shadow-2xl transition-all ${theme.bgCard}`}
+      className={`relative w-full rounded-2xl p-4 sm:p-6 border shadow-2xl transition-all ${theme.bgCard}`}
     >
       <CellTooltip cell={hoveredCell} x={tooltipPos.x} y={tooltipPos.y} />
 
@@ -154,7 +154,7 @@ export const ContributionGraph: React.FC<ContributionGraphProps> = ({
                         }}
                         className={`h-[12px] w-[12px] rounded-[2px] cursor-pointer transition-transform hover:scale-125 hover:z-10 ${
                           cell.commitCount > 0 ? 'ring-1 ring-white/10' : ''
-                        } ${cell.isCustomDrawn && cell.commitCount > 0 ? 'ring-2 ring-cyan-400' : ''}`}
+                        } ${cell.isCustomDrawn ? 'ring-2 ring-cyan-400' : ''}`}
                       />
                     );
                   })}
