@@ -25,7 +25,7 @@ function AppContent() {
   const { isDarkMode, setDarkMode } = useTheme();
 
   const [settings, setSettings] = useState<PlannerSettings>({
-    text: 'LORD SUKHMAN',
+    text: 'LORD',
     year: currentYear,
     intensityMaxCommits: 5,
     letterSpacing: 1,

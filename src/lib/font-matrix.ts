@@ -454,9 +454,9 @@ export function textToMatrix(
 
 export const PRESET_PATTERNS: PresetPattern[] = [
   {
-    id: 'lord-sukhman',
-    name: 'LORD SUKHMAN',
-    text: 'LORD SUKHMAN',
+    id: 'lord',
+    name: 'LORD',
+    text: 'LORD',
     description: 'Signature title pattern for contribution graph',
   },
   {
