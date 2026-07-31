@@ -93,6 +93,16 @@ function AppContent() {
     }));
   };
 
+  // Clean grid to blank canvas
+  const handleCleanGrid = () => {
+    setCustomOverrides({});
+    setSettings((prev) => ({
+      ...prev,
+      text: '',
+      columnOffset: 0,
+    }));
+  };
+
   // Cell click handler for drawing / erasing studio
   const handleCellClick = (cell: ContributionCell) => {
     if (settings.drawingMode === 'select') return;
@@ -146,6 +156,7 @@ function AppContent() {
             settings={settings}
             onChangeSettings={handleUpdateSettings}
             onResetGrid={handleResetGrid}
+            onCleanGrid={handleCleanGrid}
             isDarkMode={isDarkMode}
           />
 

@@ -19,12 +19,14 @@ import {
   MoveRight,
   Sliders,
   Space,
+  Trash2,
 } from 'lucide-react';
 
 interface PlannerControlsProps {
   settings: PlannerSettings;
   onChangeSettings: (updated: Partial<PlannerSettings>) => void;
   onResetGrid: () => void;
+  onCleanGrid?: () => void;
   isDarkMode?: boolean;
 }
 
@@ -32,6 +34,7 @@ export const PlannerControls: React.FC<PlannerControlsProps> = ({
   settings,
   onChangeSettings,
   onResetGrid,
+  onCleanGrid,
   isDarkMode = true,
 }) => {
   const currentYear = new Date().getFullYear();
@@ -59,6 +62,21 @@ export const PlannerControls: React.FC<PlannerControlsProps> = ({
         </h2>
 
         <div className="flex items-center gap-2">
+          {onCleanGrid && (
+            <button
+              onClick={onCleanGrid}
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border transition-colors ${
+                isDarkMode
+                  ? 'bg-rose-500/10 text-rose-400 hover:bg-rose-500/20 border-rose-500/30'
+                  : 'bg-rose-50 text-rose-700 hover:bg-rose-100 border-rose-200'
+              }`}
+              title="Clear text & drawing overrides for a blank canvas"
+            >
+              <Trash2 className="h-3.5 w-3.5" />
+              <span>Clean Grid</span>
+            </button>
+          )}
+
           <button
             onClick={onResetGrid}
             className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border transition-colors ${
@@ -66,7 +84,7 @@ export const PlannerControls: React.FC<PlannerControlsProps> = ({
                 ? 'bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white border-slate-700'
                 : 'bg-slate-100 text-slate-700 hover:bg-slate-200 hover:text-slate-900 border-slate-300'
             }`}
-            title="Reset pattern & overrides"
+            title="Reset pattern & overrides to default"
           >
             <RotateCcw className="h-3.5 w-3.5" />
             <span>Reset Grid</span>
