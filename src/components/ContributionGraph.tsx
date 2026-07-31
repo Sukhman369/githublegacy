@@ -4,12 +4,14 @@ import React, { useState, useRef } from 'react';
 import { CalendarGrid, ContributionCell, PlannerSettings } from '../types/calendar';
 import { getThemeById } from '../lib/theme-config';
 import { CellTooltip } from './CellTooltip';
-import { Sparkles, Info, MoveHorizontal } from 'lucide-react';
+import { Sparkles, Info, MoveHorizontal, Trash2, RotateCcw } from 'lucide-react';
 
 interface ContributionGraphProps {
   grid: CalendarGrid;
   settings: PlannerSettings;
   onCellClick: (cell: ContributionCell) => void;
+  onCleanGrid?: () => void;
+  onResetGrid?: () => void;
 }
 
 const MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -19,6 +21,8 @@ export const ContributionGraph: React.FC<ContributionGraphProps> = ({
   grid,
   settings,
   onCellClick,
+  onCleanGrid,
+  onResetGrid,
 }) => {
   const theme = getThemeById(settings.themeId);
   const [hoveredCell, setHoveredCell] = useState<ContributionCell | null>(null);
@@ -92,13 +96,27 @@ export const ContributionGraph: React.FC<ContributionGraphProps> = ({
           </p>
         </div>
 
-        {/* Drawing hint */}
-        {settings.drawingMode !== 'select' && (
-          <div className="flex items-center gap-1.5 text-xs font-semibold text-amber-400 bg-amber-500/10 px-3 py-1 rounded-lg border border-amber-500/20">
-            <Sparkles className="h-3.5 w-3.5" />
-            <span>Click or drag cells to {settings.drawingMode} custom pixels!</span>
-          </div>
-        )}
+        <div className="flex flex-wrap items-center gap-2">
+          {/* Drawing hint */}
+          {settings.drawingMode !== 'select' && (
+            <div className="flex items-center gap-1.5 text-xs font-semibold text-amber-400 bg-amber-500/10 px-3 py-1 rounded-lg border border-amber-500/20">
+              <Sparkles className="h-3.5 w-3.5" />
+              <span>Click or drag cells to {settings.drawingMode} custom pixels!</span>
+            </div>
+          )}
+
+          {onCleanGrid && (
+            <button
+              onClick={onCleanGrid}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all bg-rose-500/10 text-rose-400 hover:bg-rose-500/20 border-rose-500/30 shadow-sm hover:scale-105"
+              title="Clear text & drawing overrides for a blank canvas"
+            >
+              <Trash2 className="h-3.5 w-3.5" />
+              <span>Clean Grid</span>
+            </button>
+          )}
+
+        </div>
       </div>
 
       {/* Mobile Swipe Hint */}

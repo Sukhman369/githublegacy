@@ -165,6 +165,8 @@ function AppContent() {
             grid={calendarGrid}
             settings={settings}
             onCellClick={handleCellClick}
+            onCleanGrid={handleCleanGrid}
+           
           />
 
           {/* Commit Analytics Panel */}
