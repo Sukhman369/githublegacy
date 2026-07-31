@@ -120,16 +120,16 @@ export const Header: React.FC = () => {
             <span className="hidden sm:inline">GitHub</span>
           </a>
 
-          {/* Buy Me a Coffee Button */}
+          {/* Buy Me a Chai Button */}
           <a
-            href="https://buymeacoffee.com/sukhman"
+            href="https://www.buymeachai.in/sukhman"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 shadow-md hover:scale-105 transition-all"
-            title="Support GitLegacy on Buy Me a Coffee"
+            title="Support GitLegacy on Buy Me a Chai"
           >
             <Coffee className="h-4 w-4 fill-slate-950" />
-            <span className="hidden sm:inline">Buy me a coffee</span>
+            <span className="hidden sm:inline">Buy me a Chai</span>
           </a>
         </div>
       </div>

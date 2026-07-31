@@ -49,13 +49,13 @@ export const Footer: React.FC = () => {
           </a>
           <span>•</span>
           <a
-            href="https://buymeacoffee.com/sukhman"
+            href="https://www.buymeachai.in/sukhman"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-1 text-amber-500 font-bold hover:text-amber-400 transition-colors"
           >
             <Coffee className="h-3.5 w-3.5 fill-amber-500" />
-            <span>Buy Me a Coffee</span>
+            <span>Buy Me a Chai</span>
           </a>
         </div>
       </div>
