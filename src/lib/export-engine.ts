@@ -189,3 +189,97 @@ export function generatePowerShellScript(grid: CalendarGrid): string {
 
   return lines.join('\n');
 }
+
+/**
+ * Draw offscreen high-res canvas banner and trigger PNG download
+ */
+function drawCanvasBanner(
+  grid: CalendarGrid,
+  theme: { isDark: boolean; levels: [string, string, string, string, string] },
+  title: string,
+  width: number,
+  height: number,
+  filename: string
+) {
+  if (typeof window === 'undefined') return;
+
+  const canvas = document.createElement('canvas');
+  canvas.width = width * 2; // 2x DPI Retina
+  canvas.height = height * 2;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+
+  ctx.scale(2, 2);
+
+  // Background
+  ctx.fillStyle = theme.isDark ? '#0d1117' : '#ffffff';
+  ctx.fillRect(0, 0, width, height);
+
+  // Card Border / Glow
+  ctx.strokeStyle = theme.isDark ? '#30363d' : '#e1e4e8';
+  ctx.lineWidth = 2;
+  ctx.strokeRect(10, 10, width - 20, height - 20);
+
+  // Grid dimensions calculation
+  const availableW = width - 160;
+  const cellW = Math.min(22, Math.max(8, Math.floor(availableW / 53)));
+  const cellH = cellW;
+  const gap = 3;
+  const gridW = 53 * (cellW + gap);
+  const gridH = 7 * (cellH + gap);
+
+  const startX = Math.floor((width - gridW) / 2);
+  const startY = Math.floor((height - gridH) / 2) + (height > 600 ? 40 : 15);
+
+  // Header Title
+  ctx.font = 'bold 24px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+  ctx.fillStyle = theme.isDark ? '#f0f6fc' : '#1f2328';
+  ctx.textAlign = 'center';
+  ctx.fillText(`GitLegacy • ${title} (${grid.year})`, width / 2, startY - 35);
+
+  // Subtitle
+  ctx.font = '14px SFMono-Regular, Consolas, monospace';
+  ctx.fillStyle = theme.isDark ? '#8b949e' : '#656d76';
+  ctx.fillText(`GitHub Contribution Planning Studio`, width / 2, startY - 15);
+
+  // Render Grid Cells
+  grid.weeks.forEach((week, wIdx) => {
+    week.days.forEach((day, dIdx) => {
+      const x = startX + wIdx * (cellW + gap);
+      const y = startY + dIdx * (cellH + gap);
+
+      ctx.fillStyle = theme.levels[day.level];
+      ctx.beginPath();
+      if (ctx.roundRect) {
+        ctx.roundRect(x, y, cellW, cellH, Math.max(1, Math.floor(cellW / 4)));
+      } else {
+        ctx.rect(x, y, cellW, cellH);
+      }
+      ctx.fill();
+    });
+  });
+
+  // Footer Branding
+  ctx.font = 'bold 13px -apple-system, BlinkMacSystemFont, sans-serif';
+  ctx.fillStyle = '#10b981';
+  ctx.fillText('Designed with gitlegacy.dev', width / 2, startY + gridH + 35);
+
+  // Trigger Download
+  const link = document.createElement('a');
+  link.download = filename;
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+}
+
+export function exportTwitterBanner(grid: CalendarGrid, theme: any, title: string = 'LORD') {
+  drawCanvasBanner(grid, theme, title, 1500, 500, `git_legacy_twitter_banner_${grid.year}.png`);
+}
+
+export function exportLinkedInBanner(grid: CalendarGrid, theme: any, title: string = 'LORD') {
+  drawCanvasBanner(grid, theme, title, 1584, 396, `git_legacy_linkedin_banner_${grid.year}.png`);
+}
+
+export function exportInstagramPost(grid: CalendarGrid, theme: any, title: string = 'LORD') {
+  drawCanvasBanner(grid, theme, title, 1080, 1080, `git_legacy_instagram_post_${grid.year}.png`);
+}
+
