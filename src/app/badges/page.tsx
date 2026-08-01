@@ -4,25 +4,73 @@ import React, { useState } from 'react';
 import { Header } from '../../components/Header';
 import { Footer } from '../../components/Footer';
 import { useTheme } from '../../context/ThemeContext';
-import { Shield, Sparkles, Copy, Check, Code, ExternalLink, Image as ImageIcon } from 'lucide-react';
+import { Shield, Sparkles, Copy, Check, Code, ExternalLink, Image as ImageIcon, Search } from 'lucide-react';
 
 interface TechBadge {
   name: string;
   logo: string;
   color: string;
-  labelColor: string;
+  labelColor?: string;
+  category: 'frontend' | 'backend' | 'languages' | 'databases' | 'devops';
 }
 
 const TECH_BADGES: TechBadge[] = [
-  { name: 'Next.js', logo: 'nextdotjs', color: '000000', labelColor: 'ffffff' },
-  { name: 'React', logo: 'react', color: '61DAFB', labelColor: '20232A' },
-  { name: 'TypeScript', logo: 'typescript', color: '3178C6', labelColor: 'ffffff' },
-  { name: 'Python', logo: 'python', color: '3776AB', labelColor: 'ffffff' },
-  { name: 'TailwindCSS', logo: 'tailwindcss', color: '06B6D4', labelColor: 'ffffff' },
-  { name: 'Node.js', logo: 'nodedotjs', color: '5FA04E', labelColor: 'ffffff' },
-  { name: 'Docker', logo: 'docker', color: '2496ED', labelColor: 'ffffff' },
-  { name: 'Rust', logo: 'rust', color: '000000', labelColor: 'ffffff' },
-  { name: 'Go', logo: 'go', color: '00ADD8', labelColor: 'ffffff' },
+  // Frontend & UI
+  { name: 'Next.js', logo: 'nextdotjs', color: '000000', category: 'frontend' },
+  { name: 'React', logo: 'react', color: '61DAFB', category: 'frontend' },
+  { name: 'Vue.js', logo: 'vuedotjs', color: '4FC08D', category: 'frontend' },
+  { name: 'Angular', logo: 'angular', color: 'DD0031', category: 'frontend' },
+  { name: 'Svelte', logo: 'svelte', color: 'FF3E00', category: 'frontend' },
+  { name: 'TailwindCSS', logo: 'tailwindcss', color: '06B6D4', category: 'frontend' },
+  { name: 'Redux', logo: 'redux', color: '764ABC', category: 'frontend' },
+  { name: 'Sass', logo: 'sass', color: 'CC6699', category: 'frontend' },
+  { name: 'Vite', logo: 'vite', color: '646CFF', category: 'frontend' },
+  { name: 'HTML5', logo: 'html5', color: 'E34F26', category: 'frontend' },
+  { name: 'CSS3', logo: 'css3', color: '1572B6', category: 'frontend' },
+
+  // Languages
+  { name: 'TypeScript', logo: 'typescript', color: '3178C6', category: 'languages' },
+  { name: 'JavaScript', logo: 'javascript', color: 'F7DF1E', category: 'languages' },
+  { name: 'Python', logo: 'python', color: '3776AB', category: 'languages' },
+  { name: 'Java', logo: 'openjdk', color: 'ED8B00', category: 'languages' },
+  { name: 'C++', logo: 'cplusplus', color: '00599C', category: 'languages' },
+  { name: 'C#', logo: 'csharp', color: '239120', category: 'languages' },
+  { name: 'Go', logo: 'go', color: '00ADD8', category: 'languages' },
+  { name: 'Rust', logo: 'rust', color: '000000', category: 'languages' },
+  { name: 'PHP', logo: 'php', color: '777BB4', category: 'languages' },
+  { name: 'Ruby', logo: 'ruby', color: 'CC342D', category: 'languages' },
+  { name: 'Swift', logo: 'swift', color: 'F05138', category: 'languages' },
+  { name: 'Kotlin', logo: 'kotlin', color: '7F52FF', category: 'languages' },
+
+  // Backend
+  { name: 'Node.js', logo: 'nodedotjs', color: '5FA04E', category: 'backend' },
+  { name: 'Express.js', logo: 'express', color: '000000', category: 'backend' },
+  { name: 'Django', logo: 'django', color: '092E20', category: 'backend' },
+  { name: 'FastAPI', logo: 'fastapi', color: '009688', category: 'backend' },
+  { name: 'Spring Boot', logo: 'springboot', color: '6DB33F', category: 'backend' },
+  { name: 'Laravel', logo: 'laravel', color: 'FF2D20', category: 'backend' },
+  { name: '.NET', logo: 'dotnet', color: '512BD4', category: 'backend' },
+  { name: 'GraphQL', logo: 'graphql', color: 'E10098', category: 'backend' },
+
+  // Databases & Storage
+  { name: 'PostgreSQL', logo: 'postgresql', color: '4169E1', category: 'databases' },
+  { name: 'MongoDB', logo: 'mongodb', color: '47A248', category: 'databases' },
+  { name: 'MySQL', logo: 'mysql', color: '4479A1', category: 'databases' },
+  { name: 'Redis', logo: 'redis', color: 'DC382D', category: 'databases' },
+  { name: 'SQLite', logo: 'sqlite', color: '003B57', category: 'databases' },
+  { name: 'Supabase', logo: 'supabase', color: '3FCF8E', category: 'databases' },
+  { name: 'Firebase', logo: 'firebase', color: 'FFCA28', category: 'databases' },
+  { name: 'Prisma', logo: 'prisma', color: '2D3748', category: 'databases' },
+
+  // DevOps & Cloud
+  { name: 'Docker', logo: 'docker', color: '2496ED', category: 'devops' },
+  { name: 'Kubernetes', logo: 'kubernetes', color: '326CE5', category: 'devops' },
+  { name: 'AWS', logo: 'amazonwebservices', color: '232F3E', category: 'devops' },
+  { name: 'Google Cloud', logo: 'googlecloud', color: '4285F4', category: 'devops' },
+  { name: 'Vercel', logo: 'vercel', color: '000000', category: 'devops' },
+  { name: 'Linux', logo: 'linux', color: 'FCC624', category: 'devops' },
+  { name: 'Git', logo: 'git', color: 'F05032', category: 'devops' },
+  { name: 'GitHub Actions', logo: 'githubactions', color: '2088FF', category: 'devops' },
 ];
 
 export default function BadgesStudioPage() {
@@ -33,6 +81,10 @@ export default function BadgesStudioPage() {
   const [badgeYear, setBadgeYear] = useState(`${new Date().getFullYear()}`);
   const [badgeStyle, setBadgeStyle] = useState<'card' | 'compact'>('card');
   const [badgeTheme, setBadgeTheme] = useState('github-dark');
+
+  // Search & Category State for Tech Shields
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedTechCategory, setSelectedTechCategory] = useState<string>('all');
 
   // Shields State
   const [shieldLabel, setShieldLabel] = useState('GitLegacy');
@@ -57,6 +109,14 @@ export default function BadgesStudioPage() {
     setCopiedType(id);
     setTimeout(() => setCopiedType(null), 2000);
   };
+
+  const filteredTechBadges = React.useMemo(() => {
+    return TECH_BADGES.filter((b) => {
+      const matchesSearch = b.name.toLowerCase().includes(searchQuery.toLowerCase()) || b.logo.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesCategory = selectedTechCategory === 'all' || b.category === selectedTechCategory;
+      return matchesSearch && matchesCategory;
+    });
+  }, [searchQuery, selectedTechCategory]);
 
   return (
     <div className={`min-h-screen flex flex-col transition-colors duration-300 ${
@@ -192,7 +252,7 @@ export default function BadgesStudioPage() {
         <section className={`p-6 sm:p-8 rounded-2xl border shadow-2xl space-y-6 ${
           isDarkMode ? 'bg-slate-900/90 border-slate-800' : 'bg-white border-slate-200 shadow-sm'
         }`}>
-          <div className="flex items-center justify-between border-b pb-4 border-slate-800">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b pb-4 border-slate-800">
             <div className="flex items-center gap-3">
               <div className="p-2.5 rounded-xl bg-cyan-500/20 text-cyan-400">
                 <ImageIcon className="w-5 h-5" />
@@ -200,38 +260,96 @@ export default function BadgesStudioPage() {
               <div>
                 <h2 className="text-lg font-bold">2. Curated Tech Stack Shields</h2>
                 <p className={`text-xs ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
-                  Click any technology to copy its GitHub Profile README badge markdown code.
+                  Explore {TECH_BADGES.length}+ tech stack badges. Click any shield to copy Markdown snippet.
                 </p>
               </div>
             </div>
+
+            {/* Search Bar Input */}
+            <div className="relative w-full sm:w-72">
+              <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+              <input
+                type="text"
+                placeholder="Search technology..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className={`w-full pl-9 pr-4 py-2 rounded-xl text-xs font-semibold border transition-all ${
+                  isDarkMode
+                    ? 'bg-slate-950 border-slate-800 text-white placeholder:text-slate-500 focus:border-cyan-500'
+                    : 'bg-slate-100 border-slate-300 text-slate-900 placeholder:text-slate-400 focus:border-cyan-500'
+                }`}
+              />
+            </div>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-            {TECH_BADGES.map((badge) => {
-              const url = `https://img.shields.io/badge/${badge.name}-${badge.color}?style=for-the-badge&logo=${badge.logo}&logoColor=white`;
-              const md = `![${badge.name}](${url})`;
-              const isCopied = copiedType === badge.name;
-
-              return (
-                <button
-                  key={badge.name}
-                  onClick={() => handleCopy(md, badge.name)}
-                  className={`p-3 rounded-xl border flex flex-col items-center gap-2 transition-all hover:scale-105 ${
-                    isDarkMode
-                      ? 'bg-slate-950/80 border-slate-800 hover:border-emerald-500/50'
-                      : 'bg-slate-50 border-slate-200 hover:border-emerald-500/50'
-                  }`}
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={url} alt={badge.name} className="h-7 object-contain" />
-                  <span className="text-[11px] font-mono font-semibold flex items-center gap-1 text-slate-400">
-                    {isCopied ? <Check className="w-3 h-3 text-emerald-500" /> : <Copy className="w-3 h-3" />}
-                    {isCopied ? 'Copied!' : 'Copy Code'}
-                  </span>
-                </button>
-              );
-            })}
+          {/* Category Filter Pills */}
+          <div className="flex flex-wrap items-center gap-2">
+            {[
+              { id: 'all', label: 'All Stack' },
+              { id: 'languages', label: 'Languages' },
+              { id: 'frontend', label: 'Frontend & UI' },
+              { id: 'backend', label: 'Backend' },
+              { id: 'databases', label: 'Databases' },
+              { id: 'devops', label: 'DevOps & Cloud' },
+            ].map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setSelectedTechCategory(tab.id)}
+                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                  selectedTechCategory === tab.id
+                    ? 'bg-cyan-500 text-slate-950 shadow-md'
+                    : isDarkMode
+                    ? 'bg-slate-950 text-slate-400 hover:text-white border border-slate-800'
+                    : 'bg-slate-100 text-slate-600 hover:text-slate-900 border border-slate-200'
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
           </div>
+
+          {/* Tech Badges Grid */}
+          {filteredTechBadges.length > 0 ? (
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+              {filteredTechBadges.map((badge) => {
+                const url = `https://img.shields.io/badge/${encodeURIComponent(badge.name)}-${badge.color}?style=for-the-badge&logo=${badge.logo}&logoColor=white`;
+                const md = `![${badge.name}](${url})`;
+                const isCopied = copiedType === badge.name;
+
+                return (
+                  <button
+                    key={badge.name}
+                    onClick={() => handleCopy(md, badge.name)}
+                    className={`p-3.5 rounded-xl border flex flex-col items-center gap-2 transition-all hover:scale-105 ${
+                      isDarkMode
+                        ? 'bg-slate-950/80 border-slate-800 hover:border-emerald-500/50'
+                        : 'bg-slate-50 border-slate-200 hover:border-emerald-500/50'
+                    }`}
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={url} alt={badge.name} className="h-7 object-contain max-w-full" />
+                    <span className="text-[11px] font-mono font-semibold flex items-center gap-1 text-slate-400">
+                      {isCopied ? <Check className="w-3 h-3 text-emerald-500" /> : <Copy className="w-3 h-3" />}
+                      {isCopied ? 'Copied!' : 'Copy Code'}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          ) : (
+            <div className="text-center py-10 space-y-2">
+              <p className="text-sm font-semibold text-slate-400">No technology badges found for &quot;{searchQuery}&quot;</p>
+              <button
+                onClick={() => {
+                  setSearchQuery('');
+                  setSelectedTechCategory('all');
+                }}
+                className="text-xs font-bold text-cyan-400 hover:underline"
+              >
+                Clear filters
+              </button>
+            </div>
+          )}
         </section>
 
         {/* Studio Section 3: Custom Shield Builder */}
