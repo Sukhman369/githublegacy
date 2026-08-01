@@ -1,6 +1,7 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { X, Heart, ExternalLink, Coffee, Globe, ShieldCheck } from 'lucide-react';
 
 interface SponsorModalProps {
@@ -14,10 +15,16 @@ export const SponsorModal: React.FC<SponsorModalProps> = ({
   onClose,
   isDarkMode = true,
 }) => {
-  if (!isOpen) return null;
+  const [mounted, setMounted] = useState(false);
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-md animate-fadeIn">
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!isOpen || !mounted) return null;
+
+  return createPortal(
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/75 backdrop-blur-md animate-fadeIn">
       <div
         className={`relative w-full max-w-lg rounded-2xl border p-6 sm:p-8 shadow-2xl transition-all ${
           isDarkMode
@@ -156,6 +163,7 @@ export const SponsorModal: React.FC<SponsorModalProps> = ({
           </p>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
