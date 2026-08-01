@@ -39,13 +39,13 @@ const FONT_MAP: Record<string, number[][]> = {
     [1, 1, 1, 1, 0],
   ],
   E: [
-    [1, 1, 1, 1, 1],
-    [1, 0, 0, 0, 0],
-    [1, 0, 0, 0, 0],
-    [1, 1, 1, 1, 0],
-    [1, 0, 0, 0, 0],
-    [1, 0, 0, 0, 0],
-    [1, 1, 1, 1, 1],
+    [1, 1, 1, 1],
+    [1, 0, 0, 0],
+    [1, 0, 0, 0],
+    [1, 1, 1, 0],
+    [1, 0, 0, 0],
+    [1, 0, 0, 0],
+    [1, 1, 1, 1],
   ],
   F: [
     [1, 1, 1, 1, 1],
@@ -75,13 +75,13 @@ const FONT_MAP: Record<string, number[][]> = {
     [1, 0, 0, 0, 1],
   ],
   I: [
-    [0, 1, 1, 1, 0],
-    [0, 0, 1, 0, 0],
-    [0, 0, 1, 0, 0],
-    [0, 0, 1, 0, 0],
-    [0, 0, 1, 0, 0],
-    [0, 0, 1, 0, 0],
-    [0, 1, 1, 1, 0],
+    [0, 1, 1, 1 ],
+    [0, 0, 1, 0 ],
+    [0, 0, 1, 0 ],
+    [0, 0, 1, 0 ],
+    [0, 0, 1, 0 ],
+    [0, 0, 1, 0 ],
+    [0, 1, 1, 1 ],
   ],
   J: [
     [0, 0, 1, 1, 1],
@@ -102,13 +102,13 @@ const FONT_MAP: Record<string, number[][]> = {
     [1, 0, 0, 0, 1],
   ],
   L: [
-    [1, 0, 0, 0, 0],
-    [1, 0, 0, 0, 0],
-    [1, 0, 0, 0, 0],
-    [1, 0, 0, 0, 0],
-    [1, 0, 0, 0, 0],
-    [1, 0, 0, 0, 0],
-    [1, 1, 1, 1, 1],
+    [1, 0, 0, 0],
+    [1, 0, 0, 0],
+    [1, 0, 0, 0],
+    [1, 0, 0, 0],
+    [1, 0, 0, 0],
+    [1, 0, 0, 0],
+    [1, 1, 1, 1],
   ],
   M: [
     [1, 0, 0, 0, 1],
@@ -392,6 +392,42 @@ const BLANK_CHAR = [
   [0, 0, 0, 0, 0],
 ];
 
+export function trimCharMatrix(matrix: number[][]): number[][] {
+  const numRows = matrix.length;
+  const numCols = matrix[0]?.length || 0;
+  if (numCols <= 1) return matrix;
+
+  let startCol = 0;
+  while (startCol < numCols) {
+    let hasPixel = false;
+    for (let r = 0; r < numRows; r++) {
+      if (matrix[r][startCol] === 1) {
+        hasPixel = true;
+        break;
+      }
+    }
+    if (hasPixel) break;
+    startCol++;
+  }
+
+  if (startCol === numCols) return matrix;
+
+  let endCol = numCols - 1;
+  while (endCol >= startCol) {
+    let hasPixel = false;
+    for (let r = 0; r < numRows; r++) {
+      if (matrix[r][endCol] === 1) {
+        hasPixel = true;
+        break;
+      }
+    }
+    if (hasPixel) break;
+    endCol--;
+  }
+
+  return matrix.map((row) => row.slice(startCol, endCol + 1));
+}
+
 export function getCharMatrix(char: string, wordSpacing: number = 4): number[][] {
   const upper = char.toUpperCase();
   if (upper === ' ') {
@@ -399,7 +435,8 @@ export function getCharMatrix(char: string, wordSpacing: number = 4): number[][]
     const spaceCols = Math.max(1, wordSpacing - 1);
     return Array(7).fill(0).map(() => Array(spaceCols).fill(0));
   }
-  return FONT_MAP[upper] || BLANK_CHAR;
+  const raw = FONT_MAP[upper] || BLANK_CHAR;
+  return trimCharMatrix(raw);
 }
 
 export function textToMatrix(
