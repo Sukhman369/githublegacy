@@ -70,6 +70,20 @@ export const ContributionGraph: React.FC<ContributionGraphProps> = ({
     setIsMouseDown(false);
   };
 
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    const touch = e.touches[0];
+    if (touch) {
+      const target = document.elementFromPoint(touch.clientX, touch.clientY) as HTMLElement;
+      if (target && target.dataset && target.dataset.cellDate) {
+        const dateStr = target.dataset.cellDate;
+        const cell = grid.weeks.flatMap((w) => w.days).find((d) => d.date === dateStr);
+        if (cell && settings.drawingMode !== 'select') {
+          onCellClick(cell);
+        }
+      }
+    }
+  };
+
   return (
     <div
       ref={graphRef}
@@ -152,7 +166,12 @@ export const ContributionGraph: React.FC<ContributionGraphProps> = ({
             </div>
 
             {/* Weeks Matrix */}
-            <div className="flex gap-[2.5px]" onMouseLeave={() => setHoveredCell(null)}>
+            <div
+              className="flex gap-[2.5px]"
+              onMouseLeave={() => setHoveredCell(null)}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleMouseUp}
+            >
               {grid.weeks.map((week) => (
                 <div key={week.weekIndex} className="flex flex-col gap-[2.5px]">
                   {week.days.map((cell) => {
@@ -162,6 +181,7 @@ export const ContributionGraph: React.FC<ContributionGraphProps> = ({
                     return (
                       <div
                         key={cell.date}
+                        data-cell-date={cell.date}
                         onMouseEnter={(e) => handleCellMouseEnter(cell, e)}
                         onMouseLeave={() => setHoveredCell(null)}
                         onMouseDown={() => handleCellMouseDown(cell)}
