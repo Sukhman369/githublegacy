@@ -1,9 +1,10 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Heart, Coffee } from 'lucide-react';
 import { GitLegacyLogo } from './GitLegacyLogo';
 import { useTheme } from '../context/ThemeContext';
+import { SponsorModal } from './SponsorModal';
 
 const GithubIcon: React.FC<{ className?: string }> = ({ className }) => (
   <svg className={className} fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -13,6 +14,7 @@ const GithubIcon: React.FC<{ className?: string }> = ({ className }) => (
 
 export const Footer: React.FC = () => {
   const { isDarkMode } = useTheme();
+  const [isSponsorModalOpen, setIsSponsorModalOpen] = useState(false);
 
   return (
     <footer
@@ -48,17 +50,23 @@ export const Footer: React.FC = () => {
             <span>Contribute</span>
           </a>
           <span>•</span>
-          <a
-            href="https://www.buymeachai.in/sukhman"
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            onClick={() => setIsSponsorModalOpen(true)}
             className="flex items-center gap-1 text-amber-500 font-bold hover:text-amber-400 transition-colors"
+            title="Support GitLegacy (Domestic & International)"
           >
             <Coffee className="h-3.5 w-3.5 fill-amber-500" />
-            <span>Buy Me a Chai</span>
-          </a>
+            <span>Sponsor</span>
+          </button>
         </div>
       </div>
+
+      {/* Sponsor Modal */}
+      <SponsorModal
+        isOpen={isSponsorModalOpen}
+        onClose={() => setIsSponsorModalOpen(false)}
+        isDarkMode={isDarkMode}
+      />
     </footer>
   );
 };

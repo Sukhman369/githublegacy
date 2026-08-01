@@ -1,11 +1,12 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Sparkles, Sun, Moon, BookOpen, LayoutGrid, Palette, Terminal, Coffee } from 'lucide-react';
 import { GitLegacyLogo } from './GitLegacyLogo';
 import { useTheme } from '../context/ThemeContext';
+import { SponsorModal } from './SponsorModal';
 
 const GithubIcon: React.FC<{ className?: string }> = ({ className }) => (
   <svg className={className} fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -16,6 +17,7 @@ const GithubIcon: React.FC<{ className?: string }> = ({ className }) => (
 export const Header: React.FC = () => {
   const pathname = usePathname();
   const { isDarkMode, toggleDarkMode } = useTheme();
+  const [isSponsorModalOpen, setIsSponsorModalOpen] = useState(false);
 
   const navItems = [
     { label: 'Studio', href: '/', icon: LayoutGrid },
@@ -120,17 +122,15 @@ export const Header: React.FC = () => {
             <span className="hidden sm:inline">Contribute</span>
           </a>
 
-          {/* Buy Me a Chai Button */}
-          <a
-            href="https://www.buymeachai.in/sukhman"
-            target="_blank"
-            rel="noopener noreferrer"
+          {/* Sponsor / Buy Me a Chai Button */}
+          <button
+            onClick={() => setIsSponsorModalOpen(true)}
             className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 shadow-md hover:scale-105 transition-all"
-            title="Support GitLegacy on Buy Me a Chai"
+            title="Support GitLegacy (Domestic & International)"
           >
             <Coffee className="h-4 w-4 fill-slate-950" />
-            <span className="hidden sm:inline">Buy me a Chai</span>
-          </a>
+            <span className="hidden sm:inline">Sponsor</span>
+          </button>
         </div>
       </div>
 
@@ -160,6 +160,13 @@ export const Header: React.FC = () => {
           );
         })}
       </div>
+
+      {/* Sponsor Modal */}
+      <SponsorModal
+        isOpen={isSponsorModalOpen}
+        onClose={() => setIsSponsorModalOpen(false)}
+        isDarkMode={isDarkMode}
+      />
     </header>
   );
 };
