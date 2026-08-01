@@ -85,6 +85,7 @@ export default function BadgesStudioPage() {
   // Username Badge State
   const [username, setUsername] = useState('Sukhman369');
   const [userBadgeTheme, setUserBadgeTheme] = useState('github-dark');
+  const [userBadgeYear, setUserBadgeYear] = useState('last');
 
   // Search, Category & Style State for Tech Shields
   const [searchQuery, setSearchQuery] = useState('');
@@ -106,9 +107,9 @@ export default function BadgesStudioPage() {
   const canvasBadgeMarkdown = `![GitLegacy Canvas](${canvasBadgeUrl})`;
   const canvasBadgeHtml = `<a href="${baseUrl}"><img src="${canvasBadgeUrl}" alt="GitLegacy Contribution Canvas" /></a>`;
 
-  const usernameBadgeUrl = `${baseUrl}/api/u/${encodeURIComponent(username || 'developer')}.svg?theme=${userBadgeTheme}`;
-  const usernameBadgeMarkdown = `![${username || 'GitHub'} Canvas](${usernameBadgeUrl})`;
-  const usernameBadgeHtml = `<a href="https://github.com/${encodeURIComponent(username || 'developer')}"><img src="${usernameBadgeUrl}" alt="${username}'s GitHub Canvas" /></a>`;
+  const usernameBadgeUrl = `${baseUrl}/api/u/${encodeURIComponent(username || 'developer')}.svg?year=${userBadgeYear}&theme=${userBadgeTheme}`;
+  const usernameBadgeMarkdown = `![${username || 'GitHub'} Real Contributions](${usernameBadgeUrl})`;
+  const usernameBadgeHtml = `<a href="https://github.com/${encodeURIComponent(username || 'developer')}"><img src="${usernameBadgeUrl}" alt="${username}'s Real GitHub Contributions" /></a>`;
 
   const customShieldUrl = `https://img.shields.io/badge/${encodeURIComponent(shieldLabel)}-${encodeURIComponent(shieldMessage)}-${shieldColor}?style=${shieldStyle}`;
   const customShieldMarkdown = `![${shieldLabel}](${customShieldUrl})`;
@@ -257,7 +258,7 @@ export default function BadgesStudioPage() {
           </div>
         </section>
 
-        {/* Studio Section 2: Dynamic GitHub Username Profile Badge */}
+        {/* Studio Section 2: Real GitHub User Contribution Visualizer */}
         <section className={`p-6 sm:p-8 rounded-2xl border shadow-2xl space-y-6 ${
           isDarkMode ? 'bg-slate-900/90 border-slate-800' : 'bg-white border-slate-200 shadow-sm'
         }`}>
@@ -267,9 +268,9 @@ export default function BadgesStudioPage() {
                 <Code className="w-5 h-5" />
               </div>
               <div>
-                <h2 className="text-lg font-bold">2. Dynamic GitHub Username Profile Badge</h2>
+                <h2 className="text-lg font-bold">2. Real GitHub User Contribution Visualizer</h2>
                 <p className={`text-xs ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
-                  Auto-generates contribution artwork matrix SVG badge for your GitHub handle (`/api/u/[username]`).
+                  Fetches live historical GitHub contributions for any profile handle (`@username`) and generates dynamic SVG badge embeds (`/api/u/[username]`).
                 </p>
               </div>
             </div>
@@ -280,7 +281,7 @@ export default function BadgesStudioPage() {
             <div className="lg:col-span-5 space-y-4">
               <div>
                 <label className={`block text-xs font-bold uppercase mb-1.5 ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>
-                  GitHub Username
+                  GitHub Handle
                 </label>
                 <div className="relative">
                   <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-mono text-slate-500">@</span>
@@ -296,23 +297,43 @@ export default function BadgesStudioPage() {
                 </div>
               </div>
 
-              <div>
-                <label className={`block text-xs font-bold uppercase mb-1.5 ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>
-                  Theme Style
-                </label>
-                <select
-                  value={userBadgeTheme}
-                  onChange={(e) => setUserBadgeTheme(e.target.value)}
-                  className={`w-full p-2.5 rounded-xl border text-sm font-semibold ${
-                    isDarkMode ? 'bg-slate-950 border-slate-800 text-white' : 'bg-slate-100 border-slate-300 text-slate-900'
-                  }`}
-                >
-                  <option value="github-dark">GitHub Dark</option>
-                  <option value="github-light">GitHub Light</option>
-                  <option value="emerald-matrix">Emerald Matrix</option>
-                  <option value="cyberpunk">Cyberpunk Neon</option>
-                  <option value="dracula">Dracula Vamp</option>
-                </select>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className={`block text-xs font-bold uppercase mb-1.5 ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>
+                    Year Filter
+                  </label>
+                  <select
+                    value={userBadgeYear}
+                    onChange={(e) => setUserBadgeYear(e.target.value)}
+                    className={`w-full p-2.5 rounded-xl border text-sm font-semibold ${
+                      isDarkMode ? 'bg-slate-950 border-slate-800 text-white' : 'bg-slate-100 border-slate-300 text-slate-900'
+                    }`}
+                  >
+                    <option value="last">Last 365 Days</option>
+                    <option value="2026">2026</option>
+                    <option value="2025">2025</option>
+                    <option value="2024">2024</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className={`block text-xs font-bold uppercase mb-1.5 ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>
+                    Theme Style
+                  </label>
+                  <select
+                    value={userBadgeTheme}
+                    onChange={(e) => setUserBadgeTheme(e.target.value)}
+                    className={`w-full p-2.5 rounded-xl border text-sm font-semibold ${
+                      isDarkMode ? 'bg-slate-950 border-slate-800 text-white' : 'bg-slate-100 border-slate-300 text-slate-900'
+                    }`}
+                  >
+                    <option value="github-dark">GitHub Dark</option>
+                    <option value="github-light">GitHub Light</option>
+                    <option value="emerald-matrix">Emerald Matrix</option>
+                    <option value="cyberpunk">Cyberpunk Neon</option>
+                    <option value="dracula">Dracula Vamp</option>
+                  </select>
+                </div>
               </div>
             </div>
 
