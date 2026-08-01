@@ -107,15 +107,18 @@ function AppContent() {
   const handleCellClick = (cell: ContributionCell) => {
     if (settings.drawingMode === 'select') return;
 
+    // Key overrides relative to current Nudge Column offset so drawings shift together with text
+    const relKey = `${cell.weekIndex - settings.columnOffset},${cell.dayOfWeek}`;
+
     setCustomOverrides((prev) => {
       const next = { ...prev };
       if (settings.drawingMode === 'draw') {
-        next[cell.date] = {
+        next[relKey] = {
           commitCount: settings.intensityMaxCommits,
           level: 4,
         };
       } else if (settings.drawingMode === 'erase') {
-        next[cell.date] = {
+        next[relKey] = {
           commitCount: 0,
           level: 0,
         };

@@ -107,11 +107,14 @@ export function applyPatternToCalendar(
     for (let d = 0; d < 7; d++) {
       const cell = updatedWeeks[w].days[d];
       
-      // Check if user manually clicked/overrode this specific date
-      if (customOverrides[cell.date]) {
-        cell.commitCount = customOverrides[cell.date].commitCount;
-        cell.level = customOverrides[cell.date].level;
-        cell.isCustomDrawn = customOverrides[cell.date].commitCount > 0;
+      // Relative key tied to Nudge Column offset so drawings shift in sync with text pattern
+      const relKey = `${w - columnOffset},${d}`;
+      const override = customOverrides[relKey] || customOverrides[cell.date];
+
+      if (override) {
+        cell.commitCount = override.commitCount;
+        cell.level = override.level;
+        cell.isCustomDrawn = override.commitCount > 0;
         continue;
       }
 
