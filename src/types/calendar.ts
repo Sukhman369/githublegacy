@@ -78,4 +78,5 @@ export interface PresetPattern {
   name: string;
   text: string;
   description: string;
+  category?: 'gaming' | 'career' | 'tech' | 'signature';
 }

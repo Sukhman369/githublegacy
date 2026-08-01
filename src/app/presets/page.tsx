@@ -10,6 +10,12 @@ import { Sparkles, Play } from 'lucide-react';
 
 export default function PresetsPage() {
   const { isDarkMode } = useTheme();
+  const [selectedCategory, setSelectedCategory] = React.useState<string>('all');
+
+  const filteredPresets = React.useMemo(() => {
+    if (selectedCategory === 'all') return PRESET_PATTERNS;
+    return PRESET_PATTERNS.filter((p) => p.category === selectedCategory);
+  }, [selectedCategory]);
 
   return (
     <div
@@ -29,20 +35,45 @@ export default function PresetsPage() {
             }`}
           >
             <Sparkles className="h-3.5 w-3.5" />
-            <span>Contribution Art Templates</span>
+            <span>Contribution Art Gallery</span>
           </div>
 
           <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight">
-            GitHub Contribution <span className="text-emerald-500">Preset Patterns</span>
+            Pre-made <span className="text-emerald-500">Template Gallery</span>
           </h1>
 
           <p className={`text-base sm:text-lg ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
-            Explore pre-configured 5x7 matrix artwork templates for your GitHub profile contribution graph.
+            Explore popular preset patterns for gaming, career branding, tech stack logos, and signature artwork.
           </p>
+
+          {/* Category Filter Tabs */}
+          <div className="flex flex-wrap items-center justify-center gap-2 pt-2">
+            {[
+              { id: 'all', label: 'All Templates' },
+              { id: 'signature', label: 'Signature' },
+              { id: 'gaming', label: '🕹️ Gaming' },
+              { id: 'career', label: '💼 Career' },
+              { id: 'tech', label: '💻 Tech Stack' },
+            ].map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setSelectedCategory(tab.id)}
+                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+                  selectedCategory === tab.id
+                    ? 'bg-emerald-500 text-slate-950 shadow-md shadow-emerald-500/20'
+                    : isDarkMode
+                    ? 'bg-slate-900 text-slate-400 border border-slate-800 hover:text-white'
+                    : 'bg-white text-slate-600 border border-slate-200 hover:text-slate-900'
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {PRESET_PATTERNS.map((preset) => (
+          {filteredPresets.map((preset) => (
             <div
               key={preset.id}
               className={`rounded-2xl border p-6 flex flex-col justify-between transition-all hover:scale-[1.02] ${
@@ -54,9 +85,9 @@ export default function PresetsPage() {
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <span className="font-mono text-xs font-bold text-emerald-500 uppercase tracking-widest">
-                    PRESET #{preset.id.toUpperCase()}
+                    {preset.category ? preset.category.toUpperCase() : 'PRESET'}
                   </span>
-                  <span className="text-[11px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 font-mono">
+                  <span className="text-[11px] px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 font-mono font-bold">
                     5x7 Matrix
                   </span>
                 </div>
@@ -75,7 +106,7 @@ export default function PresetsPage() {
               <div className={`mt-6 pt-4 border-t flex items-center justify-between ${
                 isDarkMode ? 'border-slate-800/60' : 'border-slate-100'
               }`}>
-                <span className="text-xs text-slate-400 font-mono">Ready to load</span>
+                <span className="text-xs text-slate-400 font-mono">1-Click Load</span>
                 <Link
                   href={`/?text=${encodeURIComponent(preset.text)}`}
                   className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-emerald-500 text-slate-950 font-bold text-xs hover:scale-105 transition-all shadow-md"
