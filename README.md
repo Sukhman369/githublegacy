@@ -10,10 +10,6 @@
 
 <br />
 
-```markdown
-![My Git Canvas](https://gitlegacy.dev/api/badge?text=LORD&year=2026&theme=github-dark)
-```
-
 <p align="center">
   <b>GitLegacy</b> is the premier developer branding studio and contribution graph artwork planner.<br />
   Transform your GitHub profile's contribution grid into high-impact pixel art, 8-bit gaming nostalgia, tech stack badges, and career banners.
@@ -78,26 +74,6 @@ GitLegacy includes an interactive **Badge Studio** (`/badges`) allowing develope
 - **Icons**: [Lucide React](https://lucide.dev/)
 - **Language**: [TypeScript](https://www.typescriptlang.org/) (Strict mode)
 - **Deployment Target**: [Vercel](https://vercel.com/) / Serverless API Routes
-
----
-
-## 🚀 Local Development Setup
-
-To run GitLegacy locally on your machine:
-
-```bash
-# Clone repository
-git clone https://github.com/Sukhman369/githublegacy.git
-cd githublegacy
-
-# Install dependencies
-npm install
-
-# Run local development server
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) in your browser to launch the contribution planning studio.
 
 ---
 
