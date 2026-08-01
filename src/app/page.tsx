@@ -23,6 +23,7 @@ import { calculateStrategyStats } from '../lib/commit-planner';
 function AppContent() {
   const currentYear = new Date().getFullYear();
   const { isDarkMode, setDarkMode } = useTheme();
+  const [isMounted, setIsMounted] = useState(false);
 
   const [settings, setSettings] = useState<PlannerSettings>({
     text: 'LORD',
@@ -43,6 +44,7 @@ function AppContent() {
 
   // Parse URL search params on mount
   useEffect(() => {
+    setIsMounted(true);
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
       const textParam = params.get('text');

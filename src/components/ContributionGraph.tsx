@@ -182,6 +182,7 @@ export const ContributionGraph: React.FC<ContributionGraphProps> = ({
                       <div
                         key={cell.date}
                         data-cell-date={cell.date}
+                        suppressHydrationWarning
                         onMouseEnter={(e) => handleCellMouseEnter(cell, e)}
                         onMouseLeave={() => setHoveredCell(null)}
                         onMouseDown={() => handleCellMouseDown(cell)}
