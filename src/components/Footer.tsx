@@ -35,29 +35,33 @@ export const Footer: React.FC = () => {
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center gap-6 text-xs">
-          <span className="flex items-center gap-1.5">
-            Crafted with <Heart className="h-3.5 w-3.5 text-rose-500 fill-rose-500" /> for Developers
+        <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 text-xs w-full sm:w-auto text-center sm:text-left">
+          <span className="flex items-center justify-center gap-1.5 opacity-90">
+            Crafted with <Heart className="h-3.5 w-3.5 text-rose-500 fill-rose-500 animate-pulse" /> for Developers
           </span>
-          <span>•</span>
-          <a
-            href="https://github.com/Sukhman369/githublegacy.git"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1 hover:text-emerald-500 transition-colors"
-          >
-            <GithubIcon className="h-3.5 w-3.5" />
-            <span>Contribute</span>
-          </a>
-          <span>•</span>
-          <button
-            onClick={() => setIsSponsorModalOpen(true)}
-            className="flex items-center gap-1 text-amber-500 font-bold hover:text-amber-400 transition-colors"
-            title="Support GitLegacy (Domestic & International)"
-          >
-            <Coffee className="h-3.5 w-3.5 fill-amber-500" />
-            <span>Sponsor</span>
-          </button>
+
+          <div className="flex items-center justify-center gap-4">
+            <a
+              href="https://github.com/Sukhman369/githublegacy.git"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 hover:text-emerald-400 transition-colors font-medium"
+            >
+              <GithubIcon className="h-4 w-4" />
+              <span>Contribute</span>
+            </a>
+
+            <span className="opacity-30">•</span>
+
+            <button
+              onClick={() => setIsSponsorModalOpen(true)}
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold shadow-md hover:scale-105 transition-all text-xs"
+              title="Support GitLegacy (Domestic & International)"
+            >
+              <Coffee className="h-3.5 w-3.5 fill-slate-950" />
+              <span>Sponsor</span>
+            </button>
+          </div>
         </div>
       </div>
 
