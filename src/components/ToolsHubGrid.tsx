@@ -127,8 +127,9 @@ export function ToolsHubGrid({ showTitle = true }: { showTitle?: boolean }) {
         {TOOLS.map((tool) => {
           const Icon = tool.icon;
           return (
-            <div
+            <Link
               key={tool.id}
+              href={tool.href}
               className={`group relative p-6 rounded-2xl border transition-all duration-300 flex flex-col justify-between hover:-translate-y-1 hover:shadow-2xl bg-gradient-to-br ${tool.bgGradient} ${
                 isDarkMode
                   ? 'bg-slate-900/80 border-slate-800'
@@ -158,15 +159,14 @@ export function ToolsHubGrid({ showTitle = true }: { showTitle?: boolean }) {
               </div>
 
               <div className="pt-6 mt-4 border-t border-slate-800/50">
-                <Link
-                  href={tool.href}
+                <span
                   className={`inline-flex items-center gap-2 text-xs font-bold transition-all ${tool.color} group-hover:translate-x-1`}
                 >
                   <span>{tool.ctaText}</span>
                   <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
+                </span>
               </div>
-            </div>
+            </Link>
           );
         })}
       </div>
