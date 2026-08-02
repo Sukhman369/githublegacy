@@ -2,9 +2,9 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Header } from '../../components/Header';
-import { Footer } from '../../components/Footer';
-import { useTheme } from '../../context/ThemeContext';
+import { Header } from '../../../components/Header';
+import { Footer } from '../../../components/Footer';
+import { useTheme } from '../../../context/ThemeContext';
 import { Terminal, Copy, Check, Sparkles } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
@@ -141,7 +141,7 @@ if __name__ == "__main__":
 
         <div className="text-center pt-4">
           <Link
-            href="/"
+            href="/tools/art-studio"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-emerald-500 text-slate-950 font-extrabold text-sm shadow-lg hover:scale-105 transition-all"
           >
             <Sparkles className="h-4 w-4" />
