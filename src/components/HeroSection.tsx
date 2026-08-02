@@ -29,19 +29,19 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             : 'bg-emerald-50 border-emerald-200 text-emerald-700'
         }`}>
           <Sparkles className="h-3.5 w-3.5" />
-          <span>GitHub Contribution Art Planner</span>
+          <span>Developer Branding & Contribution Platform</span>
         </div>
 
-        <h1 className={`text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight ${
+        <h1 className={`text-3xl sm:text-5xl font-black tracking-tight leading-tight ${
           isDarkMode ? 'text-white' : 'text-slate-900'
         }`}>
-          Design your <span className="bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-500 bg-clip-text text-transparent">GitHub legacy</span> before you write code.
+          Elevate Your <span className="bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-500 bg-clip-text text-transparent">GitHub Contribution Legacy</span>
         </h1>
 
         <p className={`text-base sm:text-lg leading-relaxed ${
           isDarkMode ? 'text-slate-300' : 'text-slate-600'
         }`}>
-          Type text, initials, or patterns and instantly visualize an authentic 53-week GitHub contribution graph with an automated, copy-paste commit execution strategy.
+          Design custom 53-week pixel art, visualize real historical contribution graphs, generate dynamic live SVG profile badges, and export retina social media headers.
         </p>
 
         {/* Quick Presets Bar */}
