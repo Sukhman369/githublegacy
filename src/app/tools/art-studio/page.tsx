@@ -1,24 +1,24 @@
 'use client';
 
 import React, { useState, useMemo, useEffect, Suspense } from 'react';
-import { Header } from '../../components/Header';
-import { Footer } from '../../components/Footer';
-import { PlannerControls } from '../../components/PlannerControls';
-import { ContributionGraph } from '../../components/ContributionGraph';
-import { StatisticsPanel } from '../../components/StatisticsPanel';
-import { ExportPanel } from '../../components/ExportPanel';
-import { useTheme } from '../../context/ThemeContext';
-import { Palette, Sparkles } from 'lucide-react';
+import { Header } from '../../../components/Header';
+import { Footer } from '../../../components/Footer';
+import { PlannerControls } from '../../../components/PlannerControls';
+import { ContributionGraph } from '../../../components/ContributionGraph';
+import { StatisticsPanel } from '../../../components/StatisticsPanel';
+import { ExportPanel } from '../../../components/ExportPanel';
+import { useTheme } from '../../../context/ThemeContext';
+import { Palette } from 'lucide-react';
 import {
   PlannerSettings,
   ContributionCell,
   IntensityLevel,
-} from '../../types/calendar';
+} from '../../../types/calendar';
 import {
   createYearlyCalendarGrid,
   applyPatternToCalendar,
-} from '../../lib/calendar-engine';
-import { calculateStrategyStats } from '../../lib/commit-planner';
+} from '../../../lib/calendar-engine';
+import { calculateStrategyStats } from '../../../lib/commit-planner';
 
 function ArtStudioContent() {
   const currentYear = new Date().getFullYear();
@@ -152,7 +152,7 @@ function ArtStudioContent() {
         <div className="text-center space-y-3">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
             <Palette className="w-4 h-4" />
-            <span>Isolated Canvas Studio</span>
+            <span>GitLegacy Sub-Tool</span>
           </div>
           <h1 className="text-3xl sm:text-5xl font-black tracking-tight">
             Contribution Art <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400">Studio & Planner</span>
