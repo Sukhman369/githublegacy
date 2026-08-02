@@ -38,7 +38,7 @@ const TOOLS: ToolItem[] = [
     color: 'text-emerald-400',
     bgGradient: 'from-emerald-500/10 via-teal-500/5 to-transparent',
     borderColor: 'border-emerald-500/30 hover:border-emerald-400',
-    href: '#planner-studio',
+    href: '/tools#art-studio',
     ctaText: 'Launch Art Studio',
   },
   {
@@ -74,7 +74,7 @@ const TOOLS: ToolItem[] = [
     color: 'text-purple-400',
     bgGradient: 'from-purple-500/10 via-indigo-500/5 to-transparent',
     borderColor: 'border-purple-500/30 hover:border-purple-400',
-    href: '#export-studio',
+    href: '/tools#art-studio',
     ctaText: 'Export Banners',
   },
   {
@@ -90,16 +90,16 @@ const TOOLS: ToolItem[] = [
     ctaText: 'Browse Gallery',
   },
   {
-    id: 'script-generator',
-    title: 'Automation Script Exporter',
-    badge: 'Zero-Dep',
-    description: 'Export zero-dependency PowerShell (.ps1), Bash (.sh), or Python commit scripts to automatically populate your matrix.',
-    icon: Terminal,
+    id: 'all-tools',
+    title: 'Explore All Tools & Features',
+    badge: 'Full Suite',
+    description: 'Discover our complete expanding catalog of contribution planners, badge generators, theme engines, and developer tools.',
+    icon: Sparkles,
     color: 'text-rose-400',
     bgGradient: 'from-rose-500/10 via-pink-500/5 to-transparent',
     borderColor: 'border-rose-500/30 hover:border-rose-400',
-    href: '#script-studio',
-    ctaText: 'Generate Scripts',
+    href: '/tools',
+    ctaText: 'Explore Tools Library',
   },
 ];
 
