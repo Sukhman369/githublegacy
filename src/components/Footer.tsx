@@ -58,13 +58,13 @@ export const Footer: React.FC = () => {
             </h4>
             <ul className="space-y-2 text-xs">
               <li>
-                <Link href="/#planner-studio" className="hover:text-emerald-400 transition-colors flex items-center gap-1.5">
+                <Link href="/art-studio" className="hover:text-emerald-400 transition-colors flex items-center gap-1.5">
                   <LayoutGrid className="w-3.5 h-3.5 text-slate-500" />
                   <span>Contribution Art Planner</span>
                 </Link>
               </li>
               <li>
-                <Link href="/badges#real-history" className="hover:text-emerald-400 transition-colors flex items-center gap-1.5">
+                <Link href="/history-visualizer" className="hover:text-emerald-400 transition-colors flex items-center gap-1.5">
                   <Sparkles className="w-3.5 h-3.5 text-slate-500" />
                   <span>Real GitHub History Visualizer</span>
                 </Link>

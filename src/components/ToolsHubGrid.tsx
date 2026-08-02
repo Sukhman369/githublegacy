@@ -38,7 +38,7 @@ const TOOLS: ToolItem[] = [
     color: 'text-emerald-400',
     bgGradient: 'from-emerald-500/10 via-teal-500/5 to-transparent',
     borderColor: 'border-emerald-500/30 hover:border-emerald-400',
-    href: '/tools#art-studio',
+    href: '/art-studio',
     ctaText: 'Launch Art Studio',
   },
   {
@@ -50,7 +50,7 @@ const TOOLS: ToolItem[] = [
     color: 'text-teal-400',
     bgGradient: 'from-teal-500/10 via-cyan-500/5 to-transparent',
     borderColor: 'border-teal-500/30 hover:border-teal-400',
-    href: '/badges#real-history',
+    href: '/history-visualizer',
     ctaText: 'View GitHub History',
   },
   {
@@ -74,7 +74,7 @@ const TOOLS: ToolItem[] = [
     color: 'text-purple-400',
     bgGradient: 'from-purple-500/10 via-indigo-500/5 to-transparent',
     borderColor: 'border-purple-500/30 hover:border-purple-400',
-    href: '/tools#art-studio',
+    href: '/art-studio#export-studio',
     ctaText: 'Export Banners',
   },
   {

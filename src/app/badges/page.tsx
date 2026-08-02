@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { Header } from '../../components/Header';
 import { Footer } from '../../components/Footer';
 import { useTheme } from '../../context/ThemeContext';
@@ -258,123 +259,28 @@ export default function BadgesStudioPage() {
           </div>
         </section>
 
-        {/* Studio Section 2: Real GitHub User Contribution Visualizer */}
-        <section className={`p-6 sm:p-8 rounded-2xl border shadow-2xl space-y-6 ${
-          isDarkMode ? 'bg-slate-900/90 border-slate-800' : 'bg-white border-slate-200 shadow-sm'
+        {/* Studio Section 2: Real GitHub User Contribution Visualizer Callout */}
+        <section className={`p-6 rounded-2xl border shadow-xl flex flex-col sm:flex-row items-center justify-between gap-6 ${
+          isDarkMode ? 'bg-slate-900/80 border-slate-800' : 'bg-white border-slate-200 shadow-sm'
         }`}>
-          <div className="flex items-center justify-between border-b pb-4 border-slate-800">
-            <div className="flex items-center gap-3">
-              <div className="p-2.5 rounded-xl bg-teal-500/20 text-teal-400">
-                <Code className="w-5 h-5" />
-              </div>
-              <div>
-                <h2 className="text-lg font-bold">2. Real GitHub User Contribution Visualizer</h2>
-                <p className={`text-xs ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
-                  Fetches live historical GitHub contributions for any profile handle (`@username`) and generates dynamic SVG badge embeds (`/api/u/[username]`).
-                </p>
-              </div>
+          <div className="flex items-center gap-4">
+            <div className="p-3 rounded-2xl bg-teal-500/20 text-teal-400">
+              <Code className="w-6 h-6" />
+            </div>
+            <div>
+              <h2 className="text-base sm:text-lg font-bold">Real GitHub History Visualizer Tool</h2>
+              <p className={`text-xs mt-0.5 ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
+                Looking to generate dynamic 365-day live contribution graph badges for `@username`? Check out the dedicated tool page.
+              </p>
             </div>
           </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-            {/* Input Controls */}
-            <div className="lg:col-span-5 space-y-4">
-              <div>
-                <label className={`block text-xs font-bold uppercase mb-1.5 ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>
-                  GitHub Handle
-                </label>
-                <div className="relative">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-mono text-slate-500">@</span>
-                  <input
-                    type="text"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    placeholder="Sukhman369"
-                    className={`w-full pl-7 pr-3 py-2.5 rounded-xl border text-sm font-mono ${
-                      isDarkMode ? 'bg-slate-950 border-slate-800 text-white' : 'bg-slate-100 border-slate-300 text-slate-900'
-                    }`}
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className={`block text-xs font-bold uppercase mb-1.5 ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>
-                    Year Filter
-                  </label>
-                  <select
-                    value={userBadgeYear}
-                    onChange={(e) => setUserBadgeYear(e.target.value)}
-                    className={`w-full p-2.5 rounded-xl border text-sm font-semibold ${
-                      isDarkMode ? 'bg-slate-950 border-slate-800 text-white' : 'bg-slate-100 border-slate-300 text-slate-900'
-                    }`}
-                  >
-                    <option value="last">Last 365 Days</option>
-                    <option value="2026">2026</option>
-                    <option value="2025">2025</option>
-                    <option value="2024">2024</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className={`block text-xs font-bold uppercase mb-1.5 ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>
-                    Theme Style
-                  </label>
-                  <select
-                    value={userBadgeTheme}
-                    onChange={(e) => setUserBadgeTheme(e.target.value)}
-                    className={`w-full p-2.5 rounded-xl border text-sm font-semibold ${
-                      isDarkMode ? 'bg-slate-950 border-slate-800 text-white' : 'bg-slate-100 border-slate-300 text-slate-900'
-                    }`}
-                  >
-                    <option value="github-dark">GitHub Dark</option>
-                    <option value="github-light">GitHub Light</option>
-                    <option value="emerald-matrix">Emerald Matrix</option>
-                    <option value="cyberpunk">Cyberpunk Neon</option>
-                    <option value="dracula">Dracula Vamp</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-
-            {/* Live Username Badge Preview */}
-            <div className="lg:col-span-7 space-y-3">
-              <label className={`block text-xs font-bold uppercase ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
-                Live SVG Preview (`/api/u/{username || 'username'}.svg`)
-              </label>
-              <div className={`p-4 rounded-xl border flex items-center justify-center overflow-x-auto ${
-                isDarkMode ? 'bg-slate-950 border-slate-800' : 'bg-slate-100 border-slate-300'
-              }`}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={usernameBadgeUrl}
-                  alt={`${username}'s Profile Badge`}
-                  className="max-w-full h-auto rounded-lg shadow-lg"
-                />
-              </div>
-
-              {/* Code Snippets */}
-              <div className="flex gap-2">
-                <button
-                  onClick={() => handleCopy(usernameBadgeMarkdown, 'user-md')}
-                  className="flex-1 py-2 px-3 rounded-lg text-xs font-semibold bg-teal-500 hover:bg-teal-400 text-slate-950 flex items-center justify-center gap-1.5 shadow-md transition-all"
-                >
-                  {copiedType === 'user-md' ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
-                  <span>{copiedType === 'user-md' ? 'Copied Markdown!' : 'Copy Username Markdown'}</span>
-                </button>
-
-                <button
-                  onClick={() => handleCopy(usernameBadgeHtml, 'user-html')}
-                  className={`py-2 px-3 rounded-lg text-xs font-semibold border flex items-center gap-1.5 transition-all ${
-                    isDarkMode ? 'bg-slate-800 border-slate-700 hover:bg-slate-700 text-slate-200' : 'bg-slate-200 border-slate-300 hover:bg-slate-300 text-slate-800'
-                  }`}
-                >
-                  <Code className="w-3.5 h-3.5" />
-                  <span>Copy HTML</span>
-                </button>
-              </div>
-            </div>
-          </div>
+          <Link
+            href="/history-visualizer"
+            className="w-full sm:w-auto py-2.5 px-5 rounded-xl text-xs font-bold bg-teal-500 hover:bg-teal-400 text-slate-950 flex items-center justify-center gap-2 shadow-md transition-all whitespace-nowrap"
+          >
+            <span>Open History Visualizer</span>
+            <ExternalLink className="w-3.5 h-3.5" />
+          </Link>
         </section>
 
         {/* Studio Section 3: Curated Tech Stack Shields */}
