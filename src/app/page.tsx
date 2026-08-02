@@ -3,12 +3,15 @@
 import React, { useState, useMemo, useEffect, Suspense } from 'react';
 import { Header } from '../components/Header';
 import { HeroSection } from '../components/HeroSection';
+import { PlatformStats } from '../components/PlatformStats';
+import { ToolsHubGrid } from '../components/ToolsHubGrid';
 import { PlannerControls } from '../components/PlannerControls';
 import { ContributionGraph } from '../components/ContributionGraph';
 import { StatisticsPanel } from '../components/StatisticsPanel';
 import { ExportPanel } from '../components/ExportPanel';
 import { Footer } from '../components/Footer';
 import { useTheme } from '../context/ThemeContext';
+import { Palette } from 'lucide-react';
 import {
   PlannerSettings,
   ContributionCell,
@@ -148,37 +151,63 @@ function AppContent() {
     >
       <Header />
 
-      <main className="flex-1">
+      <main className="flex-1 space-y-12">
         <HeroSection
           activeText={settings.text}
           onSelectPreset={(text) => handleUpdateSettings({ text })}
           isDarkMode={isDarkMode}
         />
 
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 space-y-8 pb-12">
-          {/* Planner Controls Form */}
-          <PlannerControls
-            settings={settings}
-            onChangeSettings={handleUpdateSettings}
-            onResetGrid={handleResetGrid}
-            onCleanGrid={handleCleanGrid}
-            isDarkMode={isDarkMode}
-          />
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 space-y-16 pb-16">
+          {/* Platform Trust & Statistics Banner */}
+          <PlatformStats />
 
-          {/* Interactive GitHub Graph Preview */}
-          <ContributionGraph
-            grid={calendarGrid}
-            settings={settings}
-            onCellClick={handleCellClick}
-            onCleanGrid={handleCleanGrid}
-           
-          />
+          {/* Developer Tools Suite Grid */}
+          <div id="tools-hub">
+            <ToolsHubGrid />
+          </div>
 
-          {/* Commit Analytics Panel */}
-          <StatisticsPanel stats={strategyStats} isDarkMode={isDarkMode} />
+          {/* Section Divider & Header for Art Planner Studio */}
+          <div id="planner-studio" className="pt-8 border-t border-slate-800/60 space-y-8">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <div className="p-2.5 rounded-xl bg-emerald-500/20 text-emerald-400">
+                  <Palette className="w-5 h-5" />
+                </div>
+                <div>
+                  <h2 className="text-xl sm:text-2xl font-bold">Contribution Art Studio & Canvas Planner</h2>
+                  <p className={`text-xs ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
+                    Customize text, letter spacing, nudge columns, or draw pixel art across your 53-week contribution matrix.
+                  </p>
+                </div>
+              </div>
+            </div>
 
-          {/* Export Panel */}
-          <ExportPanel grid={calendarGrid} settings={settings} isDarkMode={isDarkMode} />
+            {/* Planner Controls Form */}
+            <PlannerControls
+              settings={settings}
+              onChangeSettings={handleUpdateSettings}
+              onResetGrid={handleResetGrid}
+              onCleanGrid={handleCleanGrid}
+              isDarkMode={isDarkMode}
+            />
+
+            {/* Interactive GitHub Graph Preview */}
+            <ContributionGraph
+              grid={calendarGrid}
+              settings={settings}
+              onCellClick={handleCellClick}
+              onCleanGrid={handleCleanGrid}
+            />
+
+            {/* Commit Analytics Panel */}
+            <StatisticsPanel stats={strategyStats} isDarkMode={isDarkMode} />
+
+            {/* Export Panel */}
+            <div id="export-studio">
+              <ExportPanel grid={calendarGrid} settings={settings} isDarkMode={isDarkMode} />
+            </div>
+          </div>
         </div>
       </main>
 
