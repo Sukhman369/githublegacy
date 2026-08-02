@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Sparkles, Sun, Moon, BookOpen, LayoutGrid, Palette, Terminal, Coffee, Shield } from 'lucide-react';
+import { Sparkles, Sun, Moon, BookOpen, LayoutGrid, Shield, HeartHandshake, Coffee } from 'lucide-react';
 import { GitLegacyLogo } from './GitLegacyLogo';
 import { useTheme } from '../context/ThemeContext';
 import { SponsorModal } from './SponsorModal';
@@ -21,11 +21,8 @@ export const Header: React.FC = () => {
 
   const navItems = [
     { label: 'Art Studio', href: '/', icon: LayoutGrid },
-    { label: 'Tools Hub', href: '/#tools-hub', icon: Sparkles },
     { label: 'Badge Studio', href: '/badges', icon: Shield },
-    { label: 'Presets Gallery', href: '/presets', icon: Palette },
-    { label: 'Themes', href: '/themes', icon: Palette },
-    { label: 'Script Generator', href: '/script-generator', icon: Terminal },
+    { label: 'Contribute Guide', href: '/contribute', icon: HeartHandshake },
     { label: 'Docs & Blog', href: '/blog', icon: BookOpen },
   ];
 
