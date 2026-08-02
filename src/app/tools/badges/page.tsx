@@ -2,9 +2,9 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Header } from '../../components/Header';
-import { Footer } from '../../components/Footer';
-import { useTheme } from '../../context/ThemeContext';
+import { Header } from '../../../components/Header';
+import { Footer } from '../../../components/Footer';
+import { useTheme } from '../../../context/ThemeContext';
 import { Shield, Sparkles, Copy, Check, Code, ExternalLink, Image as ImageIcon, Search } from 'lucide-react';
 
 interface TechBadge {
@@ -275,7 +275,7 @@ export default function BadgesStudioPage() {
             </div>
           </div>
           <Link
-            href="/history-visualizer"
+            href="/tools/history-visualizer"
             className="w-full sm:w-auto py-2.5 px-5 rounded-xl text-xs font-bold bg-teal-500 hover:bg-teal-400 text-slate-950 flex items-center justify-center gap-2 shadow-md transition-all whitespace-nowrap"
           >
             <span>Open History Visualizer</span>
