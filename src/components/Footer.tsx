@@ -58,31 +58,31 @@ export const Footer: React.FC = () => {
             </h4>
             <ul className="space-y-2 text-xs">
               <li>
-                <Link href="/art-studio" className="hover:text-emerald-400 transition-colors flex items-center gap-1.5">
+                <Link href="/tools/art-studio" className="hover:text-emerald-400 transition-colors flex items-center gap-1.5">
                   <LayoutGrid className="w-3.5 h-3.5 text-slate-500" />
                   <span>Contribution Art Planner</span>
                 </Link>
               </li>
               <li>
-                <Link href="/history-visualizer" className="hover:text-emerald-400 transition-colors flex items-center gap-1.5">
+                <Link href="/tools/history-visualizer" className="hover:text-emerald-400 transition-colors flex items-center gap-1.5">
                   <Sparkles className="w-3.5 h-3.5 text-slate-500" />
                   <span>Real GitHub History Visualizer</span>
                 </Link>
               </li>
               <li>
-                <Link href="/badges" className="hover:text-emerald-400 transition-colors flex items-center gap-1.5">
+                <Link href="/tools/badges" className="hover:text-emerald-400 transition-colors flex items-center gap-1.5">
                   <Shield className="w-3.5 h-3.5 text-slate-500" />
                   <span>Badge & Shield Studio</span>
                 </Link>
               </li>
               <li>
-                <Link href="/presets" className="hover:text-emerald-400 transition-colors flex items-center gap-1.5">
+                <Link href="/tools/presets" className="hover:text-emerald-400 transition-colors flex items-center gap-1.5">
                   <Palette className="w-3.5 h-3.5 text-slate-500" />
                   <span>Preset Patterns Gallery</span>
                 </Link>
               </li>
               <li>
-                <Link href="/script-generator" className="hover:text-emerald-400 transition-colors flex items-center gap-1.5">
+                <Link href="/tools/script-generator" className="hover:text-emerald-400 transition-colors flex items-center gap-1.5">
                   <Terminal className="w-3.5 h-3.5 text-slate-500" />
                   <span>Automation Script Exporter</span>
                 </Link>

@@ -39,7 +39,7 @@ const BASE_TOOLS: ToolItem[] = [
     color: 'text-emerald-400',
     bgGradient: 'from-emerald-500/10 via-teal-500/5 to-transparent',
     borderColor: 'border-emerald-500/30 hover:border-emerald-400',
-    href: '/art-studio',
+    href: '/tools/art-studio',
     ctaText: 'Launch Art Studio',
   },
   {
@@ -51,7 +51,7 @@ const BASE_TOOLS: ToolItem[] = [
     color: 'text-teal-400',
     bgGradient: 'from-teal-500/10 via-cyan-500/5 to-transparent',
     borderColor: 'border-teal-500/30 hover:border-teal-400',
-    href: '/history-visualizer',
+    href: '/tools/history-visualizer',
     ctaText: 'View GitHub History',
   },
   {
@@ -63,7 +63,7 @@ const BASE_TOOLS: ToolItem[] = [
     color: 'text-cyan-400',
     bgGradient: 'from-cyan-500/10 via-blue-500/5 to-transparent',
     borderColor: 'border-cyan-500/30 hover:border-cyan-400',
-    href: '/badges',
+    href: '/tools/badges',
     ctaText: 'Open Badge Studio',
   },
   {
@@ -75,7 +75,7 @@ const BASE_TOOLS: ToolItem[] = [
     color: 'text-purple-400',
     bgGradient: 'from-purple-500/10 via-indigo-500/5 to-transparent',
     borderColor: 'border-purple-500/30 hover:border-purple-400',
-    href: '/art-studio#export-studio',
+    href: '/tools/art-studio#export-studio',
     ctaText: 'Export Banners',
   },
   {
@@ -87,7 +87,7 @@ const BASE_TOOLS: ToolItem[] = [
     color: 'text-amber-400',
     bgGradient: 'from-amber-500/10 via-orange-500/5 to-transparent',
     borderColor: 'border-amber-500/30 hover:border-amber-400',
-    href: '/presets',
+    href: '/tools/presets',
     ctaText: 'Browse Gallery',
   },
 ];
@@ -101,7 +101,7 @@ const SCRIPT_GENERATOR_TOOL: ToolItem = {
   color: 'text-rose-400',
   bgGradient: 'from-rose-500/10 via-pink-500/5 to-transparent',
   borderColor: 'border-rose-500/30 hover:border-rose-400',
-  href: '/script-generator',
+  href: '/tools/script-generator',
   ctaText: 'Generate Scripts',
 };
 

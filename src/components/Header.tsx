@@ -21,7 +21,7 @@ export const Header: React.FC = () => {
 
   const navItems = [
     { label: 'Tools Hub', href: '/tools', icon: Wrench },
-    { label: 'Badge Studio', href: '/badges', icon: Shield },
+    { label: 'Badge Studio', href: '/tools/badges', icon: Shield },
     { label: 'Contribute Guide', href: '/contribute', icon: HeartHandshake },
     { label: 'Docs & Blog', href: '/blog', icon: BookOpen },
   ];
