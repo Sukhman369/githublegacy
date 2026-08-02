@@ -97,8 +97,8 @@ export const Footer: React.FC = () => {
             </h4>
             <ul className="space-y-2 text-xs">
               <li>
-                <Link href="/contribute" className="hover:text-emerald-400 transition-colors font-bold text-emerald-400 flex items-center gap-1.5">
-                  <HeartHandshake className="w-3.5 h-3.5" />
+                <Link href="/contribute" className="hover:text-emerald-400 transition-colors flex items-center gap-1.5">
+                  <HeartHandshake className="w-3.5 h-3.5 text-slate-500" />
                   <span>Contribute Guide & Docs</span>
                 </Link>
               </li>
