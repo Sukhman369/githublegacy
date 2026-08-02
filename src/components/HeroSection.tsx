@@ -1,18 +1,15 @@
 'use client';
 
 import React from 'react';
-import { PRESET_PATTERNS } from '../lib/font-matrix';
-import { Sparkles, Zap } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 
 interface HeroSectionProps {
-  onSelectPreset: (text: string) => void;
-  activeText: string;
+  onSelectPreset?: (text: string) => void;
+  activeText?: string;
   isDarkMode?: boolean;
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({
-  onSelectPreset,
-  activeText,
   isDarkMode = true,
 }) => {
   return (
@@ -43,38 +40,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         }`}>
           Design custom 53-week pixel art, visualize real historical contribution graphs, generate dynamic live SVG profile badges, and export retina social media headers.
         </p>
-
-        {/* Quick Presets Bar */}
-        <div className="pt-2">
-          <p className={`text-xs font-semibold uppercase tracking-wider mb-3 flex items-center justify-center gap-1.5 ${
-            isDarkMode ? 'text-slate-400' : 'text-slate-500'
-          }`}>
-            <Zap className="h-3.5 w-3.5 text-amber-500" />
-            Quick Artwork Presets
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-2">
-            {PRESET_PATTERNS.map((preset) => {
-              const isActive = activeText.toUpperCase() === preset.text.toUpperCase();
-              return (
-                <button
-                  key={preset.id}
-                  onClick={() => onSelectPreset(preset.text)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-all ${
-                    isActive
-                      ? 'bg-emerald-500 text-slate-950 font-bold shadow-md shadow-emerald-500/20 scale-105'
-                      : isDarkMode
-                      ? 'bg-slate-900/90 text-slate-300 border border-slate-800 hover:border-emerald-500/50 hover:text-white'
-                      : 'bg-white text-slate-700 border border-slate-300 shadow-sm hover:border-emerald-500 hover:text-slate-900'
-                  }`}
-                  title={preset.description}
-                >
-                  {preset.name}
-                </button>
-              );
-            })}
-          </div>
-        </div>
       </div>
     </section>
   );
 };
+

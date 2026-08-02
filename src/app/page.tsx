@@ -20,11 +20,7 @@ function AppContent() {
       <Header />
 
       <main className="flex-1 space-y-12">
-        <HeroSection
-          activeText="LORD"
-          onSelectPreset={() => {}}
-          isDarkMode={isDarkMode}
-        />
+        <HeroSection isDarkMode={isDarkMode} />
 
         <div className="mx-auto max-w-7xl px-4 sm:px-6 space-y-16 pb-16">
           {/* Platform Trust & Statistics Banner */}
