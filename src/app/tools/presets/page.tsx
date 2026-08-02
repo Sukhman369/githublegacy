@@ -2,10 +2,10 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Header } from '../../components/Header';
-import { Footer } from '../../components/Footer';
-import { PRESET_PATTERNS } from '../../lib/font-matrix';
-import { useTheme } from '../../context/ThemeContext';
+import { Header } from '../../../components/Header';
+import { Footer } from '../../../components/Footer';
+import { PRESET_PATTERNS } from '../../../lib/font-matrix';
+import { useTheme } from '../../../context/ThemeContext';
 import { Sparkles, Play } from 'lucide-react';
 
 export default function PresetsPage() {
@@ -108,7 +108,7 @@ export default function PresetsPage() {
               }`}>
                 <span className="text-xs text-slate-400 font-mono">1-Click Load</span>
                 <Link
-                  href={`/?text=${encodeURIComponent(preset.text)}`}
+                  href={`/tools/art-studio?text=${encodeURIComponent(preset.text)}`}
                   className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-emerald-500 text-slate-950 font-bold text-xs hover:scale-105 transition-all shadow-md"
                 >
                   <Play className="h-3.5 w-3.5 fill-slate-950" />
