@@ -12,6 +12,7 @@ import {
   Terminal,
   ArrowRight,
   Sparkles,
+  HeartHandshake,
 } from 'lucide-react';
 
 interface ToolItem {
@@ -28,7 +29,7 @@ interface ToolItem {
   isExternal?: boolean;
 }
 
-const TOOLS: ToolItem[] = [
+const BASE_TOOLS: ToolItem[] = [
   {
     id: 'planner',
     title: 'Contribution Art Planner',
@@ -89,22 +90,42 @@ const TOOLS: ToolItem[] = [
     href: '/presets',
     ctaText: 'Browse Gallery',
   },
-  {
-    id: 'all-tools',
-    title: 'Explore All Tools & Features',
-    badge: 'Full Suite',
-    description: 'Discover our complete expanding catalog of contribution planners, badge generators, theme engines, and developer tools.',
-    icon: Sparkles,
-    color: 'text-rose-400',
-    bgGradient: 'from-rose-500/10 via-pink-500/5 to-transparent',
-    borderColor: 'border-rose-500/30 hover:border-rose-400',
-    href: '/tools',
-    ctaText: 'Explore Tools Library',
-  },
 ];
+
+const SCRIPT_GENERATOR_TOOL: ToolItem = {
+  id: 'script-generator',
+  title: 'Automation Script Exporter',
+  badge: 'Zero-Dep',
+  description: 'Export zero-dependency PowerShell (.ps1), Bash (.sh), or Python commit scripts to automatically populate your matrix.',
+  icon: Terminal,
+  color: 'text-rose-400',
+  bgGradient: 'from-rose-500/10 via-pink-500/5 to-transparent',
+  borderColor: 'border-rose-500/30 hover:border-rose-400',
+  href: '/script-generator',
+  ctaText: 'Generate Scripts',
+};
+
+const EXPLORE_ALL_CARD: ToolItem = {
+  id: 'all-tools',
+  title: 'Explore All Tools & Features',
+  badge: 'Full Suite',
+  description: 'Discover our complete expanding catalog of contribution planners, badge generators, theme engines, and developer tools.',
+  icon: Sparkles,
+  color: 'text-rose-400',
+  bgGradient: 'from-rose-500/10 via-pink-500/5 to-transparent',
+  borderColor: 'border-rose-500/30 hover:border-rose-400',
+  href: '/tools',
+  ctaText: 'Explore Tools Library',
+};
 
 export function ToolsHubGrid({ showTitle = true }: { showTitle?: boolean }) {
   const { isDarkMode } = useTheme();
+
+  // On Homepage (showTitle = true): show EXPLORE_ALL_CARD as 6th card
+  // On /tools page (showTitle = false): show SCRIPT_GENERATOR_TOOL as 6th tool
+  const displayTools = showTitle
+    ? [...BASE_TOOLS, EXPLORE_ALL_CARD]
+    : [...BASE_TOOLS, SCRIPT_GENERATOR_TOOL];
 
   return (
     <section className="w-full space-y-6">
@@ -124,7 +145,7 @@ export function ToolsHubGrid({ showTitle = true }: { showTitle?: boolean }) {
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {TOOLS.map((tool) => {
+        {displayTools.map((tool) => {
           const Icon = tool.icon;
           return (
             <Link
