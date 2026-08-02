@@ -103,23 +103,25 @@ const TOOLS: ToolItem[] = [
   },
 ];
 
-export function ToolsHubGrid() {
+export function ToolsHubGrid({ showTitle = true }: { showTitle?: boolean }) {
   const { isDarkMode } = useTheme();
 
   return (
     <section className="w-full space-y-6">
-      <div className="text-center space-y-2">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-          <Sparkles className="w-3.5 h-3.5" />
-          <span>Complete Developer Suite</span>
+      {showTitle && (
+        <div className="text-center space-y-2">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>Complete Developer Suite</span>
+          </div>
+          <h2 className="text-2xl sm:text-4xl font-black tracking-tight">
+            Explore The <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400">GitLegacy Platform</span>
+          </h2>
+          <p className={`max-w-xl mx-auto text-xs sm:text-sm ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
+            Everything you need to craft stunning contribution artwork, showcase real activity, and elevate your GitHub profile presence.
+          </p>
         </div>
-        <h2 className="text-2xl sm:text-4xl font-black tracking-tight">
-          Explore The <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400">GitLegacy Platform</span>
-        </h2>
-        <p className={`max-w-xl mx-auto text-xs sm:text-sm ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
-          Everything you need to craft stunning contribution artwork, showcase real activity, and elevate your GitHub profile presence.
-        </p>
-      </div>
+      )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         {TOOLS.map((tool) => {

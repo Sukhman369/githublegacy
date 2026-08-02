@@ -153,8 +153,8 @@ function ToolsContent() {
         {/* Tools Page Hero */}
         <div className="text-center space-y-3">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-            <Wrench className="w-4 h-4" />
-            <span>GitLegacy Tools Library</span>
+            <Sparkles className="w-4 h-4" />
+            <span>Complete Developer Suite</span>
           </div>
           <h1 className="text-3xl sm:text-5xl font-black tracking-tight">
             Developer Tools <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400">& Art Studio</span>
@@ -165,7 +165,7 @@ function ToolsContent() {
         </div>
 
         {/* Tools Suite Grid */}
-        <ToolsHubGrid />
+        <ToolsHubGrid showTitle={false} />
 
         {/* Tool 1: Contribution Art Studio & Canvas Planner */}
         <div id="art-studio" className="pt-8 border-t border-slate-800/60 space-y-8">
