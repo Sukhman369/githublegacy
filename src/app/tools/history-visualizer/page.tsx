@@ -2,10 +2,10 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Header } from '../../components/Header';
-import { Footer } from '../../components/Footer';
-import { useTheme } from '../../context/ThemeContext';
-import { BarChart3, Code, Copy, Check, Sparkles, UserCheck, Shield } from 'lucide-react';
+import { Header } from '../../../components/Header';
+import { Footer } from '../../../components/Footer';
+import { useTheme } from '../../../context/ThemeContext';
+import { BarChart3, Code, Copy, Check, UserCheck } from 'lucide-react';
 
 export default function HistoryVisualizerPage() {
   const { isDarkMode } = useTheme();
@@ -39,7 +39,7 @@ export default function HistoryVisualizerPage() {
         <div className="text-center space-y-3">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-teal-500/10 text-teal-400 border border-teal-500/20">
             <BarChart3 className="w-4 h-4" />
-            <span>Isolated Developer Tool</span>
+            <span>GitLegacy Sub-Tool</span>
           </div>
           <h1 className="text-3xl sm:text-5xl font-black tracking-tight">
             Real GitHub <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 via-emerald-300 to-cyan-400">History Visualizer</span>
