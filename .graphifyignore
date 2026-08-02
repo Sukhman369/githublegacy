@@ -1,8 +1,0 @@
-node_modules/
-.next/
-graphify-out/
-public/
-docs/
-package-lock.json
-*.log
-
