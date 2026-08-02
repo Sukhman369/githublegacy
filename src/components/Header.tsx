@@ -20,12 +20,13 @@ export const Header: React.FC = () => {
   const [isSponsorModalOpen, setIsSponsorModalOpen] = useState(false);
 
   const navItems = [
-    { label: 'Studio', href: '/', icon: LayoutGrid },
+    { label: 'Art Studio', href: '/', icon: LayoutGrid },
+    { label: 'Tools Hub', href: '/#tools-hub', icon: Sparkles },
     { label: 'Badge Studio', href: '/badges', icon: Shield },
-    { label: 'Presets', href: '/presets', icon: Sparkles },
+    { label: 'Presets Gallery', href: '/presets', icon: Palette },
     { label: 'Themes', href: '/themes', icon: Palette },
     { label: 'Script Generator', href: '/script-generator', icon: Terminal },
-    { label: 'Blog Corner', href: '/blog', icon: BookOpen },
+    { label: 'Docs & Blog', href: '/blog', icon: BookOpen },
   ];
 
   return (
