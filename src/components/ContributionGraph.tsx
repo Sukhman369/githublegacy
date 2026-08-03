@@ -97,26 +97,21 @@ export const ContributionGraph: React.FC<ContributionGraphProps> = ({
     >
       <CellTooltip cell={hoveredCell} x={tooltipPos.x} y={tooltipPos.y} />
 
-      {/* Header Info Bar */}
+      {/* Header Info Bar matching PNG export styling */}
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800/80 pb-4 mb-4">
-        <div>
-          <h3 className={`text-base sm:text-lg font-extrabold ${theme.textColor} flex flex-wrap items-center gap-2`}>
-            <span>{grid.year} Contribution Art Calendar</span>
-            <span className="text-xs font-mono font-semibold text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded-full border border-emerald-500/20">
-              53 Weeks • {grid.totalDays} Days
-            </span>
-            {settings.username && (
-              <span className="text-xs font-mono font-bold text-teal-300 bg-teal-500/10 px-2.5 py-0.5 rounded-full border border-teal-500/20">
-                @{settings.username}
-              </span>
-            )}
+        <div className="space-y-1">
+          <h3 className={`text-xl sm:text-2xl font-black tracking-tight ${theme.textColor}`}>
+            GitLegacy • &quot;{(settings.text || 'LEGACY').toUpperCase()}&quot;
           </h3>
-          <p className={`text-xs ${theme.subtextColor} flex items-center gap-2 mt-0.5`}>
-            <span>Interactive GitHub contribution layout preview for &apos;{settings.text || 'Pattern'}&apos;</span>
+          <p className="text-xs sm:text-sm font-mono font-bold text-emerald-400 flex flex-wrap items-center gap-2">
+            <span>{grid.year} Calendar Canvas</span>
+            <span>•</span>
+            <span>{grid.totalDays} Days</span>
             {settings.username && (
-              <span className="text-[11px] font-mono text-emerald-400">
-                (Attributed to @{settings.username})
-              </span>
+              <>
+                <span>•</span>
+                <span className="text-emerald-400">@{settings.username}</span>
+              </>
             )}
           </p>
         </div>
