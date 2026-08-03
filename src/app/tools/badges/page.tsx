@@ -76,6 +76,7 @@ const TECH_BADGES: TechBadge[] = [
 
 export default function BadgesStudioPage() {
   const { isDarkMode } = useTheme();
+  const customShieldRef = React.useRef<HTMLDivElement>(null);
 
   // Search, Category & Style State for Tech Shields
   const [searchQuery, setSearchQuery] = useState('');
@@ -103,6 +104,10 @@ export default function BadgesStudioPage() {
     navigator.clipboard.writeText(code);
     setCopiedType(id);
     setTimeout(() => setCopiedType(null), 2000);
+  };
+
+  const handleScrollToCustomShield = () => {
+    customShieldRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   const filteredTechBadges = React.useMemo(() => {
@@ -136,6 +141,15 @@ export default function BadgesStudioPage() {
           <p className={`max-w-2xl mx-auto text-sm sm:text-base ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
             Explore 50+ tech stack badges and build custom status shields ready to copy & paste into your GitHub profile.
           </p>
+          <div className="pt-1 flex items-center justify-center">
+            <button
+              onClick={handleScrollToCustomShield}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold bg-purple-500/10 hover:bg-purple-500/20 text-purple-300 border border-purple-500/30 transition-all shadow-md hover:scale-105 group"
+            >
+              <Shield className="w-3.5 h-3.5 text-purple-400 group-hover:rotate-12 transition-transform" />
+              <span>Custom Shield Generator ⚡</span>
+            </button>
+          </div>
         </div>
 
         {/* Studio Section 1: Curated Tech Stack Shields */}
@@ -274,8 +288,8 @@ export default function BadgesStudioPage() {
           )}
         </section>
 
-        {/* Studio Section 3: Custom Shield Builder */}
-        <section className={`p-6 sm:p-8 rounded-2xl border shadow-2xl space-y-6 ${
+        {/* Studio Section 2: Custom Shield Builder */}
+        <section ref={customShieldRef} className={`p-6 sm:p-8 rounded-2xl border shadow-2xl space-y-6 scroll-mt-6 ${
           isDarkMode ? 'bg-slate-900/90 border-slate-800' : 'bg-white border-slate-200 shadow-sm'
         }`}>
           <div className="flex items-center justify-between border-b pb-4 border-slate-800">
