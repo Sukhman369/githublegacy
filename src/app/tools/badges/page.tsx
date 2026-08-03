@@ -379,14 +379,16 @@ export default function BadgesStudioPage() {
               }`}>
                 {displayedTechBadges.map((badge) => {
                   const url = `https://img.shields.io/badge/${encodeURIComponent(badge.name)}-${badge.color}?style=${techBadgeStyle}&logo=${badge.logo}&logoColor=white`;
-                  const md = `![${badge.name}](${url})`;
+                  const htmlTag = `<img src="${url}" alt="${badge.name}" />`;
+                  const mdTag = `![${badge.name}](${url})`;
+                  const defaultCopyText = basketFormat === 'centered-html' ? htmlTag : mdTag;
                   const isCopied = copiedType === badge.name;
                   const isSelected = selectedBadges.includes(badge.name);
 
                   return (
                     <div
                       key={badge.name}
-                      onClick={() => handleCopy(md, badge.name)}
+                      onClick={() => handleCopy(defaultCopyText, badge.name)}
                       className={`relative p-3.5 rounded-xl border flex flex-col items-center gap-2 transition-all cursor-pointer group ${
                         isSelected
                           ? 'bg-emerald-500/20 border-emerald-500 shadow-lg ring-1 ring-emerald-500'
@@ -410,10 +412,13 @@ export default function BadgesStudioPage() {
 
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img src={url} alt={badge.name} className="h-7 object-contain max-w-full" />
-                      <span className="text-[11px] font-mono font-semibold flex items-center gap-1 text-slate-400">
-                        {isCopied ? <Check className="w-3 h-3 text-emerald-500" /> : <Copy className="w-3 h-3" />}
-                        {isCopied ? 'Copied!' : 'Copy Code'}
-                      </span>
+                      
+                      <div className="flex items-center gap-2">
+                        <span className="text-[11px] font-mono font-semibold flex items-center gap-1 text-slate-400 group-hover:text-emerald-400 transition-colors">
+                          {isCopied ? <Check className="w-3 h-3 text-emerald-500" /> : <Copy className="w-3 h-3" />}
+                          {isCopied ? 'Copied Code!' : basketFormat === 'centered-html' ? 'Copy <img />' : 'Copy MD'}
+                        </span>
+                      </div>
                     </div>
                   );
                 })}
