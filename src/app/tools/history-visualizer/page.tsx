@@ -56,7 +56,7 @@ export default function HistoryVisualizerPage() {
     if (!canvasRef.current) return;
     const url = canvasRef.current.toDataURL('image/png');
     const link = document.createElement('a');
-    link.download = `${activeUsername}-github-contributions.png`;
+    link.download = `gitlegacy-${activeUsername}-github-contributions.png`;
     link.href = url;
     link.click();
   };
