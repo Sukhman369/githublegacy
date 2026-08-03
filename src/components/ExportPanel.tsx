@@ -239,6 +239,7 @@ export const ExportPanel: React.FC<ExportPanelProps> = ({ grid, settings, isDark
         pythonScript={pythonScript}
         powerShellScript={powerShellScript}
         projectName={settings.text}
+        username={targetUsername}
       />
 
       <SocialShareModal
