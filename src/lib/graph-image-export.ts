@@ -60,19 +60,38 @@ export function downloadGraphAsPNG(
   const cellH = 16;
   const gap = 4;
 
-  // Render Month Labels
+  // Calculate monthly commit totals
+  const monthlyCommitCounts: number[] = Array(12).fill(0);
+  grid.weeks.forEach((week) => {
+    week.days.forEach((day) => {
+      if (day.year === grid.year && day.commitCount > 0) {
+        monthlyCommitCounts[day.month] += day.commitCount;
+      }
+    });
+  });
+
+  // Render Month Labels with Monthly Commit Counts
   const MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   let lastMonth = -1;
-  ctx.font = '11px SFMono-Regular, Consolas, monospace';
-  ctx.fillStyle = theme.isDark ? '#94a3b8' : '#64748b';
-  ctx.textAlign = 'left';
 
   grid.weeks.forEach((week, weekIdx) => {
     const firstDayInYear = week.days.find((d) => d.year === grid.year);
     if (firstDayInYear && firstDayInYear.month !== lastMonth) {
+      const monthIdx = firstDayInYear.month;
+      const count = monthlyCommitCounts[monthIdx];
       const monthX = startX + weekIdx * (cellW + gap);
-      ctx.fillText(MONTH_NAMES[firstDayInYear.month], monthX, startY - 12);
-      lastMonth = firstDayInYear.month;
+
+      // Render monthly commit count number above month name
+      ctx.font = 'bold 10px SFMono-Regular, Consolas, monospace';
+      ctx.fillStyle = count > 0 ? '#10b981' : (theme.isDark ? '#475569' : '#94a3b8');
+      ctx.fillText(count.toString(), monthX, startY - 24);
+
+      // Render month name
+      ctx.font = '11px SFMono-Regular, Consolas, monospace';
+      ctx.fillStyle = theme.isDark ? '#94a3b8' : '#64748b';
+      ctx.fillText(MONTH_NAMES[monthIdx], monthX, startY - 10);
+
+      lastMonth = monthIdx;
     }
   });
 
@@ -183,6 +202,36 @@ export function downloadGraphAsSVG(
     });
   });
 
+  const monthlyCommitCounts: number[] = Array(12).fill(0);
+  grid.weeks.forEach((week) => {
+    week.days.forEach((day) => {
+      if (day.year === grid.year && day.commitCount > 0) {
+        monthlyCommitCounts[day.month] += day.commitCount;
+      }
+    });
+  });
+
+  const MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const svgMonthTexts: string[] = [];
+  let lastMonth = -1;
+
+  grid.weeks.forEach((week, weekIdx) => {
+    const firstDayInYear = week.days.find((d) => d.year === grid.year);
+    if (firstDayInYear && firstDayInYear.month !== lastMonth) {
+      const monthIdx = firstDayInYear.month;
+      const count = monthlyCommitCounts[monthIdx];
+      const monthX = startX + weekIdx * (cellW + gap);
+      const countColor = count > 0 ? '#10b981' : (theme.isDark ? '#475569' : '#94a3b8');
+      const labelColor = theme.isDark ? '#94a3b8' : '#64748b';
+
+      svgMonthTexts.push(
+        `<text x="${monthX}" y="${startY - 24}" fill="${countColor}" font-family="monospace" font-size="10" font-weight="bold">${count}</text>`,
+        `<text x="${monthX}" y="${startY - 10}" fill="${labelColor}" font-family="monospace" font-size="11">${MONTH_NAMES[monthIdx]}</text>`
+      );
+      lastMonth = monthIdx;
+    }
+  });
+
   const svgContent = `<?xml version="1.0" encoding="UTF-8"?>
 <svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" fill="none" xmlns="http://www.w3.org/2000/svg">
   <!-- Background -->
@@ -192,6 +241,9 @@ export function downloadGraphAsSVG(
   <!-- Header Text -->
   <text x="45" y="60" fill="${theme.isDark ? '#f8fafc' : '#0f172a'}" font-family="-apple-system, sans-serif" font-size="26" font-weight="900">GitLegacy • "${patternText}"</text>
   <text x="45" y="84" fill="#10b981" font-family="monospace" font-size="13" font-weight="bold">${grid.year} Calendar Canvas • ${grid.totalDays} Days • ${userHandle}</text>
+
+  <!-- Month Labels & Commit Numbers -->
+  ${svgMonthTexts.join('\n  ')}
 
   <!-- 53-Week Cells -->
   ${svgRects.join('\n  ')}

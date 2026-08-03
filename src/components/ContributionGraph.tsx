@@ -31,18 +31,30 @@ export const ContributionGraph: React.FC<ContributionGraphProps> = ({
   const [isMouseDown, setIsMouseDown] = useState(false);
   const graphRef = useRef<HTMLDivElement>(null);
 
-  // Compute month label column indices
-  const monthLabels: { name: string; col: number }[] = [];
+  // Calculate monthly commit totals
+  const monthlyCommitCounts: number[] = Array(12).fill(0);
+  grid.weeks.forEach((week) => {
+    week.days.forEach((day) => {
+      if (day.year === grid.year && day.commitCount > 0) {
+        monthlyCommitCounts[day.month] += day.commitCount;
+      }
+    });
+  });
+
+  // Compute month label column indices and commit counts
+  const monthLabels: { name: string; col: number; commitCount: number }[] = [];
   let lastMonth = -1;
 
   grid.weeks.forEach((week, weekIdx) => {
     const firstDayInYear = week.days.find((d) => d.year === grid.year);
     if (firstDayInYear && firstDayInYear.month !== lastMonth) {
+      const mIdx = firstDayInYear.month;
       monthLabels.push({
-        name: MONTH_NAMES[firstDayInYear.month],
+        name: MONTH_NAMES[mIdx],
         col: weekIdx,
+        commitCount: monthlyCommitCounts[mIdx],
       });
-      lastMonth = firstDayInYear.month;
+      lastMonth = mIdx;
     }
   });
 
@@ -158,13 +170,26 @@ export const ContributionGraph: React.FC<ContributionGraphProps> = ({
       {/* Graph Scroll Container */}
       <div className="w-full overflow-x-auto pb-3 select-none scrollbar-thin scrollbar-thumb-slate-700 touch-pan-x">
         <div className="min-w-[780px] space-y-2">
-          {/* Month Header Row */}
-          <div className="flex items-center text-[11px] font-mono text-slate-400 pl-8">
+          {/* Month Header Row with Commit Count Indicators */}
+          <div className="flex items-center text-[11px] font-mono text-slate-400 pl-8 pb-1">
             {grid.weeks.map((week, idx) => {
               const label = monthLabels.find((m) => m.col === idx);
+              if (!label) {
+                return <div key={idx} className="w-[14.5px] flex-shrink-0" />;
+              }
+              const count = label.commitCount;
               return (
-                <div key={idx} className="w-[14.5px] flex-shrink-0 text-left">
-                  {label ? label.name : ''}
+                <div
+                  key={idx}
+                  className="w-[14.5px] flex-shrink-0 text-left relative group/month cursor-default"
+                  title={`${label.name}: ${count} total commits`}
+                >
+                  <div className="text-[10px] font-bold leading-tight">
+                    <span className={count > 0 ? 'text-emerald-400 font-extrabold drop-shadow-[0_0_6px_rgba(16,185,129,0.4)]' : 'text-slate-600 font-normal'}>
+                      {count}
+                    </span>
+                  </div>
+                  <div className="text-[11px] text-slate-400 font-semibold">{label.name}</div>
                 </div>
               );
             })}
