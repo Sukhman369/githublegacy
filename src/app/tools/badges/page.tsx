@@ -96,6 +96,7 @@ export default function BadgesStudioPage() {
 
   // Tech Stack Basket State
   const [selectedBadges, setSelectedBadges] = useState<string[]>([]);
+  const [basketFormat, setBasketFormat] = useState<'centered-html' | 'multiline-md' | 'inline-md'>('centered-html');
 
   React.useEffect(() => {
     setVisibleCount(16);
@@ -131,10 +132,24 @@ export default function BadgesStudioPage() {
 
   const handleCopyAllBasketMarkdown = () => {
     const selectedObjects = TECH_BADGES.filter((b) => selectedBadges.includes(b.name));
-    const markdownList = selectedObjects
-      .map((b) => `![${b.name}](https://img.shields.io/badge/${encodeURIComponent(b.name)}-${b.color}?style=${techBadgeStyle}&logo=${b.logo}&logoColor=white)`)
-      .join(' ');
-    handleCopy(markdownList, 'basket-all');
+    let outputText = '';
+
+    if (basketFormat === 'centered-html') {
+      const imgTags = selectedObjects
+        .map((b) => `  <img src="https://img.shields.io/badge/${encodeURIComponent(b.name)}-${b.color}?style=${techBadgeStyle}&logo=${b.logo}&logoColor=white" alt="${b.name}" />`)
+        .join('\n');
+      outputText = `<p align="center">\n${imgTags}\n</p>`;
+    } else if (basketFormat === 'multiline-md') {
+      outputText = selectedObjects
+        .map((b) => `![${b.name}](https://img.shields.io/badge/${encodeURIComponent(b.name)}-${b.color}?style=${techBadgeStyle}&logo=${b.logo}&logoColor=white)`)
+        .join('\n');
+    } else {
+      outputText = selectedObjects
+        .map((b) => `![${b.name}](https://img.shields.io/badge/${encodeURIComponent(b.name)}-${b.color}?style=${techBadgeStyle}&logo=${b.logo}&logoColor=white)`)
+        .join(' ');
+    }
+
+    handleCopy(outputText, 'basket-all');
   };
 
   const handleScrollToCustomShield = () => {
@@ -282,13 +297,26 @@ export default function BadgesStudioPage() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2">
+                <select
+                  value={basketFormat}
+                  onChange={(e) => setBasketFormat(e.target.value as any)}
+                  className={`px-3 py-2 rounded-lg text-xs font-bold border transition-all ${
+                    isDarkMode ? 'bg-slate-900 border-slate-700 text-emerald-300' : 'bg-white border-slate-300 text-slate-900'
+                  }`}
+                  title="Output Format for GitHub README"
+                >
+                  <option value="centered-html">Format: &lt;p align="center"&gt; (Clean Profile Grid)</option>
+                  <option value="multiline-md">Format: Multiline Markdown (\n)</option>
+                  <option value="inline-md">Format: Single-Line Inline</option>
+                </select>
+
                 <button
                   onClick={handleCopyAllBasketMarkdown}
                   className="px-4 py-2 rounded-lg text-xs font-bold bg-emerald-500 hover:bg-emerald-400 text-slate-950 flex items-center gap-1.5 shadow-md transition-all"
                 >
                   {copiedType === 'basket-all' ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
-                  <span>{copiedType === 'basket-all' ? 'Copied Stack Markdown!' : 'Copy All Selected Markdown'}</span>
+                  <span>{copiedType === 'basket-all' ? 'Copied Stack Code!' : 'Copy Selected Stack'}</span>
                 </button>
 
                 <button
