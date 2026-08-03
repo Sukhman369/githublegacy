@@ -82,6 +82,7 @@ export default function BadgesStudioPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTechCategory, setSelectedTechCategory] = useState<string>('all');
   const [techBadgeStyle, setTechBadgeStyle] = useState<'for-the-badge' | 'flat' | 'flat-square' | 'plastic' | 'social'>('for-the-badge');
+  const [presetBadgeStyle, setPresetBadgeStyle] = useState<'for-the-badge' | 'flat' | 'flat-square' | 'plastic' | 'social'>('for-the-badge');
   const [visibleCount, setVisibleCount] = useState<number>(16);
 
   // README Background Preview Toggle
@@ -400,30 +401,51 @@ export default function BadgesStudioPage() {
         <section className={`p-6 sm:p-8 rounded-2xl border shadow-2xl space-y-6 ${
           isDarkMode ? 'bg-slate-900/90 border-slate-800' : 'bg-white border-slate-200 shadow-sm'
         }`}>
-          <div className="flex items-center gap-3 border-b pb-4 border-slate-800">
-            <div className="p-2.5 rounded-xl bg-emerald-500/20 text-emerald-400">
-              <Sparkles className="w-5 h-5" />
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b pb-4 border-slate-800">
+            <div className="flex items-center gap-3">
+              <div className="p-2.5 rounded-xl bg-emerald-500/20 text-emerald-400">
+                <Sparkles className="w-5 h-5" />
+              </div>
+              <div>
+                <h2 className="text-lg font-bold">2. Essential README Status Presets</h2>
+                <p className={`text-xs ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
+                  Quick 1-click status badges commonly used in top open-source repository READMEs.
+                </p>
+              </div>
             </div>
-            <div>
-              <h2 className="text-lg font-bold">2. Essential README Status Presets</h2>
-              <p className={`text-xs ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
-                Quick 1-click status badges commonly used in top open-source repository READMEs.
-              </p>
-            </div>
+
+            <select
+              value={presetBadgeStyle}
+              onChange={(e) => setPresetBadgeStyle(e.target.value as any)}
+              className={`w-full sm:w-auto px-3 py-2 rounded-xl text-xs font-bold border transition-all ${
+                isDarkMode
+                  ? 'bg-slate-950 border-slate-800 text-white'
+                  : 'bg-slate-100 border-slate-300 text-slate-900'
+              }`}
+              title="Select Preset Badge Style"
+            >
+              <option value="for-the-badge">Style: For The Badge</option>
+              <option value="flat">Style: Flat</option>
+              <option value="flat-square">Style: Flat Square</option>
+              <option value="plastic">Style: Plastic</option>
+              <option value="social">Style: Social</option>
+            </select>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 p-3.5 rounded-2xl border transition-colors duration-200 ${
+            previewBgMode === 'light' ? 'bg-slate-100/90 border-slate-300' : 'bg-slate-950/50 border-slate-800/80'
+          }`}>
             {[
-              { title: 'MIT License', label: 'License', msg: 'MIT', color: 'blue', style: 'flat-square', logo: 'github' },
-              { title: 'PRs Welcome', label: 'PRs', msg: 'Welcome', color: 'brightgreen', style: 'for-the-badge', logo: 'git' },
-              { title: 'Build Passing', label: 'Build', msg: 'Passing', color: '4c1', style: 'flat-square', logo: 'githubactions' },
-              { title: 'Prettier Style', label: 'Code Style', msg: 'Prettier', color: 'ff69b4', style: 'for-the-badge', logo: 'vuedotjs' },
-              { title: 'Active Maintenance', label: 'Maintained', msg: 'Yes', color: '10b981', style: 'for-the-badge', logo: 'github' },
-              { title: 'Contributions', label: 'Contributions', msg: 'Welcome', color: '06b6d4', style: 'flat-square', logo: 'git' },
-              { title: 'Vercel Deployment', label: 'Deployment', msg: 'Vercel', color: '000000', style: 'for-the-badge', logo: 'vercel' },
-              { title: 'Docker Ready', label: 'Container', msg: 'Docker', color: '2496ed', style: 'flat-square', logo: 'docker' },
+              { title: 'MIT License', label: 'License', msg: 'MIT', color: 'blue', logo: 'github' },
+              { title: 'PRs Welcome', label: 'PRs', msg: 'Welcome', color: 'brightgreen', logo: 'git' },
+              { title: 'Build Passing', label: 'Build', msg: 'Passing', color: '4c1', logo: 'githubactions' },
+              { title: 'Prettier Style', label: 'Code Style', msg: 'Prettier', color: 'ff69b4', logo: 'vuedotjs' },
+              { title: 'Active Maintenance', label: 'Maintained', msg: 'Yes', color: '10b981', logo: 'github' },
+              { title: 'Contributions', label: 'Contributions', msg: 'Welcome', color: '06b6d4', logo: 'git' },
+              { title: 'Vercel Deployment', label: 'Deployment', msg: 'Vercel', color: '000000', logo: 'vercel' },
+              { title: 'Docker Ready', label: 'Container', msg: 'Docker', color: '2496ed', logo: 'docker' },
             ].map((preset) => {
-              const url = `https://img.shields.io/badge/${encodeURIComponent(preset.label)}-${encodeURIComponent(preset.msg)}-${preset.color}?style=${preset.style}&logo=${preset.logo}&logoColor=white`;
+              const url = `https://img.shields.io/badge/${encodeURIComponent(preset.label)}-${encodeURIComponent(preset.msg)}-${preset.color}?style=${presetBadgeStyle}&logo=${preset.logo}&logoColor=white`;
               const md = `![${preset.title}](${url})`;
               const isCopied = copiedType === preset.title;
 
@@ -433,10 +455,8 @@ export default function BadgesStudioPage() {
                   onClick={() => handleCopy(md, preset.title)}
                   className={`p-3.5 rounded-xl border flex flex-col items-center justify-between gap-3 transition-all cursor-pointer group ${
                     previewBgMode === 'light'
-                      ? 'bg-slate-100 border-slate-300 hover:border-emerald-500/50 hover:scale-[1.02]'
-                      : isDarkMode
-                      ? 'bg-slate-950/80 border-slate-800 hover:border-emerald-500/50 hover:scale-[1.02]'
-                      : 'bg-slate-50 border-slate-200 hover:border-emerald-500/50 hover:scale-[1.02]'
+                      ? 'bg-white border-slate-200 hover:border-emerald-500/50 hover:scale-[1.02] shadow-sm'
+                      : 'bg-slate-950/80 border-slate-800 hover:border-emerald-500/50 hover:scale-[1.02]'
                   }`}
                 >
                   <div className="text-center">
