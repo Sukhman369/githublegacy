@@ -81,6 +81,11 @@ export default function BadgesStudioPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTechCategory, setSelectedTechCategory] = useState<string>('all');
   const [techBadgeStyle, setTechBadgeStyle] = useState<'for-the-badge' | 'flat' | 'flat-square' | 'plastic' | 'social'>('for-the-badge');
+  const [visibleCount, setVisibleCount] = useState<number>(16);
+
+  React.useEffect(() => {
+    setVisibleCount(16);
+  }, [searchQuery, selectedTechCategory]);
 
   // Shields State
   const [shieldLabel, setShieldLabel] = useState('GitLegacy');
@@ -107,6 +112,10 @@ export default function BadgesStudioPage() {
       return matchesSearch && matchesCategory;
     });
   }, [searchQuery, selectedTechCategory]);
+
+  const displayedTechBadges = React.useMemo(() => {
+    return filteredTechBadges.slice(0, visibleCount);
+  }, [filteredTechBadges, visibleCount]);
 
   return (
     <div className={`min-h-screen flex flex-col transition-colors duration-300 ${
@@ -210,31 +219,44 @@ export default function BadgesStudioPage() {
 
           {/* Tech Badges Grid */}
           {filteredTechBadges.length > 0 ? (
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-              {filteredTechBadges.map((badge) => {
-                const url = `https://img.shields.io/badge/${encodeURIComponent(badge.name)}-${badge.color}?style=${techBadgeStyle}&logo=${badge.logo}&logoColor=white`;
-                const md = `![${badge.name}](${url})`;
-                const isCopied = copiedType === badge.name;
+            <div className="space-y-6">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+                {displayedTechBadges.map((badge) => {
+                  const url = `https://img.shields.io/badge/${encodeURIComponent(badge.name)}-${badge.color}?style=${techBadgeStyle}&logo=${badge.logo}&logoColor=white`;
+                  const md = `![${badge.name}](${url})`;
+                  const isCopied = copiedType === badge.name;
 
-                return (
+                  return (
+                    <button
+                      key={badge.name}
+                      onClick={() => handleCopy(md, badge.name)}
+                      className={`p-3.5 rounded-xl border flex flex-col items-center gap-2 transition-all hover:scale-105 ${
+                        isDarkMode
+                          ? 'bg-slate-950/80 border-slate-800 hover:border-emerald-500/50'
+                          : 'bg-slate-50 border-slate-200 hover:border-emerald-500/50'
+                      }`}
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={url} alt={badge.name} className="h-7 object-contain max-w-full" />
+                      <span className="text-[11px] font-mono font-semibold flex items-center gap-1 text-slate-400">
+                        {isCopied ? <Check className="w-3 h-3 text-emerald-500" /> : <Copy className="w-3 h-3" />}
+                        {isCopied ? 'Copied!' : 'Copy Code'}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {filteredTechBadges.length > visibleCount && (
+                <div className="text-center pt-2">
                   <button
-                    key={badge.name}
-                    onClick={() => handleCopy(md, badge.name)}
-                    className={`p-3.5 rounded-xl border flex flex-col items-center gap-2 transition-all hover:scale-105 ${
-                      isDarkMode
-                        ? 'bg-slate-950/80 border-slate-800 hover:border-emerald-500/50'
-                        : 'bg-slate-50 border-slate-200 hover:border-emerald-500/50'
-                    }`}
+                    onClick={() => setVisibleCount((prev) => prev + 16)}
+                    className="px-6 py-2.5 rounded-xl text-xs font-bold bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 transition-all shadow-lg hover:scale-105 inline-flex items-center gap-2"
                   >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={url} alt={badge.name} className="h-7 object-contain max-w-full" />
-                    <span className="text-[11px] font-mono font-semibold flex items-center gap-1 text-slate-400">
-                      {isCopied ? <Check className="w-3 h-3 text-emerald-500" /> : <Copy className="w-3 h-3" />}
-                      {isCopied ? 'Copied!' : 'Copy Code'}
-                    </span>
+                    <span>Load More Badges (+{filteredTechBadges.length - visibleCount} more)</span>
                   </button>
-                );
-              })}
+                </div>
+              )}
             </div>
           ) : (
             <div className="text-center py-10 space-y-2">
