@@ -416,7 +416,7 @@ export default function BadgesStudioPage() {
                       <div className="flex items-center gap-2">
                         <span className="text-[11px] font-mono font-semibold flex items-center gap-1 text-slate-400 group-hover:text-emerald-400 transition-colors">
                           {isCopied ? <Check className="w-3 h-3 text-emerald-500" /> : <Copy className="w-3 h-3" />}
-                          {isCopied ? 'Copied Code!' : basketFormat === 'centered-html' ? 'Copy <img />' : 'Copy MD'}
+                          {isCopied ? 'Copied!' : 'Copy'}
                         </span>
                       </div>
                     </div>
