@@ -76,12 +76,6 @@ const TECH_BADGES: TechBadge[] = [
 
 export default function BadgesStudioPage() {
   const { isDarkMode } = useTheme();
-  
-  // Custom Canvas Badge State
-  const [badgeText, setBadgeText] = useState('LEGACY');
-  const [badgeYear, setBadgeYear] = useState(`${new Date().getFullYear()}`);
-  const [badgeStyle, setBadgeStyle] = useState<'card' | 'compact'>('card');
-  const [badgeTheme, setBadgeTheme] = useState('github-dark');
 
   // Username Badge State
   const [username, setUsername] = useState('Sukhman369');
@@ -103,10 +97,6 @@ export default function BadgesStudioPage() {
   const [copiedType, setCopiedType] = useState<string | null>(null);
 
   const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://gitlegacy.dev';
-  
-  const canvasBadgeUrl = `${baseUrl}/api/badge?text=${encodeURIComponent(badgeText)}&year=${badgeYear}&theme=${badgeTheme}&style=${badgeStyle}`;
-  const canvasBadgeMarkdown = `![GitLegacy Canvas](${canvasBadgeUrl})`;
-  const canvasBadgeHtml = `<a href="${baseUrl}"><img src="${canvasBadgeUrl}" alt="GitLegacy Contribution Canvas" /></a>`;
 
   const usernameBadgeUrl = `${baseUrl}/api/u/${encodeURIComponent(username || 'developer')}.svg?year=${userBadgeYear}&theme=${userBadgeTheme}`;
   const usernameBadgeMarkdown = `![${username || 'GitHub'} Real Contributions](${usernameBadgeUrl})`;
@@ -149,115 +139,6 @@ export default function BadgesStudioPage() {
             Generate dynamic live SVG artwork badges, tech stack shields, and contribution widgets ready to copy & paste into your profile.
           </p>
         </div>
-
-        {/* Studio Section 1: Live GitLegacy Artwork Canvas Badge */}
-        <section className={`p-6 sm:p-8 rounded-2xl border shadow-2xl space-y-6 ${
-          isDarkMode ? 'bg-slate-900/90 border-slate-800' : 'bg-white border-slate-200 shadow-sm'
-        }`}>
-          <div className="flex items-center justify-between border-b pb-4 border-slate-800">
-            <div className="flex items-center gap-3">
-              <div className="p-2.5 rounded-xl bg-emerald-500/20 text-emerald-400">
-                <Sparkles className="w-5 h-5" />
-              </div>
-              <div>
-                <h2 className="text-lg font-bold">1. Live Contribution Canvas SVG Badge</h2>
-                <p className={`text-xs ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
-                  Dynamic serverless SVG badge showing your custom contribution graph artwork.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-            {/* Controls */}
-            <div className="lg:col-span-5 space-y-4">
-              <div>
-                <label className={`block text-xs font-bold uppercase mb-1.5 ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>
-                  Text Pattern
-                </label>
-                <input
-                  type="text"
-                  value={badgeText}
-                  onChange={(e) => setBadgeText(e.target.value.toUpperCase())}
-                  className={`w-full p-2.5 rounded-xl border text-sm font-mono uppercase ${
-                    isDarkMode ? 'bg-slate-950 border-slate-800 text-white' : 'bg-slate-100 border-slate-300 text-slate-900'
-                  }`}
-                  maxLength={16}
-                />
-              </div>
-
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className={`block text-xs font-bold uppercase mb-1.5 ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>
-                    Target Year
-                  </label>
-                  <input
-                    type="number"
-                    value={badgeYear}
-                    onChange={(e) => setBadgeYear(e.target.value)}
-                    className={`w-full p-2.5 rounded-xl border text-sm font-mono ${
-                      isDarkMode ? 'bg-slate-950 border-slate-800 text-white' : 'bg-slate-100 border-slate-300 text-slate-900'
-                    }`}
-                  />
-                </div>
-
-                <div>
-                  <label className={`block text-xs font-bold uppercase mb-1.5 ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>
-                    Badge Layout
-                  </label>
-                  <select
-                    value={badgeStyle}
-                    onChange={(e) => setBadgeStyle(e.target.value as 'card' | 'compact')}
-                    className={`w-full p-2.5 rounded-xl border text-sm font-semibold ${
-                      isDarkMode ? 'bg-slate-950 border-slate-800 text-white' : 'bg-slate-100 border-slate-300 text-slate-900'
-                    }`}
-                  >
-                    <option value="card">Full Card</option>
-                    <option value="compact">Compact Header</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-
-            {/* Live SVG Badge Preview */}
-            <div className="lg:col-span-7 space-y-3">
-              <label className={`block text-xs font-bold uppercase ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
-                Live Preview
-              </label>
-              <div className={`p-4 rounded-xl border flex items-center justify-center overflow-x-auto ${
-                isDarkMode ? 'bg-slate-950 border-slate-800' : 'bg-slate-100 border-slate-300'
-              }`}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={canvasBadgeUrl}
-                  alt="GitLegacy Canvas Badge Preview"
-                  className="max-w-full h-auto rounded-lg shadow-lg"
-                />
-              </div>
-
-              {/* Code Snippets */}
-              <div className="flex gap-2">
-                <button
-                  onClick={() => handleCopy(canvasBadgeMarkdown, 'canvas-md')}
-                  className="flex-1 py-2 px-3 rounded-lg text-xs font-semibold bg-emerald-500 hover:bg-emerald-400 text-slate-950 flex items-center justify-center gap-1.5 shadow-md transition-all"
-                >
-                  {copiedType === 'canvas-md' ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
-                  <span>{copiedType === 'canvas-md' ? 'Copied Markdown!' : 'Copy Markdown Code'}</span>
-                </button>
-
-                <button
-                  onClick={() => handleCopy(canvasBadgeHtml, 'canvas-html')}
-                  className={`py-2 px-3 rounded-lg text-xs font-semibold border flex items-center gap-1.5 transition-all ${
-                    isDarkMode ? 'bg-slate-800 border-slate-700 hover:bg-slate-700 text-slate-200' : 'bg-slate-200 border-slate-300 hover:bg-slate-300 text-slate-800'
-                  }`}
-                >
-                  <Code className="w-3.5 h-3.5" />
-                  <span>Copy HTML</span>
-                </button>
-              </div>
-            </div>
-          </div>
-        </section>
 
         {/* Studio Section 2: Real GitHub User Contribution Visualizer Callout */}
         <section className={`p-6 rounded-2xl border shadow-xl flex flex-col sm:flex-row items-center justify-between gap-6 ${
