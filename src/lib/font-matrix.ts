@@ -491,10 +491,10 @@ export function textToMatrix(
 
 export const PRESET_PATTERNS: PresetPattern[] = [
   {
-    id: 'lord',
-    name: 'LORD',
-    text: 'LORD',
-    description: 'Signature title pattern for contribution graph',
+    id: 'legacy',
+    name: 'LEGACY',
+    text: 'LEGACY',
+    description: 'Classic LEGACY text pattern for your contribution graph',
     category: 'signature',
   },
   {
