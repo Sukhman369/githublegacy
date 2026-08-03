@@ -21,6 +21,7 @@ import {
   Space,
   Trash2,
   User,
+  FolderGit2,
 } from 'lucide-react';
 
 interface PlannerControlsProps {
@@ -143,6 +144,31 @@ export const PlannerControls: React.FC<PlannerControlsProps> = ({
                 isDarkMode
                   ? 'bg-slate-950 border-slate-800 text-teal-300 placeholder-slate-600'
                   : 'bg-slate-50 border-slate-300 text-teal-700 placeholder-slate-400'
+              }`}
+            />
+          </div>
+        </div>
+
+        {/* Target Repository Name Input */}
+        <div className="space-y-1.5">
+          <label
+            className={`text-xs font-semibold uppercase tracking-wider flex items-center gap-1.5 ${
+              isDarkMode ? 'text-slate-300' : 'text-slate-600'
+            }`}
+          >
+            <FolderGit2 className="h-3.5 w-3.5 text-cyan-400" />
+            <span>Target Repo Name</span>
+          </label>
+          <div className="relative">
+            <input
+              type="text"
+              value={settings.repoName || ''}
+              onChange={(e) => onChangeSettings({ repoName: e.target.value })}
+              placeholder="github-art-canvas"
+              className={`w-full rounded-xl border px-3.5 py-2 text-sm font-mono font-semibold focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 ${
+                isDarkMode
+                  ? 'bg-slate-950 border-slate-800 text-cyan-300 placeholder-slate-600'
+                  : 'bg-slate-50 border-slate-300 text-cyan-700 placeholder-slate-400'
               }`}
             />
           </div>

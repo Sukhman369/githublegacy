@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Terminal, Copy, Check, X, Download, Code, Play, GitBranch, ShieldCheck, ExternalLink, HelpCircle } from 'lucide-react';
+import { Terminal, Copy, Check, X, Download, Code, Play, GitBranch, ShieldCheck, ExternalLink, AlertTriangle } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { GitLegacyLogo } from './GitLegacyLogo';
 
@@ -13,6 +13,7 @@ interface ScriptModalProps {
   powerShellScript?: string;
   projectName: string;
   username?: string;
+  repoName?: string;
 }
 
 export const ScriptModal: React.FC<ScriptModalProps> = ({
@@ -23,6 +24,7 @@ export const ScriptModal: React.FC<ScriptModalProps> = ({
   powerShellScript = '',
   projectName,
   username = 'Sukhman369',
+  repoName = 'github-art-canvas',
 }) => {
   const [tab, setTab] = useState<'powershell' | 'bash' | 'python'>('powershell');
   const [copied, setCopied] = useState(false);
@@ -50,7 +52,7 @@ export const ScriptModal: React.FC<ScriptModalProps> = ({
     URL.revokeObjectURL(url);
   };
 
-  const pushCommandSnippet = `git remote add origin https://github.com/${username}/githublegacy.git\ngit push -u origin main --force`;
+  const pushCommandSnippet = `git remote add origin https://github.com/${username}/${repoName}.git\ngit push -u origin main --force`;
 
   const handleCopyPushCommand = () => {
     navigator.clipboard.writeText(pushCommandSnippet);
@@ -69,7 +71,7 @@ export const ScriptModal: React.FC<ScriptModalProps> = ({
               <h3 className="text-base font-bold text-white flex items-center gap-2">
                 <span>Automated Commit Script Generator</span>
                 <span className="text-xs font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                  @{username}
+                  @{username}/{repoName}
                 </span>
               </h3>
               <p className="text-xs text-slate-400">Run locally to apply contribution artwork &apos;{projectName}&apos; to GitHub</p>
@@ -144,6 +146,19 @@ export const ScriptModal: React.FC<ScriptModalProps> = ({
         {/* Content Section: Detailed Execution Guide & Script View */}
         <div className="p-6 overflow-y-auto font-sans text-xs text-slate-300 bg-slate-950 flex-1 space-y-5">
           
+          {/* Safety Warning Banner */}
+          <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs flex items-start gap-3">
+            <AlertTriangle className="h-5 w-5 text-amber-400 flex-shrink-0 mt-0.5" />
+            <div className="space-y-1">
+              <p className="font-bold text-amber-200">
+                Important: Push to a NEW Empty Repository (<span className="font-mono text-cyan-300">https://github.com/{username}/{repoName}</span>)
+              </p>
+              <p className="text-[11px] text-amber-300/90 leading-relaxed">
+                Create a <strong>new, empty repository</strong> on GitHub for your contribution art. <strong>Do NOT push to an existing project codebase</strong>, as <code className="bg-amber-950/80 px-1 py-0.5 rounded text-amber-200">git push --force</code> will overwrite its commit history!
+              </p>
+            </div>
+          </div>
+
           {/* Detailed Step-by-Step Execution Guide */}
           <div className="p-4 rounded-xl bg-slate-900/90 border border-slate-800 space-y-4">
             <div className="flex items-center justify-between border-b border-slate-800 pb-2.5">
@@ -151,7 +166,7 @@ export const ScriptModal: React.FC<ScriptModalProps> = ({
                 <Play className="h-4 w-4 text-emerald-400 fill-emerald-400" />
                 <span>Complete Execution Guide</span>
               </h4>
-              <span className="text-[11px] text-slate-400 font-mono">Target User: @{username}</span>
+              <span className="text-[11px] text-slate-400 font-mono">Target: @{username}/{repoName}</span>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -188,7 +203,7 @@ export const ScriptModal: React.FC<ScriptModalProps> = ({
                   >
                     {copiedStep2 ? <Check className="h-3 w-3 text-emerald-400" /> : <Copy className="h-3 w-3" />}
                   </button>
-                  <p>git remote add origin https://github.com/{username}/githublegacy.git</p>
+                  <p>git remote add origin https://github.com/{username}/{repoName}.git</p>
                   <p>git push -u origin main --force</p>
                 </div>
               </div>

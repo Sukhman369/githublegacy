@@ -78,9 +78,10 @@ export const ExportPanel: React.FC<ExportPanelProps> = ({ grid, settings, isDark
   };
 
   const targetUsername = settings.username || 'Sukhman369';
-  const bashScript = generateBashScript(grid, 'githublegacy', targetUsername);
-  const pythonScript = generatePythonScript(grid, targetUsername);
-  const powerShellScript = generatePowerShellScript(grid, targetUsername);
+  const targetRepoName = settings.repoName || 'github-art-canvas';
+  const bashScript = generateBashScript(grid, targetRepoName, targetUsername);
+  const pythonScript = generatePythonScript(grid, targetUsername, targetRepoName);
+  const powerShellScript = generatePowerShellScript(grid, targetUsername, targetRepoName);
 
   return (
     <>
@@ -240,6 +241,7 @@ export const ExportPanel: React.FC<ExportPanelProps> = ({ grid, settings, isDark
         powerShellScript={powerShellScript}
         projectName={settings.text}
         username={targetUsername}
+        repoName={targetRepoName}
       />
 
       <SocialShareModal

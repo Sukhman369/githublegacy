@@ -55,7 +55,7 @@ export function generateJSON(grid: CalendarGrid, settings: PlannerSettings): str
  */
 export function generateBashScript(
   grid: CalendarGrid,
-  repoName: string = 'githublegacy',
+  repoName: string = 'github-art-canvas',
   username: string = 'Sukhman369'
 ): string {
   const activeCells = grid.weeks
@@ -66,7 +66,7 @@ export function generateBashScript(
     '#!/bin/bash',
     '# =========================================================',
     `# GitLegacy Automated Commit Script for ${grid.year}`,
-    `# Target User: @${username} | Repo: ${repoName}`,
+    `# Target User: @${username} | Target Repo: ${repoName}`,
     '# =========================================================',
     '',
     'set -e',
@@ -97,7 +97,7 @@ export function generateBashScript(
 
   lines.push('');
   lines.push('echo "✅ Finished generating ' + activeCells.reduce((a, b) => a + b.commitCount, 0) + ' commits!"');
-  lines.push('echo "👉 Now run: git remote add origin https://github.com/' + username + '/' + repoName + '.git && git push -u origin main --force"');
+  lines.push('echo "👉 Now push to target repository: git remote add origin https://github.com/' + username + '/' + repoName + '.git && git push -u origin main --force"');
 
   return lines.join('\n');
 }
@@ -107,7 +107,8 @@ export function generateBashScript(
  */
 export function generatePythonScript(
   grid: CalendarGrid,
-  username: string = 'Sukhman369'
+  username: string = 'Sukhman369',
+  repoName: string = 'github-art-canvas'
 ): string {
   const activeCells = grid.weeks
     .flatMap((w) => w.days)
@@ -116,7 +117,7 @@ export function generatePythonScript(
   const script = `import os
 import subprocess
 
-# GitLegacy Automation Script for @${username}
+# GitLegacy Automation Script for @${username} (Target Repo: ${repoName})
 # Total Active Days: ${activeCells.length}
 
 SCHEDULE = ${JSON.stringify(activeCells.map(c => [c.date, c.commitCount]))}
@@ -145,7 +146,8 @@ for date_str, count in SCHEDULE:
         run_cmd("git add activity_log.txt", env=env)
         run_cmd(f'git commit -m "feat(legacy): contribution {date_str} #{i+1}"', env=env)
 
-print("Finished generating commits! Push to your repository to update GitHub contribution graph.")
+print("Finished generating commits!")
+print("👉 Push command: git remote add origin https://github.com/${username}/${repoName}.git && git push -u origin main --force")
 `;
 
   return script;
@@ -156,7 +158,8 @@ print("Finished generating commits! Push to your repository to update GitHub con
  */
 export function generatePowerShellScript(
   grid: CalendarGrid,
-  username: string = 'Sukhman369'
+  username: string = 'Sukhman369',
+  repoName: string = 'github-art-canvas'
 ): string {
   const activeCells = grid.weeks
     .flatMap((w) => w.days)
@@ -165,7 +168,7 @@ export function generatePowerShellScript(
   const lines: string[] = [
     '# =========================================================',
     `# GitLegacy Automated Commit Script (PowerShell) for ${grid.year}`,
-    `# Target User: @${username}`,
+    `# Target User: @${username} | Target Repo: ${repoName}`,
     '# =========================================================',
     '',
     '$ErrorActionPreference = "Stop"',
@@ -200,7 +203,7 @@ export function generatePowerShellScript(
   lines.push('Remove-Item Env:\\GIT_COMMITTER_DATE -ErrorAction SilentlyContinue');
   lines.push('');
   lines.push(`Write-Host "✅ Finished generating ${activeCells.reduce((a, b) => a + b.commitCount, 0)} commits!" -ForegroundColor Green`);
-  lines.push(`Write-Host "👉 Now run: git remote add origin https://github.com/${username}/githublegacy.git && git push -u origin main --force" -ForegroundColor Yellow`);
+  lines.push(`Write-Host "👉 Now push to target repository: git remote add origin https://github.com/${username}/${repoName}.git && git push -u origin main --force" -ForegroundColor Yellow`);
 
   return lines.join('\n');
 }

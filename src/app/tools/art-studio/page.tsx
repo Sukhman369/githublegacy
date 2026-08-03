@@ -37,6 +37,7 @@ function ArtStudioContent() {
     drawingMode: 'select',
     drawIntensityLevel: 4,
     username: 'Sukhman369',
+    repoName: 'github-art-canvas',
   });
 
   const [customOverrides, setCustomOverrides] = useState<
