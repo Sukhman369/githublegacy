@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { Header } from '../../../components/Header';
 import { Footer } from '../../../components/Footer';
 import { useTheme } from '../../../context/ThemeContext';
-import { Shield, Sparkles, Copy, Check, Code, ExternalLink, Image as ImageIcon, Search, ShoppingBag, Plus, Trash2, CheckCircle2 } from 'lucide-react';
+import { Shield, Sparkles, Copy, Check, Code, ExternalLink, Image as ImageIcon, Search, ShoppingBag, Plus, Trash2, CheckCircle2, Moon, Sun } from 'lucide-react';
 
 interface TechBadge {
   name: string;
@@ -83,6 +83,9 @@ export default function BadgesStudioPage() {
   const [selectedTechCategory, setSelectedTechCategory] = useState<string>('all');
   const [techBadgeStyle, setTechBadgeStyle] = useState<'for-the-badge' | 'flat' | 'flat-square' | 'plastic' | 'social'>('for-the-badge');
   const [visibleCount, setVisibleCount] = useState<number>(16);
+
+  // README Background Preview Toggle
+  const [previewBgMode, setPreviewBgMode] = useState<'dark' | 'light'>('dark');
 
   // Tech Stack Basket State
   const [selectedBadges, setSelectedBadges] = useState<string[]>([]);
@@ -190,8 +193,37 @@ export default function BadgesStudioPage() {
               </div>
             </div>
 
-            {/* Controls: Badge Style Selector & Search Input */}
+            {/* Controls: Preview Mode, Badge Style Selector & Search Input */}
             <div className="flex flex-col sm:flex-row items-center gap-2.5 w-full sm:w-auto">
+              {/* README Background Preview Toggle */}
+              <div className="flex items-center p-1 rounded-xl bg-slate-950 border border-slate-800">
+                <button
+                  onClick={() => setPreviewBgMode('dark')}
+                  className={`px-2.5 py-1 rounded-lg text-xs font-bold flex items-center gap-1 transition-all ${
+                    previewBgMode === 'dark'
+                      ? 'bg-slate-800 text-cyan-400 shadow-sm'
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                  title="Preview on GitHub Dark theme"
+                >
+                  <Moon className="w-3 h-3" />
+                  <span>Dark</span>
+                </button>
+
+                <button
+                  onClick={() => setPreviewBgMode('light')}
+                  className={`px-2.5 py-1 rounded-lg text-xs font-bold flex items-center gap-1 transition-all ${
+                    previewBgMode === 'light'
+                      ? 'bg-slate-200 text-slate-950 shadow-sm'
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                  title="Preview on GitHub Light theme"
+                >
+                  <Sun className="w-3 h-3" />
+                  <span>Light</span>
+                </button>
+              </div>
+
               <select
                 value={techBadgeStyle}
                 onChange={(e) => setTechBadgeStyle(e.target.value as any)}
@@ -305,7 +337,9 @@ export default function BadgesStudioPage() {
                       onClick={() => handleCopy(md, badge.name)}
                       className={`relative p-3.5 rounded-xl border flex flex-col items-center gap-2 transition-all cursor-pointer group ${
                         isSelected
-                          ? 'bg-emerald-950/30 border-emerald-500/60 shadow-lg shadow-emerald-950/40 ring-1 ring-emerald-500/40'
+                          ? 'bg-emerald-950/40 border-emerald-500/60 shadow-lg shadow-emerald-950/40 ring-1 ring-emerald-500/40'
+                          : previewBgMode === 'light'
+                          ? 'bg-slate-100 border-slate-300 hover:border-emerald-500/50 hover:scale-[1.02]'
                           : isDarkMode
                           ? 'bg-slate-950/80 border-slate-800 hover:border-emerald-500/50 hover:scale-[1.02]'
                           : 'bg-slate-50 border-slate-200 hover:border-emerald-500/50 hover:scale-[1.02]'
@@ -497,7 +531,9 @@ export default function BadgesStudioPage() {
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 rounded-xl border border-slate-800 bg-slate-950">
+          <div className={`flex flex-col sm:flex-row items-center justify-between gap-4 p-4 rounded-xl border transition-colors duration-200 ${
+            previewBgMode === 'light' ? 'bg-slate-100 border-slate-300' : 'bg-slate-950 border-slate-800'
+          }`}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={customShieldUrl} alt="Custom Shield Preview" className="h-8 object-contain max-w-full" />
 
