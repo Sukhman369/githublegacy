@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { Header } from '../../../components/Header';
 import { Footer } from '../../../components/Footer';
 import { useTheme } from '../../../context/ThemeContext';
-import { Shield, Sparkles, Copy, Check, Code, ExternalLink, Image as ImageIcon, Search } from 'lucide-react';
+import { Shield, Sparkles, Copy, Check, Code, ExternalLink, Image as ImageIcon, Search, ShoppingBag, Plus, Trash2, CheckCircle2 } from 'lucide-react';
 
 interface TechBadge {
   name: string;
@@ -84,6 +84,9 @@ export default function BadgesStudioPage() {
   const [techBadgeStyle, setTechBadgeStyle] = useState<'for-the-badge' | 'flat' | 'flat-square' | 'plastic' | 'social'>('for-the-badge');
   const [visibleCount, setVisibleCount] = useState<number>(16);
 
+  // Tech Stack Basket State
+  const [selectedBadges, setSelectedBadges] = useState<string[]>([]);
+
   React.useEffect(() => {
     setVisibleCount(16);
   }, [searchQuery, selectedTechCategory]);
@@ -104,6 +107,21 @@ export default function BadgesStudioPage() {
     navigator.clipboard.writeText(code);
     setCopiedType(id);
     setTimeout(() => setCopiedType(null), 2000);
+  };
+
+  const handleToggleBadgeSelection = (badgeName: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setSelectedBadges((prev) =>
+      prev.includes(badgeName) ? prev.filter((b) => b !== badgeName) : [...prev, badgeName]
+    );
+  };
+
+  const handleCopyAllBasketMarkdown = () => {
+    const selectedObjects = TECH_BADGES.filter((b) => selectedBadges.includes(b.name));
+    const markdownList = selectedObjects
+      .map((b) => `![${b.name}](https://img.shields.io/badge/${encodeURIComponent(b.name)}-${b.color}?style=${techBadgeStyle}&logo=${b.logo}&logoColor=white)`)
+      .join(' ');
+    handleCopy(markdownList, 'basket-all');
   };
 
   const handleScrollToCustomShield = () => {
@@ -205,6 +223,43 @@ export default function BadgesStudioPage() {
             </div>
           </div>
 
+          {/* 1-Click Tech Stack Basket Bar */}
+          {selectedBadges.length > 0 && (
+            <div className="p-4 rounded-xl border border-emerald-500/30 bg-emerald-950/40 backdrop-blur-md flex flex-wrap items-center justify-between gap-3 animate-in fade-in duration-200">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-emerald-500/20 text-emerald-400">
+                  <ShoppingBag className="w-5 h-5" />
+                </div>
+                <div>
+                  <h4 className="text-xs font-bold text-emerald-300 flex items-center gap-2">
+                    <span>Stack Basket ({selectedBadges.length} selected)</span>
+                  </h4>
+                  <p className="text-[11px] text-slate-400 font-mono">
+                    {selectedBadges.slice(0, 5).join(', ')}{selectedBadges.length > 5 ? ` +${selectedBadges.length - 5} more` : ''}
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={handleCopyAllBasketMarkdown}
+                  className="px-4 py-2 rounded-lg text-xs font-bold bg-emerald-500 hover:bg-emerald-400 text-slate-950 flex items-center gap-1.5 shadow-md transition-all"
+                >
+                  {copiedType === 'basket-all' ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+                  <span>{copiedType === 'basket-all' ? 'Copied Stack Markdown!' : 'Copy All Selected Markdown'}</span>
+                </button>
+
+                <button
+                  onClick={() => setSelectedBadges([])}
+                  className="p-2 rounded-lg text-xs font-bold text-slate-400 hover:text-red-400 hover:bg-red-500/10 transition-all"
+                  title="Clear basket selection"
+                >
+                  <Trash2 className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          )}
+
           {/* Category Filter Pills */}
           <div className="flex flex-wrap items-center gap-2">
             {[
@@ -239,24 +294,40 @@ export default function BadgesStudioPage() {
                   const url = `https://img.shields.io/badge/${encodeURIComponent(badge.name)}-${badge.color}?style=${techBadgeStyle}&logo=${badge.logo}&logoColor=white`;
                   const md = `![${badge.name}](${url})`;
                   const isCopied = copiedType === badge.name;
+                  const isSelected = selectedBadges.includes(badge.name);
 
                   return (
-                    <button
+                    <div
                       key={badge.name}
                       onClick={() => handleCopy(md, badge.name)}
-                      className={`p-3.5 rounded-xl border flex flex-col items-center gap-2 transition-all hover:scale-105 ${
-                        isDarkMode
-                          ? 'bg-slate-950/80 border-slate-800 hover:border-emerald-500/50'
-                          : 'bg-slate-50 border-slate-200 hover:border-emerald-500/50'
+                      className={`relative p-3.5 rounded-xl border flex flex-col items-center gap-2 transition-all cursor-pointer group ${
+                        isSelected
+                          ? 'bg-emerald-950/30 border-emerald-500/60 shadow-lg shadow-emerald-950/40 ring-1 ring-emerald-500/40'
+                          : isDarkMode
+                          ? 'bg-slate-950/80 border-slate-800 hover:border-emerald-500/50 hover:scale-[1.02]'
+                          : 'bg-slate-50 border-slate-200 hover:border-emerald-500/50 hover:scale-[1.02]'
                       }`}
                     >
+                      {/* Select Checkbox Button */}
+                      <button
+                        onClick={(e) => handleToggleBadgeSelection(badge.name, e)}
+                        className={`absolute top-2 right-2 p-1 rounded-md transition-all ${
+                          isSelected
+                            ? 'bg-emerald-500 text-slate-950'
+                            : 'text-slate-500 hover:text-emerald-400 hover:bg-emerald-500/10'
+                        }`}
+                        title={isSelected ? 'Remove from basket' : 'Add to basket'}
+                      >
+                        {isSelected ? <CheckCircle2 className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />}
+                      </button>
+
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img src={url} alt={badge.name} className="h-7 object-contain max-w-full" />
                       <span className="text-[11px] font-mono font-semibold flex items-center gap-1 text-slate-400">
                         {isCopied ? <Check className="w-3 h-3 text-emerald-500" /> : <Copy className="w-3 h-3" />}
                         {isCopied ? 'Copied!' : 'Copy Code'}
                       </span>
-                    </button>
+                    </div>
                   );
                 })}
               </div>
