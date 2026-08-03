@@ -138,7 +138,7 @@ export const ScriptModal: React.FC<ScriptModalProps> = ({
               className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-emerald-500 text-slate-950 font-bold text-xs hover:bg-emerald-400 transition-all shadow-md"
             >
               <Download className="h-3.5 w-3.5" />
-              <span>Download {scriptFileName}</span>
+              <span>Download</span>
             </button>
           </div>
         </div>
