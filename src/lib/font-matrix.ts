@@ -526,6 +526,13 @@ export const PRESET_PATTERNS: PresetPattern[] = [
     category: 'career',
   },
   {
+    id: 'fullstack',
+    name: 'FULLSTACK',
+    text: 'FULLSTACK',
+    description: 'End-to-end software engineer portfolio header',
+    category: 'career',
+  },
+  {
     id: 'space-invaders',
     name: 'SPACE INVADER',
     text: 'INVADERS',
@@ -540,6 +547,13 @@ export const PRESET_PATTERNS: PresetPattern[] = [
     category: 'gaming',
   },
   {
+    id: 'gamer',
+    name: 'PIXEL GAMER',
+    text: 'GAMER',
+    description: '8-bit retro arcade lover signature',
+    category: 'gaming',
+  },
+  {
     id: 'python-logo',
     name: 'PYTHON',
     text: 'PYTHON',
@@ -551,6 +565,20 @@ export const PRESET_PATTERNS: PresetPattern[] = [
     name: 'JAVASCRIPT',
     text: 'JS DEV',
     description: 'Fullstack web developer identity signature',
+    category: 'tech',
+  },
+  {
+    id: 'react-dev',
+    name: 'REACT DEV',
+    text: 'REACT',
+    description: 'React & frontend developer contribution art',
+    category: 'tech',
+  },
+  {
+    id: 'rust-dev',
+    name: 'RUST DEV',
+    text: 'RUST',
+    description: 'High performance systems developer badge',
     category: 'tech',
   },
   {
@@ -574,4 +602,12 @@ export const PRESET_PATTERNS: PresetPattern[] = [
     description: 'High energy release motivation artwork',
     category: 'signature',
   },
+  {
+    id: '10x-dev',
+    name: '10X DEV',
+    text: '10X DEV',
+    description: 'High output engineering flex pattern',
+    category: 'signature',
+  },
 ];
+
