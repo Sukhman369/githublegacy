@@ -144,6 +144,61 @@ export interface MultiYearData {
 const MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 /**
+ * Formats raw API data from jogruber / GitHub endpoint into structured MultiYearData
+ */
+export function formatRawContributionsToMultiYear(username: string, apiData: any): MultiYearData {
+  if (!apiData || !apiData.contributions || !Array.isArray(apiData.contributions)) {
+    return generateMultiYearSampleData(username);
+  }
+
+  const rawList: { date: string; count: number; level: number }[] = apiData.contributions;
+  const totalsByYear: Record<string, number> = apiData.total || {};
+
+  const daysByYear: Record<number, ContributionDay[]> = {};
+
+  rawList.forEach((c) => {
+    const yr = new Date(c.date).getFullYear();
+    if (!daysByYear[yr]) {
+      daysByYear[yr] = [];
+    }
+    daysByYear[yr].push({
+      date: c.date,
+      count: c.count || 0,
+      level: c.level || 0,
+    });
+  });
+
+  const availableYears = Object.keys(daysByYear)
+    .map(Number)
+    .sort((a, b) => b - a);
+
+  const currentYear = new Date().getFullYear();
+  let grandTotal = 0;
+
+  const years: YearContributionData[] = availableYears.map((yr) => {
+    const days = daysByYear[yr];
+    const yearTotal = totalsByYear[yr] !== undefined
+      ? totalsByYear[yr]
+      : days.reduce((acc, d) => acc + d.count, 0);
+
+    grandTotal += yearTotal;
+
+    return {
+      year: yr,
+      total: yearTotal,
+      isSoFar: yr === currentYear,
+      days,
+    };
+  });
+
+  return {
+    username,
+    totalContributionsAllTime: grandTotal,
+    years: years.length > 0 ? years : generateMultiYearSampleData(username).years,
+  };
+}
+
+/**
  * Generates realistic multi-year contribution data for 4 years (e.g. 2026, 2025, 2024, 2023)
  */
 export function generateMultiYearSampleData(username: string): MultiYearData {

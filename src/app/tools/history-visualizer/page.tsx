@@ -18,7 +18,9 @@ import {
 } from 'lucide-react';
 import {
   THEMES,
+  MultiYearData,
   generateMultiYearSampleData,
+  formatRawContributionsToMultiYear,
   drawMultiYearPoster,
 } from '../../../lib/contributions-canvas';
 
@@ -32,18 +34,51 @@ export default function HistoryVisualizerPage() {
   const [selectedTheme, setSelectedTheme] = useState('githubClassic');
   const [copiedType, setCopiedType] = useState<string | null>(null);
 
-  // Generate multi-year dataset
-  const multiYearData = React.useMemo(
-    () => generateMultiYearSampleData(activeUsername),
-    [activeUsername]
-  );
+  // Real Data Fetching State
+  const [realMultiYearData, setRealMultiYearData] = useState<MultiYearData | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  // Draw canvas whenever theme or username data changes
+  useEffect(() => {
+    let isMounted = true;
+    async function fetchUserHistory() {
+      if (!activeUsername.trim()) return;
+      setIsLoading(true);
+      try {
+        const res = await fetch(`/api/user-contributions?username=${encodeURIComponent(activeUsername)}`);
+        if (res.ok) {
+          const json = await res.json();
+          if (isMounted) {
+            const formatted = formatRawContributionsToMultiYear(activeUsername, json);
+            setRealMultiYearData(formatted);
+          }
+        } else {
+          if (isMounted) {
+            setRealMultiYearData(generateMultiYearSampleData(activeUsername));
+          }
+        }
+      } catch (err) {
+        if (isMounted) {
+          setRealMultiYearData(generateMultiYearSampleData(activeUsername));
+        }
+      } finally {
+        if (isMounted) setIsLoading(false);
+      }
+    }
+
+    fetchUserHistory();
+    return () => {
+      isMounted = false;
+    };
+  }, [activeUsername]);
+
+  const activeDataset = realMultiYearData || generateMultiYearSampleData(activeUsername);
+
+  // Draw canvas whenever theme or dataset changes
   useEffect(() => {
     if (canvasRef.current) {
-      drawMultiYearPoster(canvasRef.current, multiYearData, selectedTheme);
+      drawMultiYearPoster(canvasRef.current, activeDataset, selectedTheme);
     }
-  }, [multiYearData, selectedTheme]);
+  }, [activeDataset, selectedTheme]);
 
   const handleGenerate = (e: React.FormEvent) => {
     e.preventDefault();
@@ -115,10 +150,11 @@ export default function HistoryVisualizerPage() {
                 />
                 <button
                   type="submit"
-                  className="px-4 py-2.5 rounded-xl text-xs font-black bg-gradient-to-r from-purple-600 to-indigo-500 hover:from-purple-500 hover:to-indigo-400 text-white flex items-center gap-1.5 shadow-lg transition-all"
+                  disabled={isLoading}
+                  className="px-4 py-2.5 rounded-xl text-xs font-black bg-gradient-to-r from-purple-600 to-indigo-500 hover:from-purple-500 hover:to-indigo-400 text-white flex items-center gap-1.5 shadow-lg transition-all disabled:opacity-50"
                 >
-                  <Sparkles className="w-4 h-4" />
-                  <span>Generate!</span>
+                  <Sparkles className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} />
+                  <span>{isLoading ? 'Fetching...' : 'Generate!'}</span>
                 </button>
               </div>
             </form>
