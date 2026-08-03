@@ -9,7 +9,6 @@ import { PlannerSettings } from '../types/calendar';
 
 interface PresetMiniGridProps {
   text: string;
-  intensityMaxCommits?: number;
   isDarkMode?: boolean;
   year?: number;
   letterSpacing?: number;
@@ -17,7 +16,7 @@ interface PresetMiniGridProps {
 }
 
 const GREEN_LEVEL_COLORS_DARK: Record<number, string> = {
-  0: 'rgba(255, 255, 255, 0.05)',
+  0: 'rgba(255, 255, 255, 0.06)',
   1: '#0e4429',
   2: '#006d32',
   3: '#26a641',
@@ -25,7 +24,7 @@ const GREEN_LEVEL_COLORS_DARK: Record<number, string> = {
 };
 
 const GREEN_LEVEL_COLORS_LIGHT: Record<number, string> = {
-  0: 'rgba(0, 0, 0, 0.06)',
+  0: 'rgba(0, 0, 0, 0.07)',
   1: '#9be9a8',
   2: '#40c463',
   3: '#30a14e',
@@ -34,7 +33,6 @@ const GREEN_LEVEL_COLORS_LIGHT: Record<number, string> = {
 
 export const PresetMiniGrid: React.FC<PresetMiniGridProps> = ({
   text,
-  intensityMaxCommits = 5,
   isDarkMode = true,
   year = new Date().getFullYear(),
   letterSpacing = 1,
@@ -44,7 +42,7 @@ export const PresetMiniGrid: React.FC<PresetMiniGridProps> = ({
     const settings: PlannerSettings = {
       text,
       year,
-      intensityMaxCommits,
+      intensityMaxCommits: 5,
       letterSpacing,
       wordSpacing,
       alignment: 'center',
@@ -56,7 +54,7 @@ export const PresetMiniGrid: React.FC<PresetMiniGridProps> = ({
 
     const rawGrid = createYearlyCalendarGrid(year);
     return applyPatternToCalendar(rawGrid, settings);
-  }, [text, year, intensityMaxCommits, letterSpacing, wordSpacing]);
+  }, [text, year, letterSpacing, wordSpacing]);
 
   const levelColors = isDarkMode ? GREEN_LEVEL_COLORS_DARK : GREEN_LEVEL_COLORS_LIGHT;
 
@@ -66,29 +64,38 @@ export const PresetMiniGrid: React.FC<PresetMiniGridProps> = ({
         isDarkMode ? 'bg-slate-950/80 border-slate-800/80' : 'bg-slate-100 border-slate-200'
       }`}
     >
-      <div className="w-full flex items-center justify-between text-[10px] font-mono text-slate-400 mb-1.5 px-0.5">
+      <div className="w-full flex items-center justify-between text-[10px] font-mono text-slate-400 mb-2 px-0.5">
         <span>53 WEEKS CANVAS</span>
         <span className="text-emerald-400 font-bold">{text.toUpperCase()}</span>
       </div>
 
-      <div className="w-full overflow-x-auto select-none no-scrollbar">
-        <div className="grid grid-flow-col grid-rows-7 gap-[2px] min-w-[280px]">
+      <div className="w-full select-none overflow-hidden">
+        <svg
+          viewBox="0 0 530 70"
+          className="w-full h-auto block"
+          style={{ shapeRendering: 'geometricPrecision' }}
+        >
           {grid.weeks.map((week) =>
             week.days.map((day) => {
               const cellColor = levelColors[day.level] || levelColors[0];
+              const x = week.weekIndex * 10;
+              const y = day.dayOfWeek * 10;
+
               return (
-                <div
+                <rect
                   key={day.date}
-                  style={{ backgroundColor: cellColor }}
-                  className={`w-full aspect-square rounded-[1.5px] transition-all duration-150 ${
-                    day.level > 0 ? 'shadow-[0_0_4px_rgba(57,211,83,0.3)]' : ''
-                  }`}
-                  title={`${day.date}: ${day.commitCount} commits`}
+                  x={x}
+                  y={y}
+                  width={8}
+                  height={8}
+                  rx={1.5}
+                  fill={cellColor}
+                  className="transition-colors duration-200"
                 />
               );
             })
           )}
-        </div>
+        </svg>
       </div>
     </div>
   );
