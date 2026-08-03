@@ -12,7 +12,7 @@ interface TechBadge {
   logo: string;
   color: string;
   labelColor?: string;
-  category: 'frontend' | 'backend' | 'languages' | 'databases' | 'devops';
+  category: 'frontend' | 'backend' | 'languages' | 'databases' | 'devops' | 'marketing';
 }
 
 const TECH_BADGES: TechBadge[] = [
@@ -28,6 +28,7 @@ const TECH_BADGES: TechBadge[] = [
   { name: 'Vite', logo: 'vite', color: '646CFF', category: 'frontend' },
   { name: 'HTML5', logo: 'html5', color: 'E34F26', category: 'frontend' },
   { name: 'CSS3', logo: 'css3', color: '1572B6', category: 'frontend' },
+  { name: 'Bootstrap', logo: 'bootstrap', color: '7952B3', category: 'frontend' },
 
   // Languages
   { name: 'TypeScript', logo: 'typescript', color: '3178C6', category: 'languages' },
@@ -75,9 +76,22 @@ const TECH_BADGES: TechBadge[] = [
   { name: 'AWS', logo: 'amazonwebservices', color: '232F3E', category: 'devops' },
   { name: 'Google Cloud', logo: 'googlecloud', color: '4285F4', category: 'devops' },
   { name: 'Vercel', logo: 'vercel', color: '000000', category: 'devops' },
+  { name: 'Hostinger', logo: 'hostinger', color: '673DE6', category: 'devops' },
   { name: 'Linux', logo: 'linux', color: 'FCC624', category: 'devops' },
   { name: 'Git', logo: 'git', color: 'F05032', category: 'devops' },
   { name: 'GitHub Actions', logo: 'githubactions', color: '2088FF', category: 'devops' },
+
+  // Digital Marketing & SEO
+  { name: 'WordPress', logo: 'wordpress', color: '21759B', category: 'marketing' },
+  { name: 'SEO (Search Engine Optimization)', logo: 'google', color: '4285F4', category: 'marketing' },
+  { name: 'Google Analytics', logo: 'googleanalytics', color: 'E37400', category: 'marketing' },
+  { name: 'Google Ads', logo: 'googleads', color: '4285F4', category: 'marketing' },
+  { name: 'Meta Ads', logo: 'meta', color: '0467DF', category: 'marketing' },
+  { name: 'Google Search Console', logo: 'googlesearchconsole', color: '4587F4', category: 'marketing' },
+  { name: 'Semrush', logo: 'semrush', color: 'FF642D', category: 'marketing' },
+  { name: 'Mailchimp', logo: 'mailchimp', color: 'FFE01B', category: 'marketing' },
+  { name: 'HubSpot', logo: 'hubspot', color: 'FF7A59', category: 'marketing' },
+  { name: 'Ahrefs', logo: 'ahrefs', color: '2A64F6', category: 'marketing' },
 ];
 
 export default function BadgesStudioPage() {
@@ -339,6 +353,7 @@ export default function BadgesStudioPage() {
               { id: 'backend', label: 'Backend' },
               { id: 'databases', label: 'Databases' },
               { id: 'devops', label: 'DevOps & Cloud' },
+              { id: 'marketing', label: 'Digital Marketing & SEO' },
             ].map((tab) => (
               <button
                 key={tab.id}
