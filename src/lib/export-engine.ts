@@ -280,7 +280,7 @@ function drawCanvasBanner(
   // Footer Branding
   ctx.font = 'bold 13px -apple-system, BlinkMacSystemFont, sans-serif';
   ctx.fillStyle = '#10b981';
-  ctx.fillText('Designed with gitlegacy.dev', width / 2, startY + gridH + 35);
+  ctx.fillText('Designed with gitlegacy.co', width / 2, startY + gridH + 35);
 
   // Trigger Download
   const link = document.createElement('a');

@@ -197,7 +197,7 @@ export function downloadGraphAsSVG(
   ${svgRects.join('\n  ')}
 
   <!-- Footer Brand -->
-  <text x="${width - 45}" y="380" fill="#10b981" font-family="-apple-system, sans-serif" font-size="12" font-weight="bold" text-anchor="end">Generated with GitLegacy.dev</text>
+  <text x="${width - 45}" y="380" fill="#10b981" font-family="-apple-system, sans-serif" font-size="12" font-weight="bold" text-anchor="end">Generated with GitLegacy.co</text>
 </svg>`;
 
   const blob = new Blob([svgContent], { type: 'image/svg+xml;charset=utf-8' });

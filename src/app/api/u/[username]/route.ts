@@ -76,7 +76,7 @@ export async function GET(
   ${cellsSvg}
   
   {/* Footer Branding */}
-  <text x="${svgWidth - 20}" y="${svgHeight - 10}" font-family="SFMono-Regular, Consolas, monospace" font-size="9" fill="${subtextColor}" opacity="0.6" text-anchor="end">gitlegacy.dev</text>
+  <text x="${svgWidth - 20}" y="${svgHeight - 10}" font-family="SFMono-Regular, Consolas, monospace" font-size="9" fill="${subtextColor}" opacity="0.6" text-anchor="end">gitlegacy.co</text>
 </svg>`;
 
   return new NextResponse(svg, {

@@ -42,7 +42,7 @@ export const SocialShareModal: React.FC<SocialShareModalProps> = ({
   if (!isOpen || typeof window === 'undefined') return null;
 
   const currentTheme = getThemeById(themeId);
-  const siteUrl = typeof window !== 'undefined' ? window.location.origin : 'https://gitlegacy.dev';
+  const siteUrl = typeof window !== 'undefined' ? window.location.origin : 'https://gitlegacy.co';
   const shareText = `Just designed custom contribution graph artwork for my GitHub profile using @GitLegacy! 🚀\n\nPattern: "${textPattern}" (${year})\nCheck it out or plan your own:`;
   const shareUrl = `${siteUrl}?text=${encodeURIComponent(textPattern)}&year=${year}&theme=${themeId}`;
 

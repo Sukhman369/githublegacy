@@ -376,5 +376,5 @@ export function drawMultiYearPoster(
   // Footer
   ctx.fillStyle = theme.textMuted;
   ctx.font = '12px "Courier New", Courier, monospace, system-ui';
-  ctx.fillText(`Made by GitLegacy.dev ⚡ - inspired by github-contributions.vercel.app`, padding, totalHeight - padding + 15);
+  ctx.fillText(`Made by GitLegacy.co ⚡ - inspired by github-contributions.vercel.app`, padding, totalHeight - padding + 15);
 }

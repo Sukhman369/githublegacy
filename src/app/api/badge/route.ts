@@ -62,7 +62,7 @@ export async function GET(req: NextRequest) {
   const footerSvg =
     style === 'compact'
       ? ''
-      : `<text x="${svgWidth - 20}" y="${svgHeight - 12}" font-family="SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace" font-size="10" fill="${textColor}" opacity="0.5" text-anchor="end">gitlegacy.dev</text>`;
+      : `<text x="${svgWidth - 20}" y="${svgHeight - 12}" font-family="SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace" font-size="10" fill="${textColor}" opacity="0.5" text-anchor="end">gitlegacy.co</text>`;
 
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${svgWidth}" height="${svgHeight}" viewBox="0 0 ${svgWidth} ${svgHeight}">
   <rect width="${svgWidth}" height="${svgHeight}" rx="12" fill="${bgColor}" stroke="${borderColor}" stroke-width="1"/>

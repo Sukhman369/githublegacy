@@ -114,7 +114,7 @@ export default function HistoryVisualizerPage() {
   };
 
   const handleShareMarkdown = () => {
-    const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://gitlegacy.dev';
+    const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://gitlegacy.co';
     const md = `![${activeUsername}'s GitHub Contributions](${baseUrl}/api/u/${encodeURIComponent(activeUsername)}.svg?theme=${selectedTheme})`;
     navigator.clipboard.writeText(md);
     setCopiedType('share-md');
