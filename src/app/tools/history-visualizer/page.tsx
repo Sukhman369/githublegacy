@@ -128,10 +128,10 @@ export default function HistoryVisualizerPage() {
       <Header />
 
       <main className="flex-1 w-full max-w-[1400px] mx-auto px-4 py-6">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
           
-          {/* LEFT SIDEBAR: Controls & 14 Theme Swatches */}
-          <aside className="lg:col-span-4 bg-[#161b22] border border-slate-800 rounded-2xl p-6 space-y-6 shadow-2xl">
+          {/* LEFT SIDEBAR: Controls & 14 Theme Swatches (Reduced Width) */}
+          <aside className="lg:col-span-3 bg-[#161b22] border border-slate-800 rounded-2xl p-5 space-y-5 shadow-2xl">
             <div className="space-y-1">
               <p className="text-xs text-slate-400 font-semibold tracking-wide">
                 All your contributions in one image!
@@ -219,7 +219,7 @@ export default function HistoryVisualizerPage() {
           </aside>
 
           {/* RIGHT MAIN POSTER DISPLAY AREA */}
-          <section className="lg:col-span-8 space-y-6">
+          <section className="lg:col-span-9 space-y-6">
             
             {/* Header & Actions Bar */}
             <div className="bg-[#161b22] border border-slate-800 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xl">
