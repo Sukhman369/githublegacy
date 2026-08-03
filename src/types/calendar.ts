@@ -46,6 +46,7 @@ export interface PlannerSettings {
   themeId: string;
   drawingMode: 'select' | 'draw' | 'erase';
   drawIntensityLevel: IntensityLevel;
+  username?: string;
 }
 
 export interface CalendarTheme {

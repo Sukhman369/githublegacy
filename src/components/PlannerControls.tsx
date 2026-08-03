@@ -20,6 +20,7 @@ import {
   Sliders,
   Space,
   Trash2,
+  User,
 } from 'lucide-react';
 
 interface PlannerControlsProps {
@@ -92,7 +93,7 @@ export const PlannerControls: React.FC<PlannerControlsProps> = ({
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
         {/* Text Input */}
         <div className="space-y-1.5">
           <label
@@ -116,6 +117,32 @@ export const PlannerControls: React.FC<PlannerControlsProps> = ({
                 isDarkMode
                   ? 'bg-slate-950 border-slate-800 text-emerald-400 placeholder-slate-600'
                   : 'bg-slate-50 border-slate-300 text-emerald-600 placeholder-slate-400'
+              }`}
+            />
+          </div>
+        </div>
+
+        {/* GitHub Username Input */}
+        <div className="space-y-1.5">
+          <label
+            className={`text-xs font-semibold uppercase tracking-wider flex items-center gap-1.5 ${
+              isDarkMode ? 'text-slate-300' : 'text-slate-600'
+            }`}
+          >
+            <User className="h-3.5 w-3.5 text-teal-400" />
+            <span>GitHub Username</span>
+          </label>
+          <div className="relative">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-mono text-slate-500">@</span>
+            <input
+              type="text"
+              value={settings.username || ''}
+              onChange={(e) => onChangeSettings({ username: e.target.value })}
+              placeholder="Sukhman369"
+              className={`w-full rounded-xl border pl-7 pr-3 py-2 text-sm font-mono font-semibold focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 ${
+                isDarkMode
+                  ? 'bg-slate-950 border-slate-800 text-teal-300 placeholder-slate-600'
+                  : 'bg-slate-50 border-slate-300 text-teal-700 placeholder-slate-400'
               }`}
             />
           </div>

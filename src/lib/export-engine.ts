@@ -53,7 +53,11 @@ export function generateJSON(grid: CalendarGrid, settings: PlannerSettings): str
 /**
  * Generate standalone Bash script to apply commits to a target Git repo
  */
-export function generateBashScript(grid: CalendarGrid, repoName: string = 'githublegacy'): string {
+export function generateBashScript(
+  grid: CalendarGrid,
+  repoName: string = 'githublegacy',
+  username: string = 'Sukhman369'
+): string {
   const activeCells = grid.weeks
     .flatMap((w) => w.days)
     .filter((d) => d.commitCount > 0 && d.year === grid.year);
@@ -62,15 +66,16 @@ export function generateBashScript(grid: CalendarGrid, repoName: string = 'githu
     '#!/bin/bash',
     '# =========================================================',
     `# GitLegacy Automated Commit Script for ${grid.year}`,
-    `# Generated for repo: ${repoName}`,
+    `# Target User: @${username} | Repo: ${repoName}`,
     '# =========================================================',
     '',
     'set -e',
     '',
-    'echo "🚀 Starting GitLegacy commit generation..."',
+    'echo "🚀 Starting GitLegacy commit generation for @' + username + '..."',
     'mkdir -p legacy_art_data',
     'cd legacy_art_data',
     'git init',
+    `git config user.name "${username}"`,
     '',
     '# Function to write commit',
     'make_commit() {',
@@ -92,7 +97,7 @@ export function generateBashScript(grid: CalendarGrid, repoName: string = 'githu
 
   lines.push('');
   lines.push('echo "✅ Finished generating ' + activeCells.reduce((a, b) => a + b.commitCount, 0) + ' commits!"');
-  lines.push('echo "👉 Now run: git remote add origin <YOUR_REPO_URL> && git push -u origin main --force"');
+  lines.push('echo "👉 Now run: git remote add origin https://github.com/' + username + '/' + repoName + '.git && git push -u origin main --force"');
 
   return lines.join('\n');
 }
@@ -100,7 +105,10 @@ export function generateBashScript(grid: CalendarGrid, repoName: string = 'githu
 /**
  * Generate Python automation script
  */
-export function generatePythonScript(grid: CalendarGrid): string {
+export function generatePythonScript(
+  grid: CalendarGrid,
+  username: string = 'Sukhman369'
+): string {
   const activeCells = grid.weeks
     .flatMap((w) => w.days)
     .filter((d) => d.commitCount > 0 && d.year === grid.year);
@@ -108,7 +116,7 @@ export function generatePythonScript(grid: CalendarGrid): string {
   const script = `import os
 import subprocess
 
-# GitLegacy Automation Script
+# GitLegacy Automation Script for @${username}
 # Total Active Days: ${activeCells.length}
 
 SCHEDULE = ${JSON.stringify(activeCells.map(c => [c.date, c.commitCount]))}
@@ -116,11 +124,13 @@ SCHEDULE = ${JSON.stringify(activeCells.map(c => [c.date, c.commitCount]))}
 def run_cmd(cmd, env=None):
     subprocess.run(cmd, shell=True, check=True, env=env)
 
-print("Starting Git legacy generation...")
+print("Starting Git legacy generation for @${username}...")
 
 if not os.path.exists("activity_log.txt"):
     with open("activity_log.txt", "w") as f:
         f.write("GitLegacy Log\\n")
+
+run_cmd('git config user.name "${username}"')
 
 for date_str, count in SCHEDULE:
     for i in range(count):
@@ -144,7 +154,10 @@ print("Finished generating commits! Push to your repository to update GitHub con
 /**
  * Generate PowerShell script for Windows users
  */
-export function generatePowerShellScript(grid: CalendarGrid): string {
+export function generatePowerShellScript(
+  grid: CalendarGrid,
+  username: string = 'Sukhman369'
+): string {
   const activeCells = grid.weeks
     .flatMap((w) => w.days)
     .filter((d) => d.commitCount > 0 && d.year === grid.year);
@@ -152,14 +165,16 @@ export function generatePowerShellScript(grid: CalendarGrid): string {
   const lines: string[] = [
     '# =========================================================',
     `# GitLegacy Automated Commit Script (PowerShell) for ${grid.year}`,
+    `# Target User: @${username}`,
     '# =========================================================',
     '',
     '$ErrorActionPreference = "Stop"',
-    'Write-Host "🚀 Starting GitLegacy commit generation..." -ForegroundColor Green',
+    `Write-Host "🚀 Starting GitLegacy commit generation for @${username}..." -ForegroundColor Green`,
     '',
     'New-Item -ItemType Directory -Force -Path "legacy_art_data" | Out-Null',
     'Set-Location "legacy_art_data"',
     'git init',
+    `git config user.name "${username}"`,
     '',
     '$schedule = @(',
   ];
@@ -185,7 +200,7 @@ export function generatePowerShellScript(grid: CalendarGrid): string {
   lines.push('Remove-Item Env:\\GIT_COMMITTER_DATE -ErrorAction SilentlyContinue');
   lines.push('');
   lines.push(`Write-Host "✅ Finished generating ${activeCells.reduce((a, b) => a + b.commitCount, 0)} commits!" -ForegroundColor Green`);
-  lines.push('Write-Host "👉 Now run: git remote add origin <YOUR_REPO_URL> && git push -u origin main --force" -ForegroundColor Yellow');
+  lines.push(`Write-Host "👉 Now run: git remote add origin https://github.com/${username}/githublegacy.git && git push -u origin main --force" -ForegroundColor Yellow`);
 
   return lines.join('\n');
 }

@@ -66,9 +66,10 @@ export const ExportPanel: React.FC<ExportPanelProps> = ({ grid, settings, isDark
     });
   };
 
-  const bashScript = generateBashScript(grid, 'githublegacy');
-  const pythonScript = generatePythonScript(grid);
-  const powerShellScript = generatePowerShellScript(grid);
+  const targetUsername = settings.username || 'Sukhman369';
+  const bashScript = generateBashScript(grid, 'githublegacy', targetUsername);
+  const pythonScript = generatePythonScript(grid, targetUsername);
+  const powerShellScript = generatePowerShellScript(grid, targetUsername);
 
   return (
     <>
