@@ -50,7 +50,7 @@ export function downloadGraphAsPNG(
   // Header Subtitle & Attribution Badge
   ctx.fillStyle = '#10b981';
   ctx.font = 'bold 13px SFMono-Regular, Consolas, monospace';
-  const userHandle = settings.username ? `@${settings.username}` : '@githublegacy';
+  const userHandle = settings.username ? `@${settings.username}` : '@gitlegacy';
   ctx.fillText(`${grid.year} Calendar Canvas • ${grid.totalDays} Days • ${userHandle}`, 45, 84);
 
   // Calculate Grid Coordinates
@@ -165,7 +165,7 @@ export function downloadGraphAsSVG(
   const cellW = 16;
   const cellH = 16;
   const gap = 4;
-  const userHandle = settings.username ? `@${settings.username}` : '@githublegacy';
+  const userHandle = settings.username ? `@${settings.username}` : '@gitlegacy';
   const patternText = settings.text ? settings.text.toUpperCase() : 'CONTRIBUTION ART';
 
   const svgRects: string[] = [];

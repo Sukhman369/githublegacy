@@ -96,7 +96,7 @@ export default function ContributePage() {
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
             <a
-              href="https://github.com/Sukhman369/githublegacy.git"
+              href="https://github.com/Sukhman369/gitlegacy"
               target="_blank"
               rel="noopener noreferrer"
               className="py-2.5 px-5 rounded-xl text-xs font-bold bg-emerald-500 hover:bg-emerald-400 text-slate-950 flex items-center gap-2 shadow-lg transition-all"
@@ -139,7 +139,7 @@ export default function ContributePage() {
               {
                 step: '01',
                 title: 'Fork & Clone',
-                desc: 'Fork Sukhman369/githublegacy on GitHub and clone locally.',
+                desc: 'Fork Sukhman369/gitlegacy on GitHub and clone locally.',
               },
               {
                 step: '02',
@@ -288,7 +288,7 @@ export default function ContributePage() {
             Got ideas for 3D isometric contribution visualizers, README generators, or commit analytics? Open an issue on GitHub to discuss with the maintainers!
           </p>
           <a
-            href="https://github.com/Sukhman369/githublegacy/issues"
+            href="https://github.com/Sukhman369/gitlegacy/issues"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold bg-emerald-500 hover:bg-emerald-400 text-slate-950 shadow-md transition-all"

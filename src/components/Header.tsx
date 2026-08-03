@@ -107,7 +107,7 @@ export const Header: React.FC = () => {
 
           {/* Contribute / GitHub Repo Link */}
           <a
-            href="https://github.com/Sukhman369/githublegacy.git"
+            href="https://github.com/Sukhman369/gitlegacy"
             target="_blank"
             rel="noopener noreferrer"
             className={`inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-semibold border transition-all ${

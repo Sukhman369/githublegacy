@@ -81,7 +81,7 @@ function ToolsContent() {
               </Link>
 
               <a
-                href="https://github.com/Sukhman369/githublegacy.git"
+                href="https://github.com/Sukhman369/gitlegacy"
                 target="_blank"
                 rel="noopener noreferrer"
                 className={`py-3.5 px-6 rounded-2xl border text-xs font-bold flex items-center justify-center gap-2 transition-all hover:scale-105 text-center ${

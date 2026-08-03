@@ -116,7 +116,7 @@ export const Footer: React.FC = () => {
               </li>
               <li>
                 <a
-                  href="https://github.com/Sukhman369/githublegacy.git"
+                  href="https://github.com/Sukhman369/gitlegacy"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-emerald-400 transition-colors flex items-center gap-1.5"
@@ -160,7 +160,7 @@ export const Footer: React.FC = () => {
             </Link>
             <span className="opacity-30">•</span>
             <a
-              href="https://github.com/Sukhman369/githublegacy.git"
+              href="https://github.com/Sukhman369/gitlegacy"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-emerald-400 transition-colors flex items-center gap-1"

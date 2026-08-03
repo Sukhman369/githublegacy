@@ -114,7 +114,7 @@ Instead of manually running hundreds of CLI commands, GitLegacy generates fully 
 
 ### Best Practices
 
-- Always run commit scripts inside a dedicated repository (e.g., githublegacy) to keep your production repositories clean.
+- Always run commit scripts inside a dedicated repository (e.g., gitlegacy) to keep your production repositories clean.
 - Ensure your local Git email matches your primary GitHub account email so GitHub attributes the contributions to your profile.
     `,
   },

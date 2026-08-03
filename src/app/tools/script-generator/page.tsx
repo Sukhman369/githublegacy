@@ -15,7 +15,7 @@ export default function ScriptGeneratorPage() {
 
   const sampleBashScript = `#!/usr/bin/env bash
 # GitLegacy Automated Backdated Commit Script
-# Repository: githublegacy
+# Repository: gitlegacy
 
 echo "🚀 Starting GitLegacy automated commit generation..."
 git init

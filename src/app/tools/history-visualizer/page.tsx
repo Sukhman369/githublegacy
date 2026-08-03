@@ -211,7 +211,7 @@ export default function HistoryVisualizerPage() {
             {/* GitHub Repo Star Link */}
             <div className="pt-2 border-t border-slate-800">
               <a
-                href="https://github.com/Sukhman369/githublegacy"
+                href="https://github.com/Sukhman369/gitlegacy"
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-bold text-slate-300 transition-all"
