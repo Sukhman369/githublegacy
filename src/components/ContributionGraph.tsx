@@ -3,8 +3,9 @@
 import React, { useState, useRef } from 'react';
 import { CalendarGrid, ContributionCell, PlannerSettings } from '../types/calendar';
 import { getThemeById } from '../lib/theme-config';
+import { downloadGraphAsPNG } from '../lib/graph-image-export';
 import { CellTooltip } from './CellTooltip';
-import { Sparkles, Info, MoveHorizontal, Trash2, RotateCcw } from 'lucide-react';
+import { Sparkles, Info, MoveHorizontal, Trash2, RotateCcw, Image } from 'lucide-react';
 
 interface ContributionGraphProps {
   grid: CalendarGrid;
@@ -111,6 +112,16 @@ export const ContributionGraph: React.FC<ContributionGraphProps> = ({
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
+          {/* 1-Click Download Image */}
+          <button
+            onClick={() => downloadGraphAsPNG(grid, settings)}
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-emerald-500 text-slate-950 hover:bg-emerald-400 shadow-md hover:scale-105"
+            title="Download PNG image of contribution graph"
+          >
+            <Image className="h-3.5 w-3.5" />
+            <span>Download PNG</span>
+          </button>
+
           {/* Drawing hint */}
           {settings.drawingMode !== 'select' && (
             <div className="flex items-center gap-1.5 text-xs font-semibold text-amber-400 bg-amber-500/10 px-3 py-1 rounded-lg border border-amber-500/20">
