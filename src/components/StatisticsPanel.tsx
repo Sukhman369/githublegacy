@@ -122,24 +122,37 @@ export const StatisticsPanel: React.FC<StatisticsPanelProps> = ({ stats, isDarkM
         }`}>
           Monthly Commit Distribution
         </h4>
-        <div className={`grid grid-cols-12 gap-1.5 items-end h-24 p-3 rounded-xl border ${
+        <div className={`grid grid-cols-12 gap-1.5 items-end h-28 p-3 rounded-xl border ${
           isDarkMode ? 'bg-slate-950 border-slate-800/80' : 'bg-slate-50 border-slate-200'
         }`}>
           {stats.monthlyDistribution.map((m) => {
             const heightPct = Math.round((m.commits / maxMonthlyCommits) * 100);
             return (
-              <div key={m.monthName} className="flex flex-col items-center gap-1.5 h-full justify-end group">
+              <div key={m.monthName} className="flex flex-col items-center gap-1 h-full justify-end group">
+                <span className={`text-[10px] font-mono font-bold transition-colors ${
+                  m.commits > 0
+                    ? isDarkMode
+                      ? 'text-emerald-400 font-extrabold'
+                      : 'text-emerald-600 font-extrabold'
+                    : isDarkMode
+                    ? 'text-slate-600'
+                    : 'text-slate-400'
+                }`}>
+                  {m.commits}
+                </span>
+
                 <div
-                  style={{ height: `${Math.max(heightPct, 4)}%` }}
-                  className={`w-full rounded-t-sm transition-all group-hover:brightness-125 ${
+                  style={{ height: `${Math.max(heightPct, 6)}%` }}
+                  className={`w-full rounded-t-md transition-all group-hover:brightness-125 ${
                     m.commits > 0
-                      ? 'bg-gradient-to-t from-emerald-600 to-teal-400'
+                      ? 'bg-gradient-to-t from-emerald-600 to-teal-400 shadow-sm shadow-emerald-500/20'
                       : isDarkMode
                       ? 'bg-slate-800/50'
                       : 'bg-slate-200'
                   }`}
                   title={`${m.monthName}: ${m.commits} commits`}
                 />
+
                 <span className={`text-[10px] font-mono font-medium ${
                   isDarkMode ? 'text-slate-400' : 'text-slate-500'
                 }`}>
