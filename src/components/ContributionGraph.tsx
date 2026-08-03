@@ -105,9 +105,19 @@ export const ContributionGraph: React.FC<ContributionGraphProps> = ({
             <span className="text-xs font-mono font-semibold text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded-full border border-emerald-500/20">
               53 Weeks • {grid.totalDays} Days
             </span>
+            {settings.username && (
+              <span className="text-xs font-mono font-bold text-teal-300 bg-teal-500/10 px-2.5 py-0.5 rounded-full border border-teal-500/20">
+                @{settings.username}
+              </span>
+            )}
           </h3>
-          <p className={`text-xs ${theme.subtextColor}`}>
-            Interactive GitHub contribution layout preview for &apos;{settings.text || 'Pattern'}&apos;
+          <p className={`text-xs ${theme.subtextColor} flex items-center gap-2 mt-0.5`}>
+            <span>Interactive GitHub contribution layout preview for &apos;{settings.text || 'Pattern'}&apos;</span>
+            {settings.username && (
+              <span className="text-[11px] font-mono text-emerald-400">
+                (Attributed to @{settings.username})
+              </span>
+            )}
           </p>
         </div>
 
