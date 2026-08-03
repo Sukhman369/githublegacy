@@ -43,13 +43,19 @@ const TECH_BADGES: TechBadge[] = [
   { name: 'Swift', logo: 'swift', color: 'F05138', category: 'languages' },
   { name: 'Kotlin', logo: 'kotlin', color: '7F52FF', category: 'languages' },
 
-  // Backend
+  // Backend & Frameworks
   { name: 'Node.js', logo: 'nodedotjs', color: '5FA04E', category: 'backend' },
   { name: 'Express.js', logo: 'express', color: '000000', category: 'backend' },
+  { name: 'Laravel', logo: 'laravel', color: 'FF2D20', category: 'backend' },
+  { name: 'CodeIgniter 4', logo: 'codeigniter', color: 'EF4223', category: 'backend' },
+  { name: 'CodeIgniter 3', logo: 'codeigniter', color: 'DD4814', category: 'backend' },
+  { name: 'Symfony', logo: 'symfony', color: '000000', category: 'backend' },
+  { name: 'NestJS', logo: 'nestjs', color: 'E0234E', category: 'backend' },
   { name: 'Django', logo: 'django', color: '092E20', category: 'backend' },
   { name: 'FastAPI', logo: 'fastapi', color: '009688', category: 'backend' },
+  { name: 'Flask', logo: 'flask', color: '000000', category: 'backend' },
   { name: 'Spring Boot', logo: 'springboot', color: '6DB33F', category: 'backend' },
-  { name: 'Laravel', logo: 'laravel', color: 'FF2D20', category: 'backend' },
+  { name: 'Ruby on Rails', logo: 'rubyonrails', color: 'D30001', category: 'backend' },
   { name: '.NET', logo: 'dotnet', color: '512BD4', category: 'backend' },
   { name: 'GraphQL', logo: 'graphql', color: 'E10098', category: 'backend' },
 
