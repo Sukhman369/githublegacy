@@ -7,7 +7,7 @@ import { Footer } from '../../../components/Footer';
 import { PresetMiniGrid } from '../../../components/PresetMiniGrid';
 import { PRESET_PATTERNS } from '../../../lib/font-matrix';
 import { useTheme } from '../../../context/ThemeContext';
-import { Sparkles, Play, Search, Star, Flame, RotateCcw } from 'lucide-react';
+import { Sparkles, Play, Search, Star, RotateCcw } from 'lucide-react';
 
 const FAVORITES_STORAGE_KEY = 'gitlegacy_preset_favorites';
 
@@ -15,7 +15,6 @@ export default function PresetsPage() {
   const { isDarkMode } = useTheme();
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [intensityMaxCommits, setIntensityMaxCommits] = useState<number>(5);
   const [favorites, setFavorites] = useState<string[]>([]);
   const [isMounted, setIsMounted] = useState<boolean>(false);
 
@@ -96,43 +95,10 @@ export default function PresetsPage() {
           <p className={`text-base sm:text-lg ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
             Explore popular preset patterns for gaming, career branding, tech stack logos, and signature artwork with live 53-week matrix previews.
           </p>
-        </div>
-
-        {/* Global Controls Panel: Max Commits Selector & Search Bar */}
-        <div
-          className={`p-6 rounded-2xl border shadow-xl flex flex-col md:flex-row items-center justify-between gap-5 ${
-            isDarkMode ? 'bg-slate-900/90 border-slate-800' : 'bg-white border-slate-200 shadow-sm'
-          }`}
-        >
-          {/* Max Git Commits Collector */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 w-full md:w-auto">
-            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-emerald-400">
-              <Flame className="w-4 h-4 fill-emerald-400/20 text-emerald-400" />
-              <span>Max Commits / Day:</span>
-            </div>
-
-            <div className="flex items-center gap-1.5 bg-slate-950/60 p-1 rounded-xl border border-slate-800">
-              {[1, 5, 10, 15, 20].map((val) => (
-                <button
-                  key={val}
-                  onClick={() => setIntensityMaxCommits(val)}
-                  className={`px-3 py-1 rounded-lg text-xs font-mono font-bold transition-all ${
-                    intensityMaxCommits === val
-                      ? 'bg-emerald-500 text-slate-950 shadow-md'
-                      : isDarkMode
-                      ? 'text-slate-400 hover:text-white'
-                      : 'text-slate-600 hover:text-slate-900'
-                  }`}
-                >
-                  {val}
-                </button>
-              ))}
-            </div>
-          </div>
 
           {/* Search Input Bar */}
-          <div className="relative w-full md:w-80">
-            <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+          <div className="max-w-md mx-auto relative pt-2">
+            <Search className="w-4 h-4 absolute left-3.5 top-[calc(50%+4px)] -translate-y-1/2 text-slate-400" />
             <input
               type="text"
               placeholder="Search templates (e.g. INVADERS, HIRE)..."
@@ -140,8 +106,8 @@ export default function PresetsPage() {
               onChange={(e) => setSearchQuery(e.target.value)}
               className={`w-full pl-10 pr-4 py-2.5 rounded-xl text-xs font-semibold border transition-all ${
                 isDarkMode
-                  ? 'bg-slate-950 border-slate-800 text-white placeholder:text-slate-500 focus:border-emerald-500'
-                  : 'bg-slate-100 border-slate-300 text-slate-900 placeholder:text-slate-400 focus:border-emerald-500'
+                  ? 'bg-slate-900 border-slate-800 text-white placeholder:text-slate-500 focus:border-emerald-500'
+                  : 'bg-white border-slate-300 text-slate-900 placeholder:text-slate-400 focus:border-emerald-500 shadow-sm'
               }`}
             />
           </div>
@@ -178,7 +144,7 @@ export default function PresetsPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredPresets.map((preset) => {
               const isFav = favorites.includes(preset.id);
-              const artStudioUrl = `/tools/art-studio?text=${encodeURIComponent(preset.text)}&intensity=${intensityMaxCommits}`;
+              const artStudioUrl = `/tools/art-studio?text=${encodeURIComponent(preset.text)}`;
 
               return (
                 <div
@@ -222,10 +188,9 @@ export default function PresetsPage() {
                     </p>
                   </div>
 
-                  {/* Visual 53-Week Mini Grid Preview */}
+                  {/* Visual 53-Week Mini Grid Preview (Zero scrollbar SVG) */}
                   <PresetMiniGrid
                     text={preset.text}
-                    intensityMaxCommits={intensityMaxCommits}
                     isDarkMode={isDarkMode}
                   />
 
@@ -234,7 +199,7 @@ export default function PresetsPage() {
                     isDarkMode ? 'border-slate-800/80' : 'border-slate-100'
                   }`}>
                     <span className="text-[11px] text-slate-400 font-mono">
-                      Max Commits: <strong className="text-emerald-400">{intensityMaxCommits}</strong>
+                      1-Click Load
                     </span>
 
                     <Link
