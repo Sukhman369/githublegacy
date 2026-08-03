@@ -96,11 +96,14 @@ export default function BadgesStudioPage() {
   const [shieldMessage, setShieldMessage] = useState('Developer');
   const [shieldColor, setShieldColor] = useState('10b981');
   const [shieldStyle, setShieldStyle] = useState('for-the-badge');
+  const [shieldLogo, setShieldLogo] = useState('github');
+  const [shieldLogoColor, setShieldLogoColor] = useState('white');
 
   // Copy state
   const [copiedType, setCopiedType] = useState<string | null>(null);
 
-  const customShieldUrl = `https://img.shields.io/badge/${encodeURIComponent(shieldLabel)}-${encodeURIComponent(shieldMessage)}-${shieldColor}?style=${shieldStyle}`;
+  const logoQuery = shieldLogo && shieldLogo !== 'none' ? `&logo=${shieldLogo}&logoColor=${encodeURIComponent(shieldLogoColor)}` : '';
+  const customShieldUrl = `https://img.shields.io/badge/${encodeURIComponent(shieldLabel)}-${encodeURIComponent(shieldMessage)}-${shieldColor}?style=${shieldStyle}${logoQuery}`;
   const customShieldMarkdown = `![${shieldLabel}](${customShieldUrl})`;
 
   const handleCopy = (code: string, id: string) => {
@@ -377,10 +380,10 @@ export default function BadgesStudioPage() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <div>
               <label className={`block text-xs font-bold uppercase mb-1.5 ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>
-                Label
+                Label Text
               </label>
               <input
                 type="text"
@@ -394,7 +397,7 @@ export default function BadgesStudioPage() {
 
             <div>
               <label className={`block text-xs font-bold uppercase mb-1.5 ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>
-                Message
+                Message Text
               </label>
               <input
                 type="text"
@@ -408,7 +411,7 @@ export default function BadgesStudioPage() {
 
             <div>
               <label className={`block text-xs font-bold uppercase mb-1.5 ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>
-                Style
+                Badge Style
               </label>
               <select
                 value={shieldStyle}
@@ -423,11 +426,80 @@ export default function BadgesStudioPage() {
                 <option value="plastic">Plastic</option>
               </select>
             </div>
+
+            <div>
+              <label className={`block text-xs font-bold uppercase mb-1.5 ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>
+                Brand Logo Icon
+              </label>
+              <select
+                value={shieldLogo}
+                onChange={(e) => setShieldLogo(e.target.value)}
+                className={`w-full p-2.5 rounded-xl border text-sm font-semibold ${
+                  isDarkMode ? 'bg-slate-950 border-slate-800 text-white' : 'bg-slate-100 border-slate-300 text-slate-900'
+                }`}
+              >
+                <option value="github">GitHub</option>
+                <option value="react">React</option>
+                <option value="typescript">TypeScript</option>
+                <option value="python">Python</option>
+                <option value="nodedotjs">Node.js</option>
+                <option value="docker">Docker</option>
+                <option value="amazonwebservices">AWS</option>
+                <option value="nextdotjs">Next.js</option>
+                <option value="git">Git</option>
+                <option value="none">No Logo</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Color Selector & Presets */}
+          <div className="space-y-2">
+            <label className={`block text-xs font-bold uppercase ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>
+              Badge Color Palette
+            </label>
+            <div className="flex flex-wrap items-center gap-2">
+              {[
+                { name: 'Emerald', hex: '10b981' },
+                { name: 'Cyber Cyan', hex: '06b6d4' },
+                { name: 'Neon Purple', hex: '8b5cf6' },
+                { name: 'Amber', hex: 'f59e0b' },
+                { name: 'Rose', hex: 'f43f5e' },
+                { name: 'Electric Blue', hex: '2563eb' },
+                { name: 'Midnight', hex: '1e293b' },
+                { name: 'Dark Red', hex: 'dc2626' },
+              ].map((c) => (
+                <button
+                  key={c.hex}
+                  onClick={() => setShieldColor(c.hex)}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all ${
+                    shieldColor === c.hex
+                      ? 'ring-2 ring-purple-500 scale-105 shadow-md'
+                      : 'opacity-80 hover:opacity-100'
+                  }`}
+                  style={{ backgroundColor: `#${c.hex}`, color: '#ffffff' }}
+                >
+                  <span>{c.name}</span>
+                </button>
+              ))}
+
+              <div className="flex items-center gap-1.5 ml-auto">
+                <span className="text-xs text-slate-400 font-mono">Hex:</span>
+                <input
+                  type="text"
+                  value={shieldColor}
+                  onChange={(e) => setShieldColor(e.target.value.replace('#', ''))}
+                  className={`w-24 p-1.5 rounded-lg border text-xs font-mono font-semibold uppercase ${
+                    isDarkMode ? 'bg-slate-950 border-slate-800 text-white' : 'bg-slate-100 border-slate-300 text-slate-900'
+                  }`}
+                  maxLength={6}
+                />
+              </div>
+            </div>
           </div>
 
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 rounded-xl border border-slate-800 bg-slate-950">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={customShieldUrl} alt="Custom Shield Preview" className="h-8 object-contain" />
+            <img src={customShieldUrl} alt="Custom Shield Preview" className="h-8 object-contain max-w-full" />
 
             <button
               onClick={() => handleCopy(customShieldMarkdown, 'custom-shield')}
