@@ -324,7 +324,9 @@ export default function BadgesStudioPage() {
           {/* Tech Badges Grid */}
           {filteredTechBadges.length > 0 ? (
             <div className="space-y-6">
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+              <div className={`grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 p-3.5 rounded-2xl border transition-colors duration-200 ${
+                previewBgMode === 'light' ? 'bg-slate-100/90 border-slate-300' : 'bg-slate-950/50 border-slate-800/80'
+              }`}>
                 {displayedTechBadges.map((badge) => {
                   const url = `https://img.shields.io/badge/${encodeURIComponent(badge.name)}-${badge.color}?style=${techBadgeStyle}&logo=${badge.logo}&logoColor=white`;
                   const md = `![${badge.name}](${url})`;
@@ -337,12 +339,10 @@ export default function BadgesStudioPage() {
                       onClick={() => handleCopy(md, badge.name)}
                       className={`relative p-3.5 rounded-xl border flex flex-col items-center gap-2 transition-all cursor-pointer group ${
                         isSelected
-                          ? 'bg-emerald-950/40 border-emerald-500/60 shadow-lg shadow-emerald-950/40 ring-1 ring-emerald-500/40'
+                          ? 'bg-emerald-500/20 border-emerald-500 shadow-lg ring-1 ring-emerald-500'
                           : previewBgMode === 'light'
-                          ? 'bg-slate-100 border-slate-300 hover:border-emerald-500/50 hover:scale-[1.02]'
-                          : isDarkMode
-                          ? 'bg-slate-950/80 border-slate-800 hover:border-emerald-500/50 hover:scale-[1.02]'
-                          : 'bg-slate-50 border-slate-200 hover:border-emerald-500/50 hover:scale-[1.02]'
+                          ? 'bg-white border-slate-200 hover:border-emerald-500/50 hover:scale-[1.02] shadow-sm'
+                          : 'bg-slate-950/80 border-slate-800 hover:border-emerald-500/50 hover:scale-[1.02]'
                       }`}
                     >
                       {/* Select Checkbox Button */}
