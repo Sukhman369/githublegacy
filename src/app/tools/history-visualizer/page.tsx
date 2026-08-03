@@ -139,24 +139,28 @@ export default function HistoryVisualizerPage() {
             </div>
 
             {/* Username Input & Generate Form */}
-            <form onSubmit={handleGenerate} className="space-y-3">
-              <div className="flex gap-2">
+            <form onSubmit={handleGenerate} className="space-y-2.5">
+              <div>
+                <label className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block mb-1">
+                  GitHub Username
+                </label>
                 <input
                   type="text"
                   value={usernameInput}
                   onChange={(e) => setUsernameInput(e.target.value)}
                   placeholder="sukhman369"
-                  className="flex-1 px-4 py-2.5 rounded-xl bg-[#0d1117] border border-slate-700 text-sm font-bold text-white placeholder-slate-500 focus:border-purple-500 focus:outline-none transition-all"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#0d1117] border border-slate-700 text-xs font-bold text-white placeholder-slate-500 focus:border-purple-500 focus:outline-none transition-all"
                 />
-                <button
-                  type="submit"
-                  disabled={isLoading}
-                  className="px-4 py-2.5 rounded-xl text-xs font-black bg-gradient-to-r from-purple-600 to-indigo-500 hover:from-purple-500 hover:to-indigo-400 text-white flex items-center gap-1.5 shadow-lg transition-all disabled:opacity-50"
-                >
-                  <Sparkles className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} />
-                  <span>{isLoading ? 'Fetching...' : 'Generate!'}</span>
-                </button>
               </div>
+
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="w-full py-2.5 px-4 rounded-xl text-xs font-black bg-gradient-to-r from-purple-600 to-indigo-500 hover:from-purple-500 hover:to-indigo-400 text-white flex items-center justify-center gap-1.5 shadow-lg transition-all disabled:opacity-50"
+              >
+                <Sparkles className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin' : ''}`} />
+                <span>{isLoading ? 'Fetching GitHub Data...' : '⚡ Generate!'}</span>
+              </button>
             </form>
 
             {/* Theme Selector Section */}
