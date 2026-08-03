@@ -396,7 +396,66 @@ export default function BadgesStudioPage() {
           )}
         </section>
 
-        {/* Studio Section 2: Custom Shield Builder */}
+        {/* Studio Section 2: Essential Profile Status Presets */}
+        <section className={`p-6 sm:p-8 rounded-2xl border shadow-2xl space-y-6 ${
+          isDarkMode ? 'bg-slate-900/90 border-slate-800' : 'bg-white border-slate-200 shadow-sm'
+        }`}>
+          <div className="flex items-center gap-3 border-b pb-4 border-slate-800">
+            <div className="p-2.5 rounded-xl bg-emerald-500/20 text-emerald-400">
+              <Sparkles className="w-5 h-5" />
+            </div>
+            <div>
+              <h2 className="text-lg font-bold">2. Essential README Status Presets</h2>
+              <p className={`text-xs ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
+                Quick 1-click status badges commonly used in top open-source repository READMEs.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            {[
+              { title: 'MIT License', label: 'License', msg: 'MIT', color: 'blue', style: 'flat-square', logo: 'github' },
+              { title: 'PRs Welcome', label: 'PRs', msg: 'Welcome', color: 'brightgreen', style: 'for-the-badge', logo: 'git' },
+              { title: 'Build Passing', label: 'Build', msg: 'Passing', color: '4c1', style: 'flat-square', logo: 'githubactions' },
+              { title: 'Prettier Style', label: 'Code Style', msg: 'Prettier', color: 'ff69b4', style: 'for-the-badge', logo: 'vuedotjs' },
+              { title: 'Active Maintenance', label: 'Maintained', msg: 'Yes', color: '10b981', style: 'for-the-badge', logo: 'github' },
+              { title: 'Contributions', label: 'Contributions', msg: 'Welcome', color: '06b6d4', style: 'flat-square', logo: 'git' },
+              { title: 'Vercel Deployment', label: 'Deployment', msg: 'Vercel', color: '000000', style: 'for-the-badge', logo: 'vercel' },
+              { title: 'Docker Ready', label: 'Container', msg: 'Docker', color: '2496ed', style: 'flat-square', logo: 'docker' },
+            ].map((preset) => {
+              const url = `https://img.shields.io/badge/${encodeURIComponent(preset.label)}-${encodeURIComponent(preset.msg)}-${preset.color}?style=${preset.style}&logo=${preset.logo}&logoColor=white`;
+              const md = `![${preset.title}](${url})`;
+              const isCopied = copiedType === preset.title;
+
+              return (
+                <div
+                  key={preset.title}
+                  onClick={() => handleCopy(md, preset.title)}
+                  className={`p-3.5 rounded-xl border flex flex-col items-center justify-between gap-3 transition-all cursor-pointer group ${
+                    previewBgMode === 'light'
+                      ? 'bg-slate-100 border-slate-300 hover:border-emerald-500/50 hover:scale-[1.02]'
+                      : isDarkMode
+                      ? 'bg-slate-950/80 border-slate-800 hover:border-emerald-500/50 hover:scale-[1.02]'
+                      : 'bg-slate-50 border-slate-200 hover:border-emerald-500/50 hover:scale-[1.02]'
+                  }`}
+                >
+                  <div className="text-center">
+                    <span className="text-[11px] font-bold text-slate-400 block mb-1">{preset.title}</span>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={url} alt={preset.title} className="h-6 object-contain max-w-full mx-auto" />
+                  </div>
+
+                  <span className="text-[10px] font-mono font-semibold flex items-center gap-1 text-slate-400 group-hover:text-emerald-400 transition-colors">
+                    {isCopied ? <Check className="w-3 h-3 text-emerald-500" /> : <Copy className="w-3 h-3" />}
+                    {isCopied ? 'Copied!' : 'Copy Code'}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* Studio Section 3: Custom Shield Builder */}
         <section ref={customShieldRef} className={`p-6 sm:p-8 rounded-2xl border shadow-2xl space-y-6 scroll-mt-6 ${
           isDarkMode ? 'bg-slate-900/90 border-slate-800' : 'bg-white border-slate-200 shadow-sm'
         }`}>
@@ -406,7 +465,7 @@ export default function BadgesStudioPage() {
                 <Shield className="w-5 h-5" />
               </div>
               <div>
-                <h2 className="text-lg font-bold">2. Custom Status Shield Generator</h2>
+                <h2 className="text-lg font-bold">3. Custom Status Shield Generator</h2>
                 <p className={`text-xs ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
                   Customize labels, messages, and colors for bespoke GitHub badges.
                 </p>
