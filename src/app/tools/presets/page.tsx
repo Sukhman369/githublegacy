@@ -164,10 +164,10 @@ export default function PresetsPage() {
                     <button
                       onClick={() => toggleFavorite(preset.id)}
                       title={isFav ? 'Remove from favorites' : 'Add to favorites'}
-                      className="p-1.5 rounded-lg hover:bg-slate-800/50 transition-colors"
+                      className="p-1 rounded-lg hover:bg-slate-800/50 transition-colors"
                     >
                       <Star
-                        className={`w-5 h-5 transition-all ${
+                        className={`w-4 h-4 transition-all ${
                           isFav
                             ? 'fill-amber-400 text-amber-400 scale-110'
                             : 'text-slate-500 hover:text-amber-400'
@@ -176,41 +176,36 @@ export default function PresetsPage() {
                     </button>
                   </div>
 
-                  {/* Title & Description */}
+                  {/* Title with Open in Studio Button Opposite & Description */}
                   <div className="space-y-1">
-                    <h3 className={`text-xl font-black font-mono tracking-wider ${
-                      isDarkMode ? 'text-white' : 'text-slate-900'
-                    }`}>
-                      &quot;{preset.text}&quot;
-                    </h3>
+                    <div className="flex items-center justify-between gap-3">
+                      <h3 className={`text-xl font-black font-mono tracking-wider ${
+                        isDarkMode ? 'text-white' : 'text-slate-900'
+                      }`}>
+                        &quot;{preset.text}&quot;
+                      </h3>
+
+                      <Link
+                        href={artStudioUrl}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs hover:scale-105 transition-all shadow-md shrink-0"
+                      >
+                        <Play className="h-3 w-3 fill-slate-950" />
+                        <span>Open in Studio</span>
+                      </Link>
+                    </div>
+
                     <p className={`text-xs ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
                       {preset.description}
                     </p>
                   </div>
 
-                  {/* Visual 53-Week Mini Grid Preview (Zero scrollbar SVG) */}
+                  {/* Visual 53-Week Mini Grid Preview */}
                   <PresetMiniGrid
                     text={preset.text}
                     isDarkMode={isDarkMode}
                   />
-
-                  {/* Card Action Footer */}
-                  <div className={`pt-3 border-t flex items-center justify-between ${
-                    isDarkMode ? 'border-slate-800/80' : 'border-slate-100'
-                  }`}>
-                    <span className="text-[11px] text-slate-400 font-mono">
-                      1-Click Load
-                    </span>
-
-                    <Link
-                      href={artStudioUrl}
-                      className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs hover:scale-105 transition-all shadow-md"
-                    >
-                      <Play className="h-3.5 w-3.5 fill-slate-950" />
-                      <span>Open in Studio</span>
-                    </Link>
-                  </div>
                 </div>
+
               );
             })}
           </div>
