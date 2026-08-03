@@ -140,31 +140,7 @@ export default function BadgesStudioPage() {
           </p>
         </div>
 
-        {/* Studio Section 2: Real GitHub User Contribution Visualizer Callout */}
-        <section className={`p-6 rounded-2xl border shadow-xl flex flex-col sm:flex-row items-center justify-between gap-6 ${
-          isDarkMode ? 'bg-slate-900/80 border-slate-800' : 'bg-white border-slate-200 shadow-sm'
-        }`}>
-          <div className="flex items-center gap-4">
-            <div className="p-3 rounded-2xl bg-teal-500/20 text-teal-400">
-              <Code className="w-6 h-6" />
-            </div>
-            <div>
-              <h2 className="text-base sm:text-lg font-bold">Real GitHub History Visualizer Tool</h2>
-              <p className={`text-xs mt-0.5 ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
-                Looking to generate dynamic 365-day live contribution graph badges for `@username`? Check out the dedicated tool page.
-              </p>
-            </div>
-          </div>
-          <Link
-            href="/tools/history-visualizer"
-            className="w-full sm:w-auto py-2.5 px-5 rounded-xl text-xs font-bold bg-teal-500 hover:bg-teal-400 text-slate-950 flex items-center justify-center gap-2 shadow-md transition-all whitespace-nowrap"
-          >
-            <span>Open History Visualizer</span>
-            <ExternalLink className="w-3.5 h-3.5" />
-          </Link>
-        </section>
-
-        {/* Studio Section 3: Curated Tech Stack Shields */}
+        {/* Studio Section 1: Curated Tech Stack Shields */}
         <section className={`p-6 sm:p-8 rounded-2xl border shadow-2xl space-y-6 ${
           isDarkMode ? 'bg-slate-900/90 border-slate-800' : 'bg-white border-slate-200 shadow-sm'
         }`}>
