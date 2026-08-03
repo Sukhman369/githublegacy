@@ -6,7 +6,7 @@ export const runtime = 'nodejs';
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
-  const text = (searchParams.get('text') || 'LORD').toUpperCase();
+  const text = (searchParams.get('text') || 'LEGACY').toUpperCase();
   const year = parseInt(searchParams.get('year') || `${new Date().getFullYear()}`, 10);
   const themeId = searchParams.get('theme') || 'github-dark';
   const intensityMaxCommits = parseInt(searchParams.get('intensity') || '5', 10);

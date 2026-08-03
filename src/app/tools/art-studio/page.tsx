@@ -26,9 +26,9 @@ function ArtStudioContent() {
   const [isMounted, setIsMounted] = useState(false);
 
   const [settings, setSettings] = useState<PlannerSettings>({
-    text: 'LORD',
+    text: 'LEGACY',
     year: currentYear,
-    intensityMaxCommits: 5,
+    intensityMaxCommits: 4,
     letterSpacing: 1,
     wordSpacing: 4,
     alignment: 'center',
@@ -88,7 +88,7 @@ function ArtStudioContent() {
     setCustomOverrides({});
     setSettings((prev) => ({
       ...prev,
-      text: 'LORD',
+      text: 'LEGACY',
       drawingMode: 'select',
       columnOffset: 0,
       wordSpacing: 4,

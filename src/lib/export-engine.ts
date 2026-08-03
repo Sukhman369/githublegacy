@@ -286,15 +286,15 @@ function drawCanvasBanner(
   link.click();
 }
 
-export function exportTwitterBanner(grid: CalendarGrid, theme: any, title: string = 'LORD') {
+export function exportTwitterBanner(grid: CalendarGrid, theme: any, title: string = 'LEGACY') {
   drawCanvasBanner(grid, theme, title, 1500, 500, `git_legacy_twitter_banner_${grid.year}.png`);
 }
 
-export function exportLinkedInBanner(grid: CalendarGrid, theme: any, title: string = 'LORD') {
+export function exportLinkedInBanner(grid: CalendarGrid, theme: any, title: string = 'LEGACY') {
   drawCanvasBanner(grid, theme, title, 1584, 396, `git_legacy_linkedin_banner_${grid.year}.png`);
 }
 
-export function exportInstagramPost(grid: CalendarGrid, theme: any, title: string = 'LORD') {
+export function exportInstagramPost(grid: CalendarGrid, theme: any, title: string = 'LEGACY') {
   drawCanvasBanner(grid, theme, title, 1080, 1080, `git_legacy_instagram_post_${grid.year}.png`);
 }
 

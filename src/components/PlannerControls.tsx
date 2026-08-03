@@ -111,7 +111,7 @@ export const PlannerControls: React.FC<PlannerControlsProps> = ({
               type="text"
               value={settings.text}
               onChange={(e) => onChangeSettings({ text: e.target.value })}
-              placeholder="e.g. LORD"
+              placeholder="e.g. LEGACY"
               maxLength={20}
               className={`w-full rounded-xl border px-3.5 py-2 text-sm font-mono font-semibold uppercase focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 ${
                 isDarkMode

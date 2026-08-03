@@ -78,7 +78,7 @@ export default function BadgesStudioPage() {
   const { isDarkMode } = useTheme();
   
   // Custom Canvas Badge State
-  const [badgeText, setBadgeText] = useState('LORD');
+  const [badgeText, setBadgeText] = useState('LEGACY');
   const [badgeYear, setBadgeYear] = useState(`${new Date().getFullYear()}`);
   const [badgeStyle, setBadgeStyle] = useState<'card' | 'compact'>('card');
   const [badgeTheme, setBadgeTheme] = useState('github-dark');
