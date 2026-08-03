@@ -6,434 +6,228 @@ import { Header } from '../../../components/Header';
 import { Footer } from '../../../components/Footer';
 import { useTheme } from '../../../context/ThemeContext';
 import {
-  BarChart3,
-  Code,
   Copy,
   Check,
   Download,
-  Flame,
-  Trophy,
-  Zap,
-  Calendar,
+  Share2,
   Sparkles,
-  Layers,
-  Image as ImageIcon,
-  RefreshCw,
+  Star,
   Search,
+  Code,
   ExternalLink,
 } from 'lucide-react';
 import {
-  drawContributionPoster,
-  POSTER_FORMATS,
-  CANVAS_THEMES,
-  PosterFormat,
-  generateSampleData,
+  THEMES,
+  generateMultiYearSampleData,
+  drawMultiYearPoster,
 } from '../../../lib/contributions-canvas';
 
 export default function HistoryVisualizerPage() {
   const { isDarkMode } = useTheme();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
-  // Lookup & Filter State
-  const [username, setUsername] = useState('Sukhman369');
-  const [yearFilter, setYearFilter] = useState('last');
-
-  // Poster Generator State
-  const [posterFormat, setPosterFormat] = useState<PosterFormat>('twitter');
-  const [themeKey, setThemeKey] = useState<string>('github-dark');
-  const [customTitle, setCustomTitle] = useState('');
-  const [customSubtitle, setCustomSubtitle] = useState('');
-
-  // Stats & Copy State
+  // Form State
+  const [usernameInput, setUsernameInput] = useState('sukhman369');
+  const [activeUsername, setActiveUsername] = useState('sukhman369');
+  const [selectedTheme, setSelectedTheme] = useState('githubClassic');
   const [copiedType, setCopiedType] = useState<string | null>(null);
 
-  // Active Tab State: 'poster' | 'badge'
-  const [activeMode, setActiveMode] = useState<'poster' | 'badge'>('poster');
+  // Generate multi-year dataset
+  const multiYearData = React.useMemo(
+    () => generateMultiYearSampleData(activeUsername),
+    [activeUsername]
+  );
 
-  // Sample data generated based on username
-  const sample = React.useMemo(() => generateSampleData(username || 'developer'), [username]);
-
-  // Derived Stats
-  const totalCommits = sample.total;
-  const longestStreak = React.useMemo(() => Math.floor(totalCommits / 45) + 12, [totalCommits]);
-  const currentStreak = React.useMemo(() => Math.floor(longestStreak * 0.4), [longestStreak]);
-
-  // Dynamic SVG URL for README embedding
-  const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://gitlegacy.dev';
-  const usernameBadgeUrl = `${baseUrl}/api/u/${encodeURIComponent(username || 'developer')}.svg?year=${yearFilter}&theme=${themeKey}`;
-  const usernameBadgeMarkdown = `![${username || 'GitHub'} Real Contributions](${usernameBadgeUrl})`;
-  const usernameBadgeHtml = `<a href="https://github.com/${encodeURIComponent(username || 'developer')}"><img src="${usernameBadgeUrl}" alt="${username}'s Real GitHub Contributions" /></a>`;
-
-  // Draw Canvas Poster on state change
+  // Draw canvas whenever theme or username data changes
   useEffect(() => {
     if (canvasRef.current) {
-      drawContributionPoster(canvasRef.current, {
-        username,
-        title: customTitle.trim() || undefined,
-        subtitle: customSubtitle.trim() || undefined,
-        format: posterFormat,
-        themeKey,
-        daysData: sample.days,
-        totalCommits: sample.total,
-      });
+      drawMultiYearPoster(canvasRef.current, multiYearData, selectedTheme);
     }
-  }, [username, posterFormat, themeKey, customTitle, customSubtitle, sample]);
+  }, [multiYearData, selectedTheme]);
 
-  const handleCopy = (text: string, type: string) => {
-    navigator.clipboard.writeText(text);
-    setCopiedType(type);
-    setTimeout(() => setCopiedType(null), 2000);
+  const handleGenerate = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (usernameInput.trim()) {
+      setActiveUsername(usernameInput.trim());
+    }
   };
 
   const handleDownloadPNG = () => {
     if (!canvasRef.current) return;
     const url = canvasRef.current.toDataURL('image/png');
     const link = document.createElement('a');
-    link.download = `${username || 'github'}-contribution-poster-${posterFormat}.png`;
+    link.download = `${activeUsername}-github-contributions.png`;
     link.href = url;
     link.click();
   };
 
+  const handleCopyImage = async () => {
+    if (!canvasRef.current) return;
+    try {
+      canvasRef.current.toBlob(async (blob) => {
+        if (blob && navigator.clipboard) {
+          await navigator.clipboard.write([
+            new ClipboardItem({ 'image/png': blob }),
+          ]);
+          setCopiedType('copy-image');
+          setTimeout(() => setCopiedType(null), 2000);
+        }
+      });
+    } catch (err) {
+      console.error('Failed to copy canvas image:', err);
+    }
+  };
+
+  const handleShareMarkdown = () => {
+    const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://gitlegacy.dev';
+    const md = `![${activeUsername}'s GitHub Contributions](${baseUrl}/api/u/${encodeURIComponent(activeUsername)}.svg?theme=${selectedTheme})`;
+    navigator.clipboard.writeText(md);
+    setCopiedType('share-md');
+    setTimeout(() => setCopiedType(null), 2000);
+  };
+
   return (
-    <div className={`min-h-screen flex flex-col transition-colors duration-300 ${
-      isDarkMode ? 'bg-slate-950 text-slate-100' : 'bg-slate-50 text-slate-900'
+    <div className={`min-h-screen flex flex-col font-mono transition-colors duration-300 ${
+      isDarkMode ? 'bg-[#0d1117] text-slate-100' : 'bg-slate-900 text-slate-100'
     }`}>
       <Header />
 
-      <main className="flex-1 max-w-6xl w-full mx-auto px-4 py-8 space-y-10">
-        {/* Page Hero Header */}
-        <div className="text-center space-y-3">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-teal-500/20 to-cyan-500/20 text-teal-400 border border-teal-500/30">
-            <BarChart3 className="w-4 h-4" />
-            <span>GitHub Chart & Poster Visualizer Studio</span>
-          </div>
-          <h1 className="text-3xl sm:text-5xl font-black tracking-tight">
-            Real GitHub <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 via-emerald-300 to-cyan-400">History Poster Studio</span>
-          </h1>
-          <p className={`max-w-2xl mx-auto text-sm sm:text-base ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
-            Transform 365-day GitHub contribution histories into high-resolution social header banners, wallpapers, and dynamic README badges.
-          </p>
-        </div>
-
-        {/* Top Controls & Handle Lookup Bar */}
-        <section className={`p-5 rounded-2xl border shadow-xl flex flex-col md:flex-row items-center justify-between gap-4 ${
-          isDarkMode ? 'bg-slate-900/90 border-slate-800' : 'bg-white border-slate-200 shadow-sm'
-        }`}>
-          <div className="flex items-center gap-3 w-full md:w-auto">
-            <div className="p-2.5 rounded-xl bg-teal-500/20 text-teal-400">
-              <Search className="w-5 h-5" />
+      <main className="flex-1 w-full max-w-[1400px] mx-auto px-4 py-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          
+          {/* LEFT SIDEBAR: Controls & 14 Theme Swatches */}
+          <aside className="lg:col-span-4 bg-[#161b22] border border-slate-800 rounded-2xl p-6 space-y-6 shadow-2xl">
+            <div className="space-y-1">
+              <p className="text-xs text-slate-400 font-semibold tracking-wide">
+                All your contributions in one image!
+              </p>
             </div>
-            <div className="flex-1 md:flex-none">
-              <label className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block mb-1">
-                GitHub Target Handle
+
+            {/* Username Input & Generate Form */}
+            <form onSubmit={handleGenerate} className="space-y-3">
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={usernameInput}
+                  onChange={(e) => setUsernameInput(e.target.value)}
+                  placeholder="sukhman369"
+                  className="flex-1 px-4 py-2.5 rounded-xl bg-[#0d1117] border border-slate-700 text-sm font-bold text-white placeholder-slate-500 focus:border-purple-500 focus:outline-none transition-all"
+                />
+                <button
+                  type="submit"
+                  className="px-4 py-2.5 rounded-xl text-xs font-black bg-gradient-to-r from-purple-600 to-indigo-500 hover:from-purple-500 hover:to-indigo-400 text-white flex items-center gap-1.5 shadow-lg transition-all"
+                >
+                  <Sparkles className="w-4 h-4" />
+                  <span>Generate!</span>
+                </button>
+              </div>
+            </form>
+
+            {/* Theme Selector Section */}
+            <div className="space-y-3 pt-2 border-t border-slate-800">
+              <label className="text-xs font-bold tracking-wider text-slate-400 uppercase block">
+                SELECT A THEME:
               </label>
-              <div className="relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-mono text-slate-400 font-bold">@</span>
-                <input
-                  type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  placeholder="Sukhman369"
-                  className={`pl-7 pr-4 py-2 rounded-xl text-sm font-mono font-bold border transition-all ${
-                    isDarkMode
-                      ? 'bg-slate-950 border-slate-800 text-white focus:border-teal-500'
-                      : 'bg-slate-100 border-slate-300 text-slate-900 focus:border-teal-500'
-                  }`}
-                />
+
+              <div className="space-y-1.5 max-h-[480px] overflow-y-auto pr-1 custom-scrollbar">
+                {Object.values(THEMES).map((themeItem) => {
+                  const isSelected = selectedTheme === themeItem.id;
+                  return (
+                    <button
+                      key={themeItem.id}
+                      onClick={() => setSelectedTheme(themeItem.id)}
+                      className={`w-full p-2.5 rounded-xl border flex items-center justify-between text-left transition-all ${
+                        isSelected
+                          ? 'bg-slate-800/90 border-purple-500 text-white ring-1 ring-purple-500/50'
+                          : 'bg-[#0d1117]/60 border-slate-800/80 text-slate-300 hover:bg-slate-800/40 hover:border-slate-700'
+                      }`}
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <div className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center ${
+                          isSelected ? 'border-purple-400 bg-purple-500' : 'border-slate-600'
+                        }`}>
+                          {isSelected && <div className="w-1.5 h-1.5 rounded-full bg-white" />}
+                        </div>
+
+                        {/* Swatch Preview Bar */}
+                        <div className="flex items-center gap-0.5 p-0.5 rounded bg-slate-900 border border-slate-800">
+                          {themeItem.levels.map((lvl, idx) => (
+                            <div
+                              key={idx}
+                              className="w-2.5 h-2.5 rounded-sm"
+                              style={{ backgroundColor: lvl }}
+                            />
+                          ))}
+                        </div>
+
+                        <span className="text-xs font-bold tracking-tight">{themeItem.name}</span>
+                      </div>
+                    </button>
+                  );
+                })}
               </div>
             </div>
-          </div>
 
-          {/* Mode Switcher Tabs: Poster Studio vs SVG Badge */}
-          <div className="flex items-center p-1 rounded-xl bg-slate-950 border border-slate-800 w-full md:w-auto">
-            <button
-              onClick={() => setActiveMode('poster')}
-              className={`flex-1 md:flex-none px-4 py-2 rounded-lg text-xs font-bold flex items-center justify-center gap-2 transition-all ${
-                activeMode === 'poster'
-                  ? 'bg-teal-500 text-slate-950 shadow-md'
-                  : 'text-slate-400 hover:text-white'
-              }`}
-            >
-              <ImageIcon className="w-4 h-4" />
-              <span>High-Res Poster Studio</span>
-            </button>
-
-            <button
-              onClick={() => setActiveMode('badge')}
-              className={`flex-1 md:flex-none px-4 py-2 rounded-lg text-xs font-bold flex items-center justify-center gap-2 transition-all ${
-                activeMode === 'badge'
-                  ? 'bg-teal-500 text-slate-950 shadow-md'
-                  : 'text-slate-400 hover:text-white'
-              }`}
-            >
-              <Code className="w-4 h-4" />
-              <span>Dynamic SVG README Badge</span>
-            </button>
-          </div>
-        </section>
-
-        {/* Activity Highlights Stats Cards */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          <div className={`p-4 rounded-xl border flex items-center gap-3 ${
-            isDarkMode ? 'bg-slate-900/60 border-slate-800' : 'bg-white border-slate-200'
-          }`}>
-            <div className="p-2.5 rounded-lg bg-emerald-500/10 text-emerald-400">
-              <Trophy className="w-5 h-5" />
-            </div>
-            <div>
-              <span className="text-[11px] font-bold text-slate-400 block uppercase">Total Commits</span>
-              <span className="text-lg font-black text-emerald-400 font-mono">{totalCommits.toLocaleString()}</span>
-            </div>
-          </div>
-
-          <div className={`p-4 rounded-xl border flex items-center gap-3 ${
-            isDarkMode ? 'bg-slate-900/60 border-slate-800' : 'bg-white border-slate-200'
-          }`}>
-            <div className="p-2.5 rounded-lg bg-orange-500/10 text-orange-400">
-              <Flame className="w-5 h-5" />
-            </div>
-            <div>
-              <span className="text-[11px] font-bold text-slate-400 block uppercase">Longest Streak</span>
-              <span className="text-lg font-black text-orange-400 font-mono">{longestStreak} days</span>
-            </div>
-          </div>
-
-          <div className={`p-4 rounded-xl border flex items-center gap-3 ${
-            isDarkMode ? 'bg-slate-900/60 border-slate-800' : 'bg-white border-slate-200'
-          }`}>
-            <div className="p-2.5 rounded-lg bg-teal-500/10 text-teal-400">
-              <Zap className="w-5 h-5" />
-            </div>
-            <div>
-              <span className="text-[11px] font-bold text-slate-400 block uppercase">Current Streak</span>
-              <span className="text-lg font-black text-teal-400 font-mono">{currentStreak} days</span>
-            </div>
-          </div>
-
-          <div className={`p-4 rounded-xl border flex items-center gap-3 ${
-            isDarkMode ? 'bg-slate-900/60 border-slate-800' : 'bg-white border-slate-200'
-          }`}>
-            <div className="p-2.5 rounded-lg bg-cyan-500/10 text-cyan-400">
-              <Calendar className="w-5 h-5" />
-            </div>
-            <div>
-              <span className="text-[11px] font-bold text-slate-400 block uppercase">Year Range</span>
-              <span className="text-lg font-black text-cyan-400 font-mono">Last 365 Days</span>
-            </div>
-          </div>
-        </div>
-
-        {/* MODE 1: High-Res Canvas Poster Studio */}
-        {activeMode === 'poster' && (
-          <section className={`p-6 sm:p-8 rounded-2xl border shadow-2xl space-y-6 ${
-            isDarkMode ? 'bg-slate-900/90 border-slate-800' : 'bg-white border-slate-200 shadow-sm'
-          }`}>
-            <div className="flex items-center justify-between border-b pb-4 border-slate-800">
-              <div className="flex items-center gap-3">
-                <div className="p-2.5 rounded-xl bg-teal-500/20 text-teal-400">
-                  <Sparkles className="w-5 h-5" />
-                </div>
-                <div>
-                  <h2 className="text-lg font-bold">Retina Canvas Poster Customizer</h2>
-                  <p className={`text-xs ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
-                    Render high-DPI social headers & wallpapers for Twitter, LinkedIn, Instagram, or desktop background.
-                  </p>
-                </div>
-              </div>
-
-              <button
-                onClick={handleDownloadPNG}
-                className="px-4 py-2.5 rounded-xl text-xs font-bold bg-gradient-to-r from-teal-500 to-emerald-400 text-slate-950 flex items-center gap-2 shadow-lg hover:scale-105 transition-all"
+            {/* GitHub Repo Star Link */}
+            <div className="pt-2 border-t border-slate-800">
+              <a
+                href="https://github.com/Sukhman369/githublegacy"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-bold text-slate-300 transition-all"
               >
-                <Download className="w-4 h-4" />
-                <span>Export High-Res PNG</span>
-              </button>
+                <Star className="w-3.5 h-3.5 text-yellow-400 fill-yellow-400" />
+                <span>Star GitLegacy</span>
+              </a>
             </div>
+          </aside>
 
-            {/* Customizer Controls Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              <div>
-                <label className={`block text-xs font-bold uppercase mb-1.5 ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>
-                  Poster Format
-                </label>
-                <select
-                  value={posterFormat}
-                  onChange={(e) => setPosterFormat(e.target.value as PosterFormat)}
-                  className={`w-full p-2.5 rounded-xl border text-xs font-bold ${
-                    isDarkMode ? 'bg-slate-950 border-slate-800 text-white' : 'bg-slate-100 border-slate-300 text-slate-900'
-                  }`}
+          {/* RIGHT MAIN POSTER DISPLAY AREA */}
+          <section className="lg:col-span-8 space-y-6">
+            
+            {/* Header & Actions Bar */}
+            <div className="bg-[#161b22] border border-slate-800 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xl">
+              <h2 className="text-base font-bold text-slate-200">
+                Your chart is ready!
+              </h2>
+
+              <div className="flex flex-wrap items-center gap-2.5 w-full sm:w-auto">
+                <button
+                  onClick={handleCopyImage}
+                  className="flex-1 sm:flex-none px-4 py-2 rounded-xl text-xs font-bold bg-purple-600 hover:bg-purple-500 text-white flex items-center justify-center gap-2 transition-all shadow-md"
                 >
-                  {Object.entries(POSTER_FORMATS).map(([key, item]) => (
-                    <option key={key} value={key}>
-                      {item.name} ({item.label})
-                    </option>
-                  ))}
-                </select>
-              </div>
+                  {copiedType === 'copy-image' ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                  <span>{copiedType === 'copy-image' ? 'Copied Image!' : 'Copy'}</span>
+                </button>
 
-              <div>
-                <label className={`block text-xs font-bold uppercase mb-1.5 ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>
-                  Color Theme Palette
-                </label>
-                <select
-                  value={themeKey}
-                  onChange={(e) => setThemeKey(e.target.value)}
-                  className={`w-full p-2.5 rounded-xl border text-xs font-bold ${
-                    isDarkMode ? 'bg-slate-950 border-slate-800 text-white' : 'bg-slate-100 border-slate-300 text-slate-900'
-                  }`}
+                <button
+                  onClick={handleDownloadPNG}
+                  className="flex-1 sm:flex-none px-4 py-2 rounded-xl text-xs font-bold bg-purple-600 hover:bg-purple-500 text-white flex items-center justify-center gap-2 transition-all shadow-md"
                 >
-                  {Object.entries(CANVAS_THEMES).map(([key, item]) => (
-                    <option key={key} value={key}>
-                      {item.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
+                  <Download className="w-3.5 h-3.5" />
+                  <span>Download</span>
+                </button>
 
-              <div>
-                <label className={`block text-xs font-bold uppercase mb-1.5 ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>
-                  Custom Poster Title
-                </label>
-                <input
-                  type="text"
-                  value={customTitle}
-                  onChange={(e) => setCustomTitle(e.target.value)}
-                  placeholder={`@${username || 'developer'}'s Code Journey`}
-                  className={`w-full p-2.5 rounded-xl border text-xs font-semibold ${
-                    isDarkMode ? 'bg-slate-950 border-slate-800 text-white' : 'bg-slate-100 border-slate-300 text-slate-900'
-                  }`}
-                />
-              </div>
-
-              <div>
-                <label className={`block text-xs font-bold uppercase mb-1.5 ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>
-                  Custom Subtitle
-                </label>
-                <input
-                  type="text"
-                  value={customSubtitle}
-                  onChange={(e) => setCustomSubtitle(e.target.value)}
-                  placeholder={`${totalCommits.toLocaleString()} commits in 2025`}
-                  className={`w-full p-2.5 rounded-xl border text-xs font-semibold ${
-                    isDarkMode ? 'bg-slate-950 border-slate-800 text-white' : 'bg-slate-100 border-slate-300 text-slate-900'
-                  }`}
-                />
+                <button
+                  onClick={handleShareMarkdown}
+                  className="flex-1 sm:flex-none px-4 py-2 rounded-xl text-xs font-bold bg-purple-600 hover:bg-purple-500 text-white flex items-center justify-center gap-2 transition-all shadow-md"
+                >
+                  {copiedType === 'share-md' ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Share2 className="w-3.5 h-3.5" />}
+                  <span>{copiedType === 'share-md' ? 'Copied Markdown!' : 'Share'}</span>
+                </button>
               </div>
             </div>
 
-            {/* Canvas Preview Display Box */}
-            <div className="space-y-2">
-              <div className="flex items-center justify-between text-xs text-slate-400 font-mono">
-                <span>Canvas Live Preview ({POSTER_FORMATS[posterFormat].name})</span>
-                <span>{POSTER_FORMATS[posterFormat].width} × {POSTER_FORMATS[posterFormat].height} px</span>
-              </div>
-
-              <div className={`p-4 rounded-xl border flex items-center justify-center overflow-x-auto min-h-[300px] ${
-                isDarkMode ? 'bg-slate-950 border-slate-800' : 'bg-slate-100 border-slate-300'
-              }`}>
-                <canvas
-                  ref={canvasRef}
-                  className="max-w-full h-auto rounded-lg shadow-2xl border border-slate-800/50"
-                />
-              </div>
+            {/* Poster Canvas Display Box */}
+            <div className="p-6 rounded-2xl bg-[#0d1117] border border-slate-800 shadow-2xl flex justify-center items-center overflow-x-auto min-h-[500px]">
+              <canvas
+                ref={canvasRef}
+                className="max-w-full h-auto rounded-xl shadow-2xl transition-all"
+              />
             </div>
           </section>
-        )}
 
-        {/* MODE 2: Dynamic SVG README Badge Generator */}
-        {activeMode === 'badge' && (
-          <section className={`p-6 sm:p-8 rounded-2xl border shadow-2xl space-y-6 ${
-            isDarkMode ? 'bg-slate-900/90 border-slate-800' : 'bg-white border-slate-200 shadow-sm'
-          }`}>
-            <div className="flex items-center justify-between border-b pb-4 border-slate-800">
-              <div className="flex items-center gap-3">
-                <div className="p-2.5 rounded-xl bg-teal-500/20 text-teal-400">
-                  <Code className="w-5 h-5" />
-                </div>
-                <div>
-                  <h2 className="text-lg font-bold">Dynamic SVG README Profile Card</h2>
-                  <p className={`text-xs ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
-                    Serverless vector SVG card endpoint fetching live contributions for <code>/api/u/[username]</code>.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-              {/* Controls */}
-              <div className="lg:col-span-5 space-y-4">
-                <div>
-                  <label className={`block text-xs font-bold uppercase mb-1.5 ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>
-                    Theme Palette
-                  </label>
-                  <select
-                    value={themeKey}
-                    onChange={(e) => setThemeKey(e.target.value)}
-                    className={`w-full p-2.5 rounded-xl border text-xs font-bold ${
-                      isDarkMode ? 'bg-slate-950 border-slate-800 text-white' : 'bg-slate-100 border-slate-300 text-slate-900'
-                    }`}
-                  >
-                    <option value="github-dark">GitHub Dark</option>
-                    <option value="github-light">GitHub Light</option>
-                    <option value="emerald-matrix">Emerald Matrix</option>
-                    <option value="cyberpunk">Cyberpunk Neon</option>
-                    <option value="dracula">Dracula Vamp</option>
-                  </select>
-                </div>
-
-                <div className={`p-4 rounded-xl border space-y-2 ${
-                  isDarkMode ? 'bg-slate-950/60 border-slate-800' : 'bg-slate-50 border-slate-200'
-                }`}>
-                  <div className="flex items-center justify-between text-xs font-semibold">
-                    <span className="text-slate-400">Direct SVG URL</span>
-                    <span className="text-emerald-400 font-mono">100% Vector</span>
-                  </div>
-                  <code className="block p-2 rounded bg-slate-900 border border-slate-800 text-[11px] font-mono text-teal-300 break-all select-all">
-                    {usernameBadgeUrl}
-                  </code>
-                </div>
-              </div>
-
-              {/* SVG Live Preview */}
-              <div className="lg:col-span-7 space-y-3">
-                <label className={`block text-xs font-bold uppercase ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
-                  Live Vector SVG Preview (`/api/u/{username || 'username'}.svg`)
-                </label>
-
-                <div className={`p-5 rounded-xl border flex items-center justify-center overflow-x-auto min-h-[200px] ${
-                  isDarkMode ? 'bg-slate-950 border-slate-800' : 'bg-slate-100 border-slate-300'
-                }`}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={usernameBadgeUrl}
-                    alt={`${username}'s Real GitHub Contribution History`}
-                    className="max-w-full h-auto rounded-lg shadow-lg"
-                  />
-                </div>
-
-                <div className="flex flex-col sm:flex-row gap-2">
-                  <button
-                    onClick={() => handleCopy(usernameBadgeMarkdown, 'user-md')}
-                    className="flex-1 py-2.5 px-4 rounded-xl text-xs font-bold bg-teal-500 hover:bg-teal-400 text-slate-950 flex items-center justify-center gap-2 shadow-md transition-all"
-                  >
-                    {copiedType === 'user-md' ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-                    <span>{copiedType === 'user-md' ? 'Copied Markdown!' : 'Copy Profile Markdown'}</span>
-                  </button>
-
-                  <button
-                    onClick={() => handleCopy(usernameBadgeHtml, 'user-html')}
-                    className={`py-2.5 px-4 rounded-xl text-xs font-semibold border flex items-center justify-center gap-2 transition-all ${
-                      isDarkMode ? 'bg-slate-800 border-slate-700 hover:bg-slate-700 text-slate-200' : 'bg-slate-200 border-slate-300 hover:bg-slate-300 text-slate-800'
-                    }`}
-                  >
-                    <Code className="w-4 h-4" />
-                    <span>Copy HTML</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </section>
-        )}
+        </div>
       </main>
 
       <Footer />

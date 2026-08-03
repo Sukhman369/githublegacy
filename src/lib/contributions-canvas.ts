@@ -1,277 +1,325 @@
 export interface ThemePalette {
+  id: string;
   name: string;
   background: string;
   text: string;
   textMuted: string;
-  border: string;
   levels: [string, string, string, string, string]; // 0 to 4
 }
 
-export const CANVAS_THEMES: Record<string, ThemePalette> = {
-  'github-dark': {
-    name: 'GitHub Dark',
-    background: '#0d1117',
-    text: '#f0f6fc',
-    textMuted: '#8b949e',
-    border: '#30363d',
-    levels: ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353'],
-  },
-  'github-light': {
-    name: 'GitHub Light',
+export const THEMES: Record<string, ThemePalette> = {
+  github: {
+    id: 'github',
+    name: 'GitHub',
     background: '#ffffff',
-    text: '#24292f',
-    textMuted: '#57606a',
-    border: '#d0d7de',
+    text: '#24292e',
+    textMuted: '#586069',
     levels: ['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39'],
   },
-  'cyberpunk': {
-    name: 'Cyberpunk Neon',
-    background: '#090d16',
-    text: '#00f0ff',
-    textMuted: '#7088a0',
-    border: '#1e293b',
-    levels: ['#121b2d', '#00475b', '#008ba8', '#00f0ff', '#ff0055'],
+  githubClassic: {
+    id: 'githubClassic',
+    name: 'GitHub Classic',
+    background: '#ffffff',
+    text: '#24292e',
+    textMuted: '#586069',
+    levels: ['#eee', '#c6e48b', '#7bc96f', '#239a3b', '#196127'],
   },
-  'dracula': {
-    name: 'Dracula Vamp',
+  githubDark: {
+    id: 'githubDark',
+    name: 'GitHub Dark',
+    background: '#0d1117',
+    text: '#c9d1d9',
+    textMuted: '#8b949e',
+    levels: ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353'],
+  },
+  halloween: {
+    id: 'halloween',
+    name: 'Halloween',
+    background: '#ffffff',
+    text: '#24292e',
+    textMuted: '#586069',
+    levels: ['#ebedf0', '#fdf156', '#ffc722', '#ff9711', '#04001c'],
+  },
+  teal: {
+    id: 'teal',
+    name: 'Teal',
+    background: '#040d16',
+    text: '#eceff1',
+    textMuted: '#78909c',
+    levels: ['#040d16', '#1de9b6', '#00bfa5', '#00897b', '#004d40'],
+  },
+  leftPad: {
+    id: 'leftPad',
+    name: '@left_pad',
+    background: '#000000',
+    text: '#ffffff',
+    textMuted: '#888888',
+    levels: ['#111111', '#333333', '#666666', '#999999', '#ffffff'],
+  },
+  dracula: {
+    id: 'dracula',
+    name: 'Dracula',
     background: '#282a36',
     text: '#f8f8f2',
     textMuted: '#6272a4',
-    border: '#44475a',
     levels: ['#343746', '#6272a4', '#8be9fd', '#bd93f9', '#ff79c6'],
   },
-  'solarized': {
-    name: 'Solarized Warm',
+  blue: {
+    id: 'blue',
+    name: 'Blue',
+    background: '#ffffff',
+    text: '#24292e',
+    textMuted: '#586069',
+    levels: ['#ebedf0', '#bbdefb', '#64b5f6', '#2196f3', '#0d47a1'],
+  },
+  panda: {
+    id: 'panda',
+    name: 'Panda 🐼',
+    background: '#292a2b',
+    text: '#e6e6e6',
+    textMuted: '#888888',
+    levels: ['#292a2b', '#ff75b5', '#ff9ac1', '#19f9d8', '#6fc1ff'],
+  },
+  sunny: {
+    id: 'sunny',
+    name: 'Sunny',
+    background: '#ffffff',
+    text: '#24292e',
+    textMuted: '#586069',
+    levels: ['#fffde7', '#fff59d', '#ffee58', '#fdd835', '#f57f17'],
+  },
+  pink: {
+    id: 'pink',
+    name: 'Pink',
+    background: '#ffffff',
+    text: '#24292e',
+    textMuted: '#586069',
+    levels: ['#fce4ec', '#f8bbd0', '#f48fb1', '#f06292', '#ad1457'],
+  },
+  ylGnBu: {
+    id: 'ylGnBu',
+    name: 'YlGnBu',
+    background: '#ffffff',
+    text: '#24292e',
+    textMuted: '#586069',
+    levels: ['#ffffd9', '#c7e9b4', '#41b6c4', '#225ea8', '#081d58'],
+  },
+  solarizedDark: {
+    id: 'solarizedDark',
+    name: 'Solarized Dark',
+    background: '#002b36',
+    text: '#839496',
+    textMuted: '#586e75',
+    levels: ['#073642', '#2aa198', '#859900', '#b58900', '#d33682'],
+  },
+  solarizedLight: {
+    id: 'solarizedLight',
+    name: 'Solarized Light',
     background: '#fdf6e3',
-    text: '#073642',
-    textMuted: '#657b83',
-    border: '#eee8d5',
-    levels: ['#eee8d5', '#b58900', '#cb4b16', '#dc322f', '#d33682'],
+    text: '#586e75',
+    textMuted: '#93a1a1',
+    levels: ['#fdf6e3', '#2aa198', '#859900', '#b58900', '#d33682'],
   },
-  'emerald-matrix': {
-    name: 'Emerald Matrix',
-    background: '#040d08',
-    text: '#34d399',
-    textMuted: '#059669',
-    border: '#064e3b',
-    levels: ['#0a2014', '#064e3b', '#047857', '#10b981', '#34d399'],
-  },
-};
-
-export type PosterFormat = 'twitter' | 'linkedin' | 'instagram' | 'wallpaper' | 'card';
-
-export interface FormatSpec {
-  name: string;
-  width: number;
-  height: number;
-  label: string;
-}
-
-export const POSTER_FORMATS: Record<PosterFormat, FormatSpec> = {
-  twitter: { name: 'Twitter Header', width: 1500, height: 500, label: '1500 x 500 px' },
-  linkedin: { name: 'LinkedIn Banner', width: 1584, height: 396, label: '1584 x 396 px' },
-  instagram: { name: 'Instagram Square', width: 1080, height: 1080, label: '1080 x 1080 px' },
-  wallpaper: { name: '4K Wallpaper', width: 3840, height: 2160, label: '3840 x 2160 px' },
-  card: { name: 'Profile Card', width: 1200, height: 630, label: '1200 x 630 px' },
 };
 
 export interface ContributionDay {
   date: string;
   count: number;
-  level: number; // 0..4
+  level: number;
 }
 
-export interface DrawOptions {
+export interface YearContributionData {
+  year: number;
+  total: number;
+  isSoFar?: boolean;
+  days: ContributionDay[];
+}
+
+export interface MultiYearData {
   username: string;
-  title?: string;
-  subtitle?: string;
-  format: PosterFormat;
-  themeKey: string;
-  daysData?: ContributionDay[];
-  totalCommits?: number;
+  totalContributionsAllTime: number;
+  years: YearContributionData[];
 }
 
 const MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-const DAY_LABELS = ['Mon', 'Wed', 'Fri'];
 
 /**
- * Generates sample contribution data (53 weeks * 7 days) if none provided
+ * Generates realistic multi-year contribution data for 4 years (e.g. 2026, 2025, 2024, 2023)
  */
-export function generateSampleData(seedUsername: string): { days: ContributionDay[]; total: number } {
-  const days: ContributionDay[] = [];
-  let total = 0;
-
-  // Simple hash for consistent random-looking values per username
+export function generateMultiYearSampleData(username: string): MultiYearData {
+  const currentYear = new Date().getFullYear(); // e.g. 2026
+  const yearsList = [currentYear, currentYear - 1, currentYear - 2, currentYear - 3];
+  
   let hash = 0;
-  for (let i = 0; i < seedUsername.length; i++) {
-    hash = (hash << 5) - hash + seedUsername.charCodeAt(i);
+  for (let i = 0; i < username.length; i++) {
+    hash = (hash << 5) - hash + username.charCodeAt(i);
     hash |= 0;
   }
 
-  const today = new Date();
-  const startDate = new Date(today);
-  startDate.setDate(startDate.getDate() - 370);
+  let grandTotal = 0;
+  const yearDataArray: YearContributionData[] = [];
 
-  for (let i = 0; i < 371; i++) {
-    const d = new Date(startDate);
-    d.setDate(d.getDate() + i);
+  yearsList.forEach((yr, yrIndex) => {
+    const isCurrent = yr === currentYear;
+    const totalDays = isCurrent ? 240 : 365; // partial year for current year
+    const days: ContributionDay[] = [];
+    let yearTotal = 0;
 
-    const val = Math.abs(Math.sin(i * 0.4 + hash) * 10) + Math.abs(Math.cos(i * 0.1) * 5);
-    const count = Math.floor(val);
-    let level = 0;
-    if (count > 0) level = 1;
-    if (count > 3) level = 2;
-    if (count > 6) level = 3;
-    if (count > 10) level = 4;
+    const startDate = new Date(yr, 0, 1);
 
-    total += count;
-    days.push({
-      date: d.toISOString().split('T')[0],
-      count,
-      level,
+    for (let i = 0; i < 364; i++) {
+      const d = new Date(startDate);
+      d.setDate(d.getDate() + i);
+
+      if (d.getFullYear() > yr) break;
+
+      let count = 0;
+      // Make most recent year active, older years sparser or active based on seed
+      const randSeed = Math.abs(Math.sin(i * 0.3 + hash + yrIndex) * 10);
+      if (yrIndex === 0) {
+        count = randSeed > 3 ? Math.floor(randSeed * 1.5) : 0;
+      } else if (yrIndex === 3 && i === 300) {
+        count = 5; // e.g. small commits in past
+      }
+
+      let level = 0;
+      if (count > 0) level = 1;
+      if (count > 3) level = 2;
+      if (count > 6) level = 3;
+      if (count > 10) level = 4;
+
+      yearTotal += count;
+      days.push({
+        date: d.toISOString().split('T')[0],
+        count,
+        level,
+      });
+    }
+
+    grandTotal += yearTotal;
+    yearDataArray.push({
+      year: yr,
+      total: yearTotal,
+      isSoFar: isCurrent,
+      days,
     });
-  }
+  });
 
-  return { days, total };
+  return {
+    username,
+    totalContributionsAllTime: grandTotal || 442,
+    years: yearDataArray,
+  };
 }
 
 /**
- * Draws the high-res Retina contribution chart onto an HTML5 canvas
+ * Draws the complete multi-year poster canvas matching github-contributions.vercel.app
  */
-export function drawContributionPoster(canvas: HTMLCanvasElement, options: DrawOptions) {
-  const spec = POSTER_FORMATS[options.format] || POSTER_FORMATS.card;
-  const theme = CANVAS_THEMES[options.themeKey] || CANVAS_THEMES['github-dark'];
+export function drawMultiYearPoster(
+  canvas: HTMLCanvasElement,
+  data: MultiYearData,
+  themeKey: string
+) {
+  const theme = THEMES[themeKey] || THEMES.githubClassic;
 
-  const width = spec.width;
-  const height = spec.height;
+  const canvasWidth = 1000;
+  const padding = 40;
+  const headerHeight = 90;
+  const yearHeaderHeight = 35;
+  const gridHeight = 110;
+  const yearSectionHeight = yearHeaderHeight + gridHeight + 20;
+  const footerHeight = 40;
 
-  canvas.width = width;
-  canvas.height = height;
+  const totalHeight = padding * 2 + headerHeight + data.years.length * yearSectionHeight + footerHeight;
+
+  canvas.width = canvasWidth;
+  canvas.height = totalHeight;
 
   const ctx = canvas.getContext('2d');
   if (!ctx) return;
 
-  // Clear background
+  // Background
   ctx.fillStyle = theme.background;
-  ctx.fillRect(0, 0, width, height);
+  ctx.fillRect(0, 0, canvasWidth, totalHeight);
 
-  // Decorative subtle border gradient
-  ctx.strokeStyle = theme.border;
-  ctx.lineWidth = Math.max(2, Math.floor(width / 600));
-  ctx.strokeRect(10, 10, width - 20, height - 20);
-
-  // Sample data fallback
-  const { days, total } = options.daysData && options.daysData.length > 0
-    ? { days: options.daysData, total: options.totalCommits || options.daysData.reduce((acc, d) => acc + d.count, 0) }
-    : generateSampleData(options.username || 'developer');
-
-  // Header Title & Subtitle
-  const titleText = options.title || `@${options.username || 'developer'}'s Code Journey`;
-  const subtitleText = options.subtitle || `${total.toLocaleString()} contributions in the last year • Generated with GitLegacy`;
-
-  const scale = width / 1200; // Scaling multiplier based on reference width of 1200px
-
-  // Title
+  // Top Header: "@username on GitHub"
   ctx.fillStyle = theme.text;
-  ctx.font = `900 ${Math.round(28 * scale)}px system-ui, -apple-system, sans-serif`;
-  ctx.fillText(titleText, 40 * scale, 65 * scale);
+  ctx.font = 'bold 26px "Courier New", Courier, monospace, system-ui';
+  ctx.fillText(`@${data.username} on GitHub`, padding, padding + 30);
 
-  // Subtitle
+  ctx.font = '14px "Courier New", Courier, monospace, system-ui';
   ctx.fillStyle = theme.textMuted;
-  ctx.font = `600 ${Math.round(15 * scale)}px system-ui, -apple-system, sans-serif`;
-  ctx.fillText(subtitleText, 40 * scale, 95 * scale);
+  ctx.fillText(`Total Contributions: ${data.totalContributionsAllTime.toLocaleString()}`, padding, padding + 60);
 
-  // Calculate Grid Coordinates
-  const numWeeks = 53;
-  const numDaysPerWeek = 7;
-
-  // Size calculations
-  const availableWidth = width - 100 * scale;
-  const availableHeight = height - 180 * scale;
-
-  const maxSquareW = Math.floor((availableWidth - (numWeeks - 1) * (3 * scale)) / numWeeks);
-  const maxSquareH = Math.floor((availableHeight - (numDaysPerWeek - 1) * (3 * scale)) / numDaysPerWeek);
-
-  const squareSize = Math.max(4, Math.min(maxSquareW, maxSquareH, 30 * scale));
-  const gap = Math.max(1, Math.floor(squareSize * 0.22));
-
-  const totalGridWidth = numWeeks * squareSize + (numWeeks - 1) * gap;
-  const totalGridHeight = numDaysPerWeek * squareSize + (numDaysPerWeek - 1) * gap;
-
-  const startX = (width - totalGridWidth) / 2;
-  const startY = (height - totalGridHeight) / 2 + 20 * scale;
-
-  // Draw Day Labels (Mon, Wed, Fri)
+  // Less / More Legend (top right)
+  const legendRightX = canvasWidth - padding;
   ctx.fillStyle = theme.textMuted;
-  ctx.font = `600 ${Math.round(Math.max(9, squareSize * 0.7))}px system-ui, -apple-system, sans-serif`;
-  const dayIndices = [1, 3, 5]; // Mon, Wed, Fri
-  dayIndices.forEach((dIdx, i) => {
-    const labelY = startY + dIdx * (squareSize + gap) + squareSize * 0.85;
-    ctx.fillText(DAY_LABELS[i], startX - 35 * scale, labelY);
-  });
+  ctx.font = '12px "Courier New", Courier, monospace, system-ui';
+  ctx.textAlign = 'right';
+  ctx.fillText('More', legendRightX, padding + 30);
 
-  // Draw Grid Cells & Month Headers
-  let currentMonth = -1;
+  const squareSize = 13;
+  const gap = 3;
 
-  for (let w = 0; w < numWeeks; w++) {
-    const x = startX + w * (squareSize + gap);
+  const legendX = legendRightX - 35;
+  for (let i = 4; i >= 0; i--) {
+    ctx.fillStyle = theme.levels[i];
+    ctx.fillRect(legendX - (4 - i) * (squareSize + gap), padding + 18, squareSize, squareSize);
+  }
+  ctx.fillText('Less', legendX - 5 * (squareSize + gap) - 5, padding + 30);
+  ctx.textAlign = 'left';
 
-    for (let d = 0; d < numDaysPerWeek; d++) {
-      const idx = w * 7 + d;
-      const dayData = days[idx] || { level: 0, count: 0, date: '' };
-      const y = startY + d * (squareSize + gap);
+  // Render each year's grid
+  let currentY = padding + headerHeight;
 
-      // Check month transition for month label rendering
-      if (dayData.date && d === 0) {
-        const dateObj = new Date(dayData.date);
-        const m = dateObj.getMonth();
-        if (m !== currentMonth) {
-          currentMonth = m;
-          ctx.fillStyle = theme.textMuted;
-          ctx.font = `700 ${Math.round(Math.max(9, squareSize * 0.75))}px system-ui, -apple-system, sans-serif`;
-          ctx.fillText(MONTH_NAMES[m], x, startY - 10 * scale);
+  data.years.forEach((yData) => {
+    // Year Header Line
+    ctx.fillStyle = theme.text;
+    ctx.font = 'bold 14px "Courier New", Courier, monospace, system-ui';
+    const yearTitle = `${yData.year}: ${yData.total} Contributions ${yData.isSoFar ? '(so far)' : ''}`;
+    ctx.fillText(yearTitle, padding, currentY + 15);
+
+    const gridStartY = currentY + yearHeaderHeight;
+
+    // Month headers
+    ctx.fillStyle = theme.textMuted;
+    ctx.font = '11px "Courier New", Courier, monospace, system-ui';
+
+    const numWeeks = 53;
+    const startX = padding;
+
+    let lastMonth = -1;
+    for (let w = 0; w < numWeeks; w++) {
+      const dayIndex = w * 7;
+      const dayObj = yData.days[dayIndex];
+      if (dayObj && dayObj.date) {
+        const m = new Date(dayObj.date).getMonth();
+        if (m !== lastMonth) {
+          lastMonth = m;
+          const monthX = startX + w * (squareSize + gap);
+          ctx.fillText(MONTH_NAMES[m], monthX, gridStartY - 6);
         }
       }
-
-      // Draw contribution square
-      ctx.fillStyle = theme.levels[dayData.level] || theme.levels[0];
-
-      // Rounded rectangle
-      const radius = Math.max(1, Math.floor(squareSize * 0.2));
-      ctx.beginPath();
-      ctx.roundRect(x, y, squareSize, squareSize, radius);
-      ctx.fill();
     }
-  }
 
-  // Draw Footer Watermark & Legend
-  const footerY = height - 30 * scale;
+    // Grid squares
+    for (let w = 0; w < numWeeks; w++) {
+      const x = startX + w * (squareSize + gap);
+      for (let d = 0; d < 7; d++) {
+        const idx = w * 7 + d;
+        const day = yData.days[idx];
+        const y = gridStartY + d * (squareSize + gap);
 
-  // Legend
-  ctx.fillStyle = theme.textMuted;
-  ctx.font = `600 ${Math.round(12 * scale)}px system-ui, -apple-system, sans-serif`;
-  ctx.fillText('Less', startX, footerY);
+        ctx.fillStyle = day ? theme.levels[day.level] : theme.levels[0];
+        ctx.fillRect(x, y, squareSize, squareSize);
+      }
+    }
 
-  const legendX = startX + 35 * scale;
-  const legendSquareSize = Math.max(8, 12 * scale);
-  const legendGap = Math.max(2, 3 * scale);
-
-  theme.levels.forEach((lvlColor, idx) => {
-    ctx.fillStyle = lvlColor;
-    const lx = legendX + idx * (legendSquareSize + legendGap);
-    const ly = footerY - legendSquareSize * 0.8;
-    ctx.beginPath();
-    ctx.roundRect(lx, ly, legendSquareSize, legendSquareSize, 2);
-    ctx.fill();
+    currentY += yearSectionHeight;
   });
 
+  // Footer
   ctx.fillStyle = theme.textMuted;
-  ctx.fillText('More', legendX + 5 * (legendSquareSize + legendGap) + 5 * scale, footerY);
-
-  // Watermark
-  ctx.fillStyle = theme.text;
-  ctx.font = `900 ${Math.round(13 * scale)}px system-ui, -apple-system, sans-serif`;
-  ctx.textAlign = 'right';
-  ctx.fillText('GitLegacy.dev ⚡', width - 40 * scale, footerY);
-  ctx.textAlign = 'left';
+  ctx.font = '12px "Courier New", Courier, monospace, system-ui';
+  ctx.fillText(`Made by GitLegacy.dev ⚡ - inspired by github-contributions.vercel.app`, padding, totalHeight - padding + 15);
 }
