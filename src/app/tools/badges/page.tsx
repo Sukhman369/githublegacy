@@ -77,11 +77,6 @@ const TECH_BADGES: TechBadge[] = [
 export default function BadgesStudioPage() {
   const { isDarkMode } = useTheme();
 
-  // Username Badge State
-  const [username, setUsername] = useState('Sukhman369');
-  const [userBadgeTheme, setUserBadgeTheme] = useState('github-dark');
-  const [userBadgeYear, setUserBadgeYear] = useState('last');
-
   // Search, Category & Style State for Tech Shields
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTechCategory, setSelectedTechCategory] = useState<string>('all');
@@ -89,18 +84,12 @@ export default function BadgesStudioPage() {
 
   // Shields State
   const [shieldLabel, setShieldLabel] = useState('GitLegacy');
-  const [shieldMessage, setShieldMessage] = useState('Canvas Art');
+  const [shieldMessage, setShieldMessage] = useState('Developer');
   const [shieldColor, setShieldColor] = useState('10b981');
   const [shieldStyle, setShieldStyle] = useState('for-the-badge');
 
   // Copy state
   const [copiedType, setCopiedType] = useState<string | null>(null);
-
-  const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://gitlegacy.dev';
-
-  const usernameBadgeUrl = `${baseUrl}/api/u/${encodeURIComponent(username || 'developer')}.svg?year=${userBadgeYear}&theme=${userBadgeTheme}`;
-  const usernameBadgeMarkdown = `![${username || 'GitHub'} Real Contributions](${usernameBadgeUrl})`;
-  const usernameBadgeHtml = `<a href="https://github.com/${encodeURIComponent(username || 'developer')}"><img src="${usernameBadgeUrl}" alt="${username}'s Real GitHub Contributions" /></a>`;
 
   const customShieldUrl = `https://img.shields.io/badge/${encodeURIComponent(shieldLabel)}-${encodeURIComponent(shieldMessage)}-${shieldColor}?style=${shieldStyle}`;
   const customShieldMarkdown = `![${shieldLabel}](${customShieldUrl})`;
@@ -130,13 +119,13 @@ export default function BadgesStudioPage() {
         <div className="text-center space-y-3">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold tracking-wide uppercase bg-gradient-to-r from-emerald-500/20 to-teal-500/20 text-emerald-400 border border-emerald-500/30">
             <Shield className="w-3.5 h-3.5" />
-            <span>Developer Profile Badge Studio</span>
+            <span>Developer Badges & Shields Studio</span>
           </div>
           <h1 className="text-3xl sm:text-5xl font-black tracking-tight">
-            Elevate Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400">GitHub README</span>
+            Curated Developer <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400">Badges & Shields</span>
           </h1>
           <p className={`max-w-2xl mx-auto text-sm sm:text-base ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
-            Generate dynamic live SVG artwork badges, tech stack shields, and contribution widgets ready to copy & paste into your profile.
+            Explore 50+ tech stack badges and build custom status shields ready to copy & paste into your GitHub profile.
           </p>
         </div>
 
@@ -150,7 +139,7 @@ export default function BadgesStudioPage() {
                 <ImageIcon className="w-5 h-5" />
               </div>
               <div>
-                <h2 className="text-lg font-bold">3. Curated Tech Stack Shields</h2>
+                <h2 className="text-lg font-bold">1. Curated Tech Stack Badges</h2>
                 <p className={`text-xs ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
                   Explore {TECH_BADGES.length}+ tech stack badges. Choose badge style and click any shield to copy Markdown snippet.
                 </p>
@@ -273,7 +262,7 @@ export default function BadgesStudioPage() {
                 <Shield className="w-5 h-5" />
               </div>
               <div>
-                <h2 className="text-lg font-bold">3. Custom Status Shield Generator</h2>
+                <h2 className="text-lg font-bold">2. Custom Status Shield Generator</h2>
                 <p className={`text-xs ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
                   Customize labels, messages, and colors for bespoke GitHub badges.
                 </p>
