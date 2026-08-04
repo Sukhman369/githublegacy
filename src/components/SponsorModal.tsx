@@ -123,6 +123,23 @@ export const SponsorModal: React.FC<SponsorModalProps> = ({
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
               <a
+                href="https://www.buymeacoffee.com/sukhman69"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`inline-flex items-center justify-between px-3.5 py-2.5 rounded-xl border font-bold text-xs hover:scale-[1.02] transition-all ${
+                  isDarkMode
+                    ? 'bg-slate-900 border-slate-800 text-amber-400 hover:bg-slate-800'
+                    : 'bg-white border-amber-200 text-amber-700 hover:bg-amber-50'
+                }`}
+              >
+                <div className="flex items-center gap-1.5">
+                  <Coffee className="h-3.5 w-3.5 text-amber-400" />
+                  <span>Buy Me a Coffee</span>
+                </div>
+                <ExternalLink className="h-3.5 w-3.5" />
+              </a>
+
+              <a
                 href="https://ko-fi.com/sukhman"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -140,7 +157,7 @@ export const SponsorModal: React.FC<SponsorModalProps> = ({
                 href="https://github.com/sponsors/Sukhman369"
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`inline-flex items-center justify-between px-3.5 py-2.5 rounded-xl border font-bold text-xs hover:scale-[1.02] transition-all ${
+                className={`sm:col-span-2 inline-flex items-center justify-between px-3.5 py-2.5 rounded-xl border font-bold text-xs hover:scale-[1.02] transition-all ${
                   isDarkMode
                     ? 'bg-slate-900 border-slate-800 text-rose-400 hover:bg-slate-800'
                     : 'bg-white border-rose-200 text-rose-700 hover:bg-rose-50'
