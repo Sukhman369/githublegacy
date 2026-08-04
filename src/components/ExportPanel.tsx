@@ -20,11 +20,6 @@ export const ExportPanel: React.FC<ExportPanelProps> = ({ grid, settings, isDark
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [copiedFormat, setCopiedFormat] = useState<string | null>(null);
 
-  const handleDownloadPNG = () => {
-    downloadGraphAsPNG(grid, settings);
-    triggerConfetti();
-  };
-
   const handleDownloadSVG = () => {
     downloadGraphAsSVG(grid, settings);
     triggerConfetti();
@@ -105,22 +100,6 @@ export const ExportPanel: React.FC<ExportPanelProps> = ({ grid, settings, isDark
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-          {/* 1-Click PNG Download */}
-          <button
-            onClick={handleDownloadPNG}
-            className="flex items-center justify-between p-4 rounded-xl bg-gradient-to-r from-emerald-500/20 to-cyan-500/20 border border-emerald-500/40 hover:border-emerald-400 text-emerald-300 font-semibold text-xs transition-all hover:scale-[1.02] shadow-lg shadow-emerald-500/10 group"
-          >
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-emerald-500 text-slate-950 font-bold group-hover:scale-110 transition-transform">
-                <Image className="h-4 w-4" />
-              </div>
-              <div className="text-left">
-                <p className={`text-sm font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>Download Image (PNG)</p>
-                <p className="text-[11px] text-emerald-400 font-normal">1-Click HD artwork banner</p>
-              </div>
-            </div>
-            <Sparkles className="h-4 w-4 text-emerald-400 animate-pulse" />
-          </button>
 
           {/* 1-Click SVG Download */}
           <button
