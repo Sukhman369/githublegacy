@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Sparkles, Sun, Moon, BookOpen, LayoutGrid, Shield, HeartHandshake, Coffee, Wrench } from 'lucide-react';
+import { Sparkles, Sun, Moon, BookOpen, LayoutGrid, Shield, HeartHandshake, Coffee, Wrench, ArrowUp } from 'lucide-react';
 import { GitLegacyLogo } from './GitLegacyLogo';
 import { useTheme } from '../context/ThemeContext';
 import { SponsorModal } from './SponsorModal';
@@ -18,6 +18,38 @@ export const Header: React.FC = () => {
   const pathname = usePathname();
   const { isDarkMode, toggleDarkMode } = useTheme();
   const [isSponsorModalOpen, setIsSponsorModalOpen] = useState(false);
+  const [showThemeHint, setShowThemeHint] = useState(true);
+  const [isHintFading, setIsHintFading] = useState(false);
+
+  useEffect(() => {
+    const dismiss = () => {
+      setIsHintFading(true);
+      setTimeout(() => setShowThemeHint(false), 700);
+    };
+
+    // Auto-dissolve after 5 seconds
+    const timer = setTimeout(() => {
+      dismiss();
+    }, 5000);
+
+    // Dissolve when user begins surfing the site
+    const handleUserSurfing = () => {
+      dismiss();
+    };
+
+    window.addEventListener('scroll', handleUserSurfing, { passive: true });
+    window.addEventListener('click', handleUserSurfing);
+    window.addEventListener('keydown', handleUserSurfing);
+    window.addEventListener('touchstart', handleUserSurfing, { passive: true });
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('scroll', handleUserSurfing);
+      window.removeEventListener('click', handleUserSurfing);
+      window.removeEventListener('keydown', handleUserSurfing);
+      window.removeEventListener('touchstart', handleUserSurfing);
+    };
+  }, []);
 
   const navItems = [
     { label: 'Tools Hub', href: '/tools', icon: Wrench },
@@ -86,24 +118,50 @@ export const Header: React.FC = () => {
         {/* Actions */}
         <div className="flex items-center gap-2">
           {/* Dark / Light Mode Switch */}
-          <button
-            onClick={toggleDarkMode}
-            className={`flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-semibold border transition-all ${
-              isDarkMode
-                ? 'bg-slate-900 border-slate-800 text-amber-400 hover:bg-slate-800'
-                : 'bg-slate-100 border-slate-300 text-slate-800 hover:bg-slate-200'
-            }`}
-            title={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-          >
-            {isDarkMode ? (
-              <Sun className="h-4 w-4 text-amber-400" />
-            ) : (
-              <Moon className="h-4 w-4 text-slate-700" />
+          <div className="relative">
+            <button
+              onClick={() => {
+                toggleDarkMode();
+                setShowThemeHint(false);
+              }}
+              className={`flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-semibold border transition-all ${
+                isDarkMode
+                  ? 'bg-slate-900 border-slate-800 text-amber-400 hover:bg-slate-800'
+                  : 'bg-slate-100 border-slate-300 text-slate-800 hover:bg-slate-200'
+              }`}
+              title={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+            >
+              {isDarkMode ? (
+                <Sun className="h-4 w-4 text-amber-400" />
+              ) : (
+                <Moon className="h-4 w-4 text-slate-700" />
+              )}
+              <span className="hidden sm:inline text-xs font-medium">
+                {isDarkMode ? 'Light' : 'Dark'}
+              </span>
+            </button>
+
+            {/* Switch Theme Animated Arrow Tooltip */}
+            {showThemeHint && (
+              <div
+                className={`absolute top-full mt-2 right-0 z-50 transition-all duration-700 transform pointer-events-none ${
+                  isHintFading
+                    ? 'opacity-0 scale-95 -translate-y-1'
+                    : 'opacity-100 scale-100 translate-y-0'
+                }`}
+              >
+                <div className="flex flex-col items-end">
+                  {/* Caret pointing up */}
+                  <div className="mr-4 h-2 w-2 rotate-45 bg-amber-500 border-t border-l border-amber-300/60" />
+                  {/* Tooltip Badge */}
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 text-slate-950 text-[11px] font-extrabold shadow-xl shadow-amber-500/25 border border-amber-300/50 whitespace-nowrap animate-bounce">
+                    <ArrowUp className="h-3.5 w-3.5 fill-slate-950" />
+                    <span>Switch theme / Change theme</span>
+                  </div>
+                </div>
+              </div>
             )}
-            <span className="hidden sm:inline text-xs font-medium">
-              {isDarkMode ? 'Light' : 'Dark'}
-            </span>
-          </button>
+          </div>
 
           {/* Contribute / GitHub Repo Link */}
           <a
