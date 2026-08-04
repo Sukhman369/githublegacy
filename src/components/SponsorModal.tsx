@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { X, Heart, ExternalLink, Coffee, Globe, ShieldCheck } from 'lucide-react';
+import { X, Heart, ExternalLink, Coffee, Globe } from 'lucide-react';
 
 interface SponsorModalProps {
   isOpen: boolean;
@@ -152,23 +152,6 @@ export const SponsorModal: React.FC<SponsorModalProps> = ({
                 <div className="flex items-center gap-1.5">
                   <Coffee className="h-3.5 w-3.5 text-indigo-400" />
                   <span>Support on Ko-fi</span>
-                </div>
-                <ExternalLink className="h-3.5 w-3.5" />
-              </a>
-
-              <a
-                href="https://github.com/sponsors/Sukhman369"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`sm:col-span-2 inline-flex items-center justify-between px-3.5 py-2.5 rounded-xl border font-bold text-xs hover:scale-[1.02] transition-all ${
-                  isDarkMode
-                    ? 'bg-slate-900 border-slate-800 text-rose-400 hover:bg-slate-800'
-                    : 'bg-white border-rose-200 text-rose-700 hover:bg-rose-50'
-                }`}
-              >
-                <div className="flex items-center gap-1.5">
-                  <ShieldCheck className="h-3.5 w-3.5 text-rose-400" />
-                  <span>GitHub Sponsors</span>
                 </div>
                 <ExternalLink className="h-3.5 w-3.5" />
               </a>
