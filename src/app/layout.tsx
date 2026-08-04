@@ -4,6 +4,7 @@ import './globals.css';
 import { ThemeProvider } from '../context/ThemeContext';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import { getWebSiteSchema, getOrganizationSchema, getSiteNavigationSchema } from '../lib/schema-org';
 
 const inter = Inter({
   variable: '--font-inter',
@@ -26,15 +27,23 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: 'GitLegacy - Design your GitHub legacy before you write code',
+  metadataBase: new URL('https://gitlegacy.co'),
+  title: {
+    default: 'GitLegacy - Design your GitHub legacy before you write code',
+    template: '%s | GitLegacy',
+  },
   description:
-    'GitLegacy is an interactive developer planning studio for designing GitHub contribution graph artwork, custom patterns, and generating automated backdated commit strategies.',
+    'GitLegacy is an interactive developer planning studio for designing GitHub contribution graph artwork, custom badges, and generating automated backdated commit strategies.',
   keywords: [
     'GitLegacy',
+    'Git Legacy',
+    'gitlegacy.co',
+    'Git Legacy Studio',
     'GitHub Contribution Graph',
     'Git Commit Art',
     'GitHub Contribution Generator',
-    'Developer Tools',
+    'GitHub Badge Generator',
+    'Developer Badges',
     'Commit Strategy Planner',
   ],
   authors: [{ name: 'Sukhman' }],
@@ -44,10 +53,17 @@ export const metadata: Metadata = {
     apple: '/icon.svg',
   },
   openGraph: {
-    title: 'GitLegacy - GitHub Contribution Calendar Planner',
+    title: 'GitLegacy - GitHub Contribution Calendar Planner & Badge Studio',
     description:
-      'Design your GitHub contribution art before you write code. Convert text, initials, or logos into an authentic contribution strategy with instant script export.',
+      'Design your GitHub contribution art before you write code. Convert text, initials, or logos into an authentic contribution strategy with instant script export and custom badges.',
     type: 'website',
+    siteName: 'GitLegacy',
+    url: 'https://gitlegacy.co',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'GitLegacy - GitHub Contribution Calendar Planner',
+    description: 'Design your GitHub contribution art before you write code.',
   },
 };
 
@@ -56,11 +72,29 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const websiteSchema = getWebSiteSchema();
+  const orgSchema = getOrganizationSchema();
+  const sitelinksSchema = getSiteNavigationSchema();
+
   return (
     <html
       lang="en"
       className={`${inter.variable} ${jetbrainsMono.variable} h-full antialiased dark`}
     >
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(sitelinksSchema) }}
+        />
+      </head>
       <body className="min-h-full flex flex-col font-sans overflow-x-hidden selection:bg-emerald-500 selection:text-slate-950">
         <ThemeProvider>{children}</ThemeProvider>
         <Analytics />
