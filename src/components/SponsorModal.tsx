@@ -140,16 +140,19 @@ export const SponsorModal: React.FC<SponsorModalProps> = ({
               </a>
 
               <a
-                href="https://ko-fi.com/sukhman"
+                href="https://ko-fi.com/U1M224GXT4"
                 target="_blank"
                 rel="noopener noreferrer"
                 className={`inline-flex items-center justify-between px-3.5 py-2.5 rounded-xl border font-bold text-xs hover:scale-[1.02] transition-all ${
                   isDarkMode
-                    ? 'bg-slate-900 border-slate-800 text-emerald-400 hover:bg-slate-800'
-                    : 'bg-white border-emerald-200 text-emerald-700 hover:bg-emerald-50'
+                    ? 'bg-slate-900 border-indigo-500/30 text-indigo-400 hover:bg-indigo-500/10'
+                    : 'bg-indigo-50/50 border-indigo-200 text-indigo-700 hover:bg-indigo-100/50'
                 }`}
               >
-                <span>Support on Ko-fi</span>
+                <div className="flex items-center gap-1.5">
+                  <Coffee className="h-3.5 w-3.5 text-indigo-400" />
+                  <span>Support on Ko-fi</span>
+                </div>
                 <ExternalLink className="h-3.5 w-3.5" />
               </a>
 

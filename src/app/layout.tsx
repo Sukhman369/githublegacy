@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { Inter, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '../context/ThemeContext';
+import { KofiWidget } from '../components/KofiWidget';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { getWebSiteSchema, getOrganizationSchema, getSiteNavigationSchema } from '../lib/schema-org';
@@ -96,7 +97,10 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col font-sans overflow-x-hidden selection:bg-emerald-500 selection:text-slate-950">
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          {children}
+          <KofiWidget />
+        </ThemeProvider>
         <Analytics />
         <SpeedInsights />
       </body>
