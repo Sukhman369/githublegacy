@@ -65,7 +65,7 @@ export const Header: React.FC = () => {
     { label: 'Tools Hub', href: '/tools', icon: Wrench },
     { label: 'Badge Studio', href: '/tools/badges', icon: Shield },
     { label: 'Contribute Guide', href: '/contribute', icon: HeartHandshake },
-    { label: 'Docs & Blog', href: '/blog', icon: BookOpen },
+    { label: 'Blog', href: '/blog', icon: BookOpen },
   ];
 
   return (
