@@ -141,7 +141,7 @@ export const Footer: React.FC = () => {
               className="w-full py-2 px-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold shadow-md hover:scale-105 transition-all text-xs flex items-center justify-center gap-1.5"
             >
               <Coffee className="h-3.5 w-3.5 fill-slate-950" />
-              <span>Sponsor Coffee</span>
+              <span>Sponsor Chai/Coffee</span>
             </button>
           </div>
         </div>
