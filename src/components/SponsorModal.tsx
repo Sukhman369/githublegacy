@@ -121,39 +121,39 @@ export const SponsorModal: React.FC<SponsorModalProps> = ({
               </span>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mt-2.5">
               <a
                 href="https://www.buymeacoffee.com/sukhman69"
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`inline-flex items-center justify-between px-3.5 py-2.5 rounded-xl border font-bold text-xs hover:scale-[1.02] transition-all ${
+                className={`inline-flex items-center justify-between px-4 py-3 rounded-xl border font-bold text-xs hover:scale-[1.02] transition-all shadow-sm ${
                   isDarkMode
-                    ? 'bg-slate-900 border-slate-800 text-amber-400 hover:bg-slate-800'
-                    : 'bg-white border-amber-200 text-amber-700 hover:bg-amber-50'
+                    ? 'bg-slate-900/90 border-amber-500/30 text-amber-400 hover:bg-amber-500/10 hover:border-amber-500/50'
+                    : 'bg-white border-amber-200 text-amber-700 hover:bg-amber-50/80 hover:border-amber-300'
                 }`}
               >
-                <div className="flex items-center gap-1.5">
-                  <Coffee className="h-3.5 w-3.5 text-amber-400" />
+                <div className="flex items-center gap-2">
+                  <Coffee className="h-4 w-4 text-amber-400" />
                   <span>Buy Me a Coffee</span>
                 </div>
-                <ExternalLink className="h-3.5 w-3.5" />
+                <ExternalLink className="h-3.5 w-3.5 opacity-70" />
               </a>
 
               <a
                 href="https://ko-fi.com/U1M224GXT4"
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`inline-flex items-center justify-between px-3.5 py-2.5 rounded-xl border font-bold text-xs hover:scale-[1.02] transition-all ${
+                className={`inline-flex items-center justify-between px-4 py-3 rounded-xl border font-bold text-xs hover:scale-[1.02] transition-all shadow-sm ${
                   isDarkMode
-                    ? 'bg-slate-900 border-indigo-500/30 text-indigo-400 hover:bg-indigo-500/10'
-                    : 'bg-indigo-50/50 border-indigo-200 text-indigo-700 hover:bg-indigo-100/50'
+                    ? 'bg-slate-900/90 border-indigo-500/30 text-indigo-400 hover:bg-indigo-500/10 hover:border-indigo-500/50'
+                    : 'bg-indigo-50/50 border-indigo-200 text-indigo-700 hover:bg-indigo-100/50 hover:border-indigo-300'
                 }`}
               >
-                <div className="flex items-center gap-1.5">
-                  <Coffee className="h-3.5 w-3.5 text-indigo-400" />
+                <div className="flex items-center gap-2">
+                  <Coffee className="h-4 w-4 text-indigo-400" />
                   <span>Support on Ko-fi</span>
                 </div>
-                <ExternalLink className="h-3.5 w-3.5" />
+                <ExternalLink className="h-3.5 w-3.5 opacity-70" />
               </a>
             </div>
           </div>
