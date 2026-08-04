@@ -56,7 +56,7 @@ export function generateJSON(grid: CalendarGrid, settings: PlannerSettings): str
 export function generateBashScript(
   grid: CalendarGrid,
   repoName: string = 'github-art-canvas',
-  username: string = 'Sukhman369'
+  username: string = 'your-username'
 ): string {
   const activeCells = grid.weeks
     .flatMap((w) => w.days)
@@ -107,7 +107,7 @@ export function generateBashScript(
  */
 export function generatePythonScript(
   grid: CalendarGrid,
-  username: string = 'Sukhman369',
+  username: string = 'your-username',
   repoName: string = 'github-art-canvas'
 ): string {
   const activeCells = grid.weeks
@@ -158,7 +158,7 @@ print("👉 Push command: git remote add origin https://github.com/${username}/$
  */
 export function generatePowerShellScript(
   grid: CalendarGrid,
-  username: string = 'Sukhman369',
+  username: string = 'your-username',
   repoName: string = 'github-art-canvas'
 ): string {
   const activeCells = grid.weeks

@@ -23,7 +23,7 @@ export const ScriptModal: React.FC<ScriptModalProps> = ({
   pythonScript,
   powerShellScript = '',
   projectName,
-  username = 'Sukhman369',
+  username = 'your-username',
   repoName = 'github-art-canvas',
 }) => {
   const [tab, setTab] = useState<'powershell' | 'bash' | 'python'>('powershell');

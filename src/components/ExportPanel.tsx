@@ -77,7 +77,7 @@ export const ExportPanel: React.FC<ExportPanelProps> = ({ grid, settings, isDark
     });
   };
 
-  const targetUsername = settings.username || 'Sukhman369';
+  const targetUsername = settings.username || 'your-username';
   const targetRepoName = settings.repoName || 'github-art-canvas';
   const bashScript = generateBashScript(grid, targetRepoName, targetUsername);
   const pythonScript = generatePythonScript(grid, targetUsername, targetRepoName);

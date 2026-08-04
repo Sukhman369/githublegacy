@@ -38,6 +38,11 @@ export const metadata: Metadata = {
     'Commit Strategy Planner',
   ],
   authors: [{ name: 'Sukhman' }],
+  icons: {
+    icon: '/icon.svg',
+    shortcut: '/icon.svg',
+    apple: '/icon.svg',
+  },
   openGraph: {
     title: 'GitLegacy - GitHub Contribution Calendar Planner',
     description:

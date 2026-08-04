@@ -127,9 +127,13 @@ export default function BadgesStudioPage() {
   // Copy state
   const [copiedType, setCopiedType] = useState<string | null>(null);
 
+  const GITLEGACY_TOOL_URL = 'https://gitlegacy.co/tools/badges';
+  const GITLEGACY_API_BASE = 'https://gitlegacy.co/api/badge/shield';
+
   const logoQuery = shieldLogo && shieldLogo !== 'none' ? `&logo=${shieldLogo}&logoColor=${encodeURIComponent(shieldLogoColor)}` : '';
-  const customShieldUrl = `https://img.shields.io/badge/${encodeURIComponent(shieldLabel)}-${encodeURIComponent(shieldMessage)}-${shieldColor}?style=${shieldStyle}${logoQuery}`;
-  const customShieldMarkdown = `![${shieldLabel}](${customShieldUrl})`;
+  const customShieldLocalUrl = `/api/badge/shield?label=${encodeURIComponent(shieldLabel)}&message=${encodeURIComponent(shieldMessage)}&color=${shieldColor}&style=${shieldStyle}${logoQuery}`;
+  const customShieldProdUrl = `${GITLEGACY_API_BASE}?label=${encodeURIComponent(shieldLabel)}&message=${encodeURIComponent(shieldMessage)}&color=${shieldColor}&style=${shieldStyle}${logoQuery}`;
+  const customShieldMarkdown = `[![${shieldLabel}](${customShieldProdUrl})](${GITLEGACY_TOOL_URL})`;
 
   const handleCopy = (code: string, id: string) => {
     navigator.clipboard.writeText(code);
@@ -150,16 +154,25 @@ export default function BadgesStudioPage() {
 
     if (basketFormat === 'centered-html') {
       const imgTags = selectedObjects
-        .map((b) => `  <img src="https://img.shields.io/badge/${encodeURIComponent(b.name)}-${b.color}?style=${techBadgeStyle}&logo=${b.logo}&logoColor=white" alt="${b.name}" />`)
+        .map(
+          (b) =>
+            `  <a href="${GITLEGACY_TOOL_URL}" target="_blank" rel="noopener noreferrer">\n    <img src="${GITLEGACY_API_BASE}?name=${encodeURIComponent(b.name)}&color=${b.color}&style=${techBadgeStyle}&logo=${b.logo}&logoColor=white" alt="${b.name}" />\n  </a>`
+        )
         .join('\n');
       outputText = `<p align="center">\n${imgTags}\n</p>`;
     } else if (basketFormat === 'multiline-md') {
       outputText = selectedObjects
-        .map((b) => `![${b.name}](https://img.shields.io/badge/${encodeURIComponent(b.name)}-${b.color}?style=${techBadgeStyle}&logo=${b.logo}&logoColor=white)`)
+        .map(
+          (b) =>
+            `[![${b.name}](${GITLEGACY_API_BASE}?name=${encodeURIComponent(b.name)}&color=${b.color}&style=${techBadgeStyle}&logo=${b.logo}&logoColor=white)](${GITLEGACY_TOOL_URL})`
+        )
         .join('\n');
     } else {
       outputText = selectedObjects
-        .map((b) => `![${b.name}](https://img.shields.io/badge/${encodeURIComponent(b.name)}-${b.color}?style=${techBadgeStyle}&logo=${b.logo}&logoColor=white)`)
+        .map(
+          (b) =>
+            `[![${b.name}](${GITLEGACY_API_BASE}?name=${encodeURIComponent(b.name)}&color=${b.color}&style=${techBadgeStyle}&logo=${b.logo}&logoColor=white)](${GITLEGACY_TOOL_URL})`
+        )
         .join(' ');
     }
 
@@ -378,9 +391,10 @@ export default function BadgesStudioPage() {
                 previewBgMode === 'light' ? 'bg-slate-100/90 border-slate-300' : 'bg-slate-950/50 border-slate-800/80'
               }`}>
                 {displayedTechBadges.map((badge) => {
-                  const url = `https://img.shields.io/badge/${encodeURIComponent(badge.name)}-${badge.color}?style=${techBadgeStyle}&logo=${badge.logo}&logoColor=white`;
-                  const htmlTag = `<img src="${url}" alt="${badge.name}" />`;
-                  const mdTag = `![${badge.name}](${url})`;
+                  const localProxyUrl = `/api/badge/shield?name=${encodeURIComponent(badge.name)}&color=${badge.color}&style=${techBadgeStyle}&logo=${badge.logo}&logoColor=white`;
+                  const prodProxyUrl = `${GITLEGACY_API_BASE}?name=${encodeURIComponent(badge.name)}&color=${badge.color}&style=${techBadgeStyle}&logo=${badge.logo}&logoColor=white`;
+                  const htmlTag = `<a href="${GITLEGACY_TOOL_URL}" target="_blank" rel="noopener noreferrer">\n  <img src="${prodProxyUrl}" alt="${badge.name}" />\n</a>`;
+                  const mdTag = `[![${badge.name}](${prodProxyUrl})](${GITLEGACY_TOOL_URL})`;
                   const defaultCopyText = basketFormat === 'centered-html' ? htmlTag : mdTag;
                   const isCopied = copiedType === badge.name;
                   const isSelected = selectedBadges.includes(badge.name);
@@ -411,7 +425,7 @@ export default function BadgesStudioPage() {
                       </button>
 
                       {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={url} alt={badge.name} className="h-7 object-contain max-w-full" />
+                      <img src={localProxyUrl} alt={badge.name} className="h-7 object-contain max-w-full" />
                       
                       <div className="flex items-center gap-2">
                         <span className="text-[11px] font-mono font-semibold flex items-center gap-1 text-slate-400 group-hover:text-emerald-400 transition-colors">
@@ -499,8 +513,9 @@ export default function BadgesStudioPage() {
               { title: 'Vercel Deployment', label: 'Deployment', msg: 'Vercel', color: '000000', logo: 'vercel' },
               { title: 'Docker Ready', label: 'Container', msg: 'Docker', color: '2496ed', logo: 'docker' },
             ].map((preset) => {
-              const url = `https://img.shields.io/badge/${encodeURIComponent(preset.label)}-${encodeURIComponent(preset.msg)}-${preset.color}?style=${presetBadgeStyle}&logo=${preset.logo}&logoColor=white`;
-              const md = `![${preset.title}](${url})`;
+              const localProxyUrl = `/api/badge/shield?label=${encodeURIComponent(preset.label)}&message=${encodeURIComponent(preset.msg)}&color=${preset.color}&style=${presetBadgeStyle}&logo=${preset.logo}&logoColor=white`;
+              const prodProxyUrl = `${GITLEGACY_API_BASE}?label=${encodeURIComponent(preset.label)}&message=${encodeURIComponent(preset.msg)}&color=${preset.color}&style=${presetBadgeStyle}&logo=${preset.logo}&logoColor=white`;
+              const md = `[![${preset.title}](${prodProxyUrl})](${GITLEGACY_TOOL_URL})`;
               const isCopied = copiedType === preset.title;
 
               return (
@@ -516,7 +531,7 @@ export default function BadgesStudioPage() {
                   <div className="text-center">
                     <span className="text-[11px] font-bold text-slate-400 block mb-1">{preset.title}</span>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={url} alt={preset.title} className="h-6 object-contain max-w-full mx-auto" />
+                    <img src={localProxyUrl} alt={preset.title} className="h-6 object-contain max-w-full mx-auto" />
                   </div>
 
                   <span className="text-[10px] font-mono font-semibold flex items-center gap-1 text-slate-400 group-hover:text-emerald-400 transition-colors">
@@ -668,7 +683,7 @@ export default function BadgesStudioPage() {
             previewBgMode === 'light' ? 'bg-slate-100 border-slate-300' : 'bg-slate-950 border-slate-800'
           }`}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={customShieldUrl} alt="Custom Shield Preview" className="h-8 object-contain max-w-full" />
+            <img src={customShieldLocalUrl} alt="Custom Shield Preview" className="h-8 object-contain max-w-full" />
 
             <button
               onClick={() => handleCopy(customShieldMarkdown, 'custom-shield')}

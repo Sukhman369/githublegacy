@@ -36,7 +36,7 @@ function ArtStudioContent() {
     themeId: 'github-dark',
     drawingMode: 'select',
     drawIntensityLevel: 4,
-    username: 'Sukhman369',
+    username: '',
     repoName: 'github-art-canvas',
   });
 

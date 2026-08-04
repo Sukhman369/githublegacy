@@ -29,8 +29,8 @@ export default function HistoryVisualizerPage() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   // Form State
-  const [usernameInput, setUsernameInput] = useState('sukhman369');
-  const [activeUsername, setActiveUsername] = useState('sukhman369');
+  const [usernameInput, setUsernameInput] = useState('');
+  const [activeUsername, setActiveUsername] = useState('torvalds');
   const [selectedTheme, setSelectedTheme] = useState('githubClassic');
   const [copiedType, setCopiedType] = useState<string | null>(null);
 
@@ -148,7 +148,7 @@ export default function HistoryVisualizerPage() {
                   type="text"
                   value={usernameInput}
                   onChange={(e) => setUsernameInput(e.target.value)}
-                  placeholder="sukhman369"
+                  placeholder="Enter GitHub username... (e.g. torvalds)"
                   className="w-full px-3.5 py-2.5 rounded-xl bg-[#0d1117] border border-slate-700 text-xs font-bold text-white placeholder-slate-500 focus:border-purple-500 focus:outline-none transition-all"
                 />
               </div>

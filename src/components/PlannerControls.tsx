@@ -139,7 +139,7 @@ export const PlannerControls: React.FC<PlannerControlsProps> = ({
               type="text"
               value={settings.username || ''}
               onChange={(e) => onChangeSettings({ username: e.target.value })}
-              placeholder="Sukhman369"
+              placeholder="Enter your GitHub username..."
               className={`w-full rounded-xl border pl-7 pr-3 py-2 text-sm font-mono font-semibold focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 ${
                 isDarkMode
                   ? 'bg-slate-950 border-slate-800 text-teal-300 placeholder-slate-600'
