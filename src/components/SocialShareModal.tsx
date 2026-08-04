@@ -46,7 +46,7 @@ export const SocialShareModal: React.FC<SocialShareModalProps> = ({
   const shareText = `Just designed custom contribution graph artwork for my GitHub profile using @GitLegacy! 🚀\n\nPattern: "${textPattern}" (${year})\nCheck it out or plan your own:`;
   const shareUrl = `${siteUrl}/tools/art-studio?text=${encodeURIComponent(textPattern)}&year=${year}&theme=${themeId}`;
 
-  const twitterShareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
+  const twitterShareUrl = `https://x.com/intent/post?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
   const linkedinShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`;
 
   const markdownSnippet = `[![My Git Canvas](${siteUrl}/api/badge?text=${encodeURIComponent(textPattern)}&year=${year}&theme=${themeId})](${shareUrl})`;
