@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { Inter, JetBrains_Mono } from 'next/font/google';
+import Script from 'next/script';
 import './globals.css';
 import { ThemeProvider } from '../context/ThemeContext';
 import { Analytics } from '@vercel/analytics/next';
@@ -99,6 +100,20 @@ export default function RootLayout({
         <ThemeProvider>{children}</ThemeProvider>
         <Analytics />
         <SpeedInsights />
+        <Script
+          id="bmc-widget"
+          src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
+          data-name="BMC-Widget"
+          data-cfasync="false"
+          data-id="sukhman69"
+          data-description="Support me on Buy me a coffee!"
+          data-message=""
+          data-color="#40DCA5"
+          data-position="Right"
+          data-x_margin="18"
+          data-y_margin="18"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );
