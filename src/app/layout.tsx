@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { Inter, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '../context/ThemeContext';
+import { Analytics } from '@vercel/analytics/next';
 
 const inter = Inter({
   variable: '--font-inter',
@@ -56,6 +57,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col font-sans overflow-x-hidden selection:bg-emerald-500 selection:text-slate-950">
         <ThemeProvider>{children}</ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
