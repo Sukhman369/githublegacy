@@ -18,10 +18,20 @@ export const Header: React.FC = () => {
   const pathname = usePathname();
   const { isDarkMode, toggleDarkMode } = useTheme();
   const [isSponsorModalOpen, setIsSponsorModalOpen] = useState(false);
-  const [showThemeHint, setShowThemeHint] = useState(true);
+  const [showThemeHint, setShowThemeHint] = useState(false);
   const [isHintFading, setIsHintFading] = useState(false);
 
   useEffect(() => {
+    // Only display hint on the very first page visit in this session
+    if (typeof window !== 'undefined') {
+      const hasShown = sessionStorage.getItem('gitlegacy_theme_hint_shown');
+      if (hasShown) {
+        return;
+      }
+      sessionStorage.setItem('gitlegacy_theme_hint_shown', 'true');
+      setShowThemeHint(true);
+    }
+
     const dismiss = () => {
       setIsHintFading(true);
       setTimeout(() => setShowThemeHint(false), 700);
