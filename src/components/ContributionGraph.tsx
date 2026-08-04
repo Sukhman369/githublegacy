@@ -5,7 +5,8 @@ import { CalendarGrid, ContributionCell, PlannerSettings } from '../types/calend
 import { getThemeById } from '../lib/theme-config';
 import { downloadGraphAsPNG } from '../lib/graph-image-export';
 import { CellTooltip } from './CellTooltip';
-import { Sparkles, Info, MoveHorizontal, Trash2, RotateCcw, Image } from 'lucide-react';
+import { SocialShareModal } from './SocialShareModal';
+import { Sparkles, Info, MoveHorizontal, Trash2, RotateCcw, Image, Share2 } from 'lucide-react';
 
 interface ContributionGraphProps {
   grid: CalendarGrid;
@@ -29,6 +30,7 @@ export const ContributionGraph: React.FC<ContributionGraphProps> = ({
   const [hoveredCell, setHoveredCell] = useState<ContributionCell | null>(null);
   const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
   const [isMouseDown, setIsMouseDown] = useState(false);
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const graphRef = useRef<HTMLDivElement>(null);
 
   // Compute month label column indices
@@ -125,6 +127,16 @@ export const ContributionGraph: React.FC<ContributionGraphProps> = ({
           >
             <Image className="h-3.5 w-3.5" />
             <span>Download PNG</span>
+          </button>
+
+          {/* 1-Click Export & Brag */}
+          <button
+            onClick={() => setIsShareModalOpen(true)}
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white shadow-md hover:scale-105"
+            title="Export artwork banner and share to X / LinkedIn"
+          >
+            <Share2 className="h-3.5 w-3.5" />
+            <span>Export & Brag</span>
           </button>
 
           {/* Drawing hint */}
@@ -242,6 +254,16 @@ export const ContributionGraph: React.FC<ContributionGraphProps> = ({
           <span className="text-slate-400 font-medium">More</span>
         </div>
       </div>
+
+      <SocialShareModal
+        isOpen={isShareModalOpen}
+        onClose={() => setIsShareModalOpen(false)}
+        textPattern={settings.text}
+        year={settings.year}
+        grid={grid}
+        themeId={settings.themeId}
+        isDarkMode={true}
+      />
     </div>
   );
 };

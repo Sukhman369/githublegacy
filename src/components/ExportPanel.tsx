@@ -4,9 +4,8 @@ import React, { useState } from 'react';
 import { CalendarGrid, PlannerSettings } from '../types/calendar';
 import { generateCSV, generateJSON, generateBashScript, generatePythonScript, generatePowerShellScript } from '../lib/export-engine';
 import { ScriptModal } from './ScriptModal';
-import { SocialShareModal } from './SocialShareModal';
-import { downloadGraphAsPNG, downloadGraphAsSVG } from '../lib/graph-image-export';
-import { Download, FileSpreadsheet, FileCode, Terminal, Share2, Check, Sparkles, Image, FileImage } from 'lucide-react';
+import { downloadGraphAsSVG } from '../lib/graph-image-export';
+import { Download, FileSpreadsheet, FileCode, Terminal, Sparkles, FileImage } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 interface ExportPanelProps {
@@ -17,7 +16,6 @@ interface ExportPanelProps {
 
 export const ExportPanel: React.FC<ExportPanelProps> = ({ grid, settings, isDarkMode = true }) => {
   const [isScriptModalOpen, setIsScriptModalOpen] = useState(false);
-  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [copiedFormat, setCopiedFormat] = useState<string | null>(null);
 
   const handleDownloadSVG = () => {
@@ -193,22 +191,6 @@ export const ExportPanel: React.FC<ExportPanelProps> = ({ grid, settings, isDark
             <Download className="h-4 w-4 opacity-70" />
           </button>
 
-          {/* Share & Brag Modal Trigger */}
-          <button
-            onClick={() => setIsShareModalOpen(true)}
-            className="flex items-center justify-between p-4 rounded-xl bg-gradient-to-r from-purple-600/20 to-pink-600/20 border border-purple-500/30 hover:border-purple-500/60 text-purple-300 font-semibold text-xs transition-all hover:scale-[1.02] shadow-lg shadow-purple-500/10 group"
-          >
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 text-white font-bold group-hover:scale-110 transition-transform">
-                <Share2 className="h-4 w-4" />
-              </div>
-              <div className="text-left">
-                <p className={`text-sm font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>Export & Brag</p>
-                <p className="text-[11px] text-purple-400 font-normal">X, LinkedIn & Banners</p>
-              </div>
-            </div>
-            <Sparkles className="h-4 w-4 text-purple-400" />
-          </button>
         </div>
       </div>
 
@@ -221,16 +203,6 @@ export const ExportPanel: React.FC<ExportPanelProps> = ({ grid, settings, isDark
         projectName={settings.text}
         username={targetUsername}
         repoName={targetRepoName}
-      />
-
-      <SocialShareModal
-        isOpen={isShareModalOpen}
-        onClose={() => setIsShareModalOpen(false)}
-        textPattern={settings.text}
-        year={settings.year}
-        grid={grid}
-        themeId={settings.themeId}
-        isDarkMode={isDarkMode}
       />
     </>
   );
