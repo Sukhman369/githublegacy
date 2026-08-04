@@ -138,38 +138,38 @@ export const SocialShareModal: React.FC<SocialShareModalProps> = ({
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
             <button
               onClick={() => exportTwitterBanner(grid, currentTheme, textPattern)}
-              className={`flex items-center justify-center gap-2 py-2 px-3 rounded-lg text-xs font-semibold border transition-all ${
+              className={`flex items-center justify-center gap-1.5 py-2 px-2.5 rounded-lg text-xs font-semibold border transition-all hover:scale-[1.02] ${
                 isDarkMode
                   ? 'bg-slate-800/80 border-slate-700 hover:bg-slate-700 text-slate-200'
                   : 'bg-slate-100 border-slate-300 hover:bg-slate-200 text-slate-800'
               }`}
             >
-              <Download className="w-3.5 h-3.5 text-emerald-500" />
-              <span>Twitter Banner</span>
+              <Download className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+              <span>Twitter Banner (1500x500)</span>
             </button>
 
             <button
               onClick={() => exportLinkedInBanner(grid, currentTheme, textPattern)}
-              className={`flex items-center justify-center gap-2 py-2 px-3 rounded-lg text-xs font-semibold border transition-all ${
+              className={`flex items-center justify-center gap-1.5 py-2 px-2.5 rounded-lg text-xs font-semibold border transition-all hover:scale-[1.02] ${
                 isDarkMode
                   ? 'bg-slate-800/80 border-slate-700 hover:bg-slate-700 text-slate-200'
                   : 'bg-slate-100 border-slate-300 hover:bg-slate-200 text-slate-800'
               }`}
             >
-              <Download className="w-3.5 h-3.5 text-emerald-500" />
-              <span>LinkedIn Cover</span>
+              <Download className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+              <span>LinkedIn Cover (1584x396)</span>
             </button>
 
             <button
               onClick={() => exportInstagramPost(grid, currentTheme, textPattern)}
-              className={`flex items-center justify-center gap-2 py-2 px-3 rounded-lg text-xs font-semibold border transition-all ${
+              className={`flex items-center justify-center gap-1.5 py-2 px-2.5 rounded-lg text-xs font-semibold border transition-all hover:scale-[1.02] ${
                 isDarkMode
                   ? 'bg-slate-800/80 border-slate-700 hover:bg-slate-700 text-slate-200'
                   : 'bg-slate-100 border-slate-300 hover:bg-slate-200 text-slate-800'
               }`}
             >
-              <Download className="w-3.5 h-3.5 text-emerald-500" />
-              <span>Instagram Post</span>
+              <Download className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+              <span>Instagram Post (1080x1080)</span>
             </button>
           </div>
         </div>
