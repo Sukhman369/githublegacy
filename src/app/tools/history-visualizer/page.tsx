@@ -23,6 +23,7 @@ import {
   formatRawContributionsToMultiYear,
   drawMultiYearPoster,
 } from '../../../lib/contributions-canvas';
+import { getSoftwareApplicationSchema } from '../../../lib/schema-org';
 
 export default function HistoryVisualizerPage() {
   const { isDarkMode } = useTheme();
@@ -121,10 +122,20 @@ export default function HistoryVisualizerPage() {
     setTimeout(() => setCopiedType(null), 2000);
   };
 
+  const visualizerSchema = getSoftwareApplicationSchema(
+    'GitLegacy History Visualizer',
+    'Visualize your entire multi-year GitHub contribution calendar poster in 14 themes.',
+    '/tools/history-visualizer'
+  );
+
   return (
     <div className={`min-h-screen flex flex-col font-mono transition-colors duration-300 ${
       isDarkMode ? 'bg-[#0d1117] text-slate-100' : 'bg-slate-900 text-slate-100'
     }`}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(visualizerSchema) }}
+      />
       <Header />
 
       <main className="flex-1 w-full max-w-[1400px] mx-auto px-4 py-6">

@@ -19,6 +19,7 @@ import {
   applyPatternToCalendar,
 } from '../../../lib/calendar-engine';
 import { calculateStrategyStats } from '../../../lib/commit-planner';
+import { getSoftwareApplicationSchema } from '../../../lib/schema-org';
 
 function ArtStudioContent() {
   const currentYear = new Date().getFullYear();
@@ -141,12 +142,22 @@ function ArtStudioContent() {
     return calculateStrategyStats(calendarGrid);
   }, [calendarGrid]);
 
+  const artStudioSchema = getSoftwareApplicationSchema(
+    'GitLegacy Contribution Art Studio',
+    'Design custom 8-bit pixel text and GitHub contribution graph artwork.',
+    '/tools/art-studio'
+  );
+
   return (
     <div
       className={`min-h-screen flex flex-col transition-colors duration-300 ${
         isDarkMode ? 'bg-slate-950 text-slate-100' : 'bg-slate-50 text-slate-900'
       }`}
     >
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(artStudioSchema) }}
+      />
       <Header />
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-10 space-y-8">

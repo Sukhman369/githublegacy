@@ -7,6 +7,7 @@ import { Footer } from '../../../components/Footer';
 import { useTheme } from '../../../context/ThemeContext';
 import { Terminal, Copy, Check, Sparkles } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import { getSoftwareApplicationSchema } from '../../../lib/schema-org';
 
 export default function ScriptGeneratorPage() {
   const { isDarkMode } = useTheme();
@@ -69,12 +70,22 @@ if __name__ == "__main__":
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const scriptSchema = getSoftwareApplicationSchema(
+    'GitLegacy CLI Script Generator',
+    'Generate standalone Bash, Python & PowerShell backdated commit scripts.',
+    '/tools/script-generator'
+  );
+
   return (
     <div
       className={`min-h-screen flex flex-col font-sans transition-colors duration-300 ${
         isDarkMode ? 'bg-slate-950 text-slate-100' : 'bg-slate-50 text-slate-900'
       }`}
     >
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(scriptSchema) }}
+      />
       <Header />
 
       <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 py-10 w-full space-y-10">

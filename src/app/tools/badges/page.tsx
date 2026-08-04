@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Header } from '../../../components/Header';
 import { Footer } from '../../../components/Footer';
 import { useTheme } from '../../../context/ThemeContext';
+import { getSoftwareApplicationSchema } from '../../../lib/schema-org';
 import { Shield, Sparkles, Copy, Check, Code, ExternalLink, Image as ImageIcon, Search, ShoppingBag, Plus, Trash2, CheckCircle2, Moon, Sun } from 'lucide-react';
 
 interface TechBadge {
@@ -195,10 +196,20 @@ export default function BadgesStudioPage() {
     return filteredTechBadges.slice(0, visibleCount);
   }, [filteredTechBadges, visibleCount]);
 
+  const badgeSchema = getSoftwareApplicationSchema(
+    'GitLegacy Badge Studio',
+    'Curated developer badges & shields generator for GitHub profile READMEs.',
+    '/tools/badges'
+  );
+
   return (
     <div className={`min-h-screen flex flex-col transition-colors duration-300 ${
       isDarkMode ? 'bg-slate-950 text-slate-100' : 'bg-slate-50 text-slate-900'
     }`}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(badgeSchema) }}
+      />
       <Header />
 
       <main className="flex-1 max-w-6xl w-full mx-auto px-4 py-8 space-y-10">
