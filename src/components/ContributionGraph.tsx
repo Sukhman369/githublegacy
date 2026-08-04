@@ -3,10 +3,10 @@
 import React, { useState, useRef } from 'react';
 import { CalendarGrid, ContributionCell, PlannerSettings } from '../types/calendar';
 import { getThemeById } from '../lib/theme-config';
-import { downloadGraphAsPNG } from '../lib/graph-image-export';
+import { downloadGraphAsPNG, downloadGraphAsSVG } from '../lib/graph-image-export';
 import { CellTooltip } from './CellTooltip';
 import { SocialShareModal } from './SocialShareModal';
-import { Sparkles, Info, MoveHorizontal, Trash2, RotateCcw, Image, Share2 } from 'lucide-react';
+import { Sparkles, Info, MoveHorizontal, Trash2, RotateCcw, Image, Share2, FileImage } from 'lucide-react';
 
 interface ContributionGraphProps {
   grid: CalendarGrid;
@@ -119,7 +119,7 @@ export const ContributionGraph: React.FC<ContributionGraphProps> = ({
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
-          {/* 1-Click Download Image */}
+          {/* 1-Click Download PNG */}
           <button
             onClick={() => downloadGraphAsPNG(grid, settings)}
             className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-emerald-500 text-slate-950 hover:bg-emerald-400 shadow-md hover:scale-105"
@@ -127,6 +127,16 @@ export const ContributionGraph: React.FC<ContributionGraphProps> = ({
           >
             <Image className="h-3.5 w-3.5" />
             <span>Download PNG</span>
+          </button>
+
+          {/* 1-Click Download SVG */}
+          <button
+            onClick={() => downloadGraphAsSVG(grid, settings)}
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-teal-500/20 text-teal-300 border border-teal-500/40 hover:bg-teal-500/30 hover:border-teal-400 shadow-sm hover:scale-105"
+            title="Download SVG vector file of contribution graph"
+          >
+            <FileImage className="h-3.5 w-3.5" />
+            <span>Download SVG</span>
           </button>
 
           {/* 1-Click Export & Brag */}

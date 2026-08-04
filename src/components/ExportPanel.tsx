@@ -4,8 +4,7 @@ import React, { useState } from 'react';
 import { CalendarGrid, PlannerSettings } from '../types/calendar';
 import { generateCSV, generateJSON, generateBashScript, generatePythonScript, generatePowerShellScript } from '../lib/export-engine';
 import { ScriptModal } from './ScriptModal';
-import { downloadGraphAsSVG } from '../lib/graph-image-export';
-import { Download, FileSpreadsheet, FileCode, Terminal, Sparkles, FileImage } from 'lucide-react';
+import { Download, FileSpreadsheet, FileCode, Terminal, Sparkles } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 interface ExportPanelProps {
@@ -17,11 +16,6 @@ interface ExportPanelProps {
 export const ExportPanel: React.FC<ExportPanelProps> = ({ grid, settings, isDarkMode = true }) => {
   const [isScriptModalOpen, setIsScriptModalOpen] = useState(false);
   const [copiedFormat, setCopiedFormat] = useState<string | null>(null);
-
-  const handleDownloadSVG = () => {
-    downloadGraphAsSVG(grid, settings);
-    triggerConfetti();
-  };
 
   const handleExportCSV = () => {
     const csvContent = generateCSV(grid);
@@ -97,52 +91,24 @@ export const ExportPanel: React.FC<ExportPanelProps> = ({ grid, settings, isDark
           </span>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-
-          {/* 1-Click SVG Download */}
-          <button
-            onClick={handleDownloadSVG}
-            className={`flex items-center justify-between p-4 rounded-xl border font-semibold text-xs transition-all hover:scale-[1.02] group ${
-              isDarkMode
-                ? 'bg-slate-950/80 border-slate-800 hover:border-teal-500/50 text-teal-300'
-                : 'bg-slate-50 border-slate-200 hover:border-teal-400 text-teal-700'
-            }`}
-          >
-            <div className="flex items-center gap-3">
-              <div className={`p-2 rounded-lg border ${
-                isDarkMode ? 'bg-slate-900 text-teal-400 border-slate-800' : 'bg-white text-teal-600 border-slate-200'
-              }`}>
-                <FileImage className="h-4 w-4" />
-              </div>
-              <div className="text-left">
-                <p className={`text-sm font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>Download Vector (SVG)</p>
-                <p className={`text-[11px] font-normal ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>Scalable vector file</p>
-              </div>
-            </div>
-            <Download className="h-4 w-4 opacity-70" />
-          </button>
-
-          {/* Script Generator Button */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          {/* Highlighted Primary Action: Git Commit Script Generator */}
           <button
             onClick={() => setIsScriptModalOpen(true)}
-            className={`flex items-center justify-between p-4 rounded-xl border font-semibold text-xs transition-all hover:scale-[1.02] group ${
-              isDarkMode
-                ? 'bg-slate-950/80 border-slate-800 hover:border-slate-700 text-slate-200'
-                : 'bg-slate-50 border-slate-200 hover:border-slate-300 text-slate-800'
-            }`}
+            className="flex items-center justify-between p-4 rounded-xl bg-gradient-to-r from-emerald-500/20 via-teal-500/20 to-cyan-500/20 border border-emerald-500/50 hover:border-emerald-400 text-emerald-300 font-semibold text-xs transition-all hover:scale-[1.02] shadow-lg shadow-emerald-500/10 group"
           >
             <div className="flex items-center gap-3">
-              <div className={`p-2 rounded-lg border ${
-                isDarkMode ? 'bg-slate-900 text-emerald-400 border-slate-800' : 'bg-white text-emerald-600 border-slate-200'
-              }`}>
+              <div className="p-2 rounded-lg bg-emerald-500 text-slate-950 font-bold group-hover:scale-110 transition-transform">
                 <Terminal className="h-4 w-4" />
               </div>
               <div className="text-left">
-                <p className={`text-sm font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>Git Commit Script</p>
-                <p className="text-[11px] text-emerald-500 dark:text-emerald-400 font-normal">PowerShell / Bash / Python</p>
+                <p className={`text-sm font-extrabold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+                  Git Commit Script
+                </p>
+                <p className="text-[11px] text-emerald-400 font-medium">PowerShell / Bash / Python</p>
               </div>
             </div>
-            <Download className="h-4 w-4 opacity-70" />
+            <Sparkles className="h-4 w-4 text-emerald-400 animate-pulse" />
           </button>
 
           {/* CSV Export */}
