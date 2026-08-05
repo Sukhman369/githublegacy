@@ -18,6 +18,7 @@ import {
 import { CalendarGrid } from '../types/calendar';
 import { getThemeById } from '../lib/theme-config';
 import {
+  exportPNG,
   exportTwitterBanner,
   exportLinkedInBanner,
   exportFullHDBanner,
@@ -76,6 +77,16 @@ export const SocialShareModal: React.FC<SocialShareModalProps> = ({
   };
 
   const bannerPresets = [
+    {
+      id: 'png-image',
+      title: 'High-Res PNG Graphic',
+      resolution: '1200 × 400 px',
+      ratio: '3:1 Standard',
+      badge: 'PNG Graphic',
+      color: 'from-emerald-500/20 to-cyan-600/10 border-emerald-500/30 text-emerald-400',
+      icon: ImageIcon,
+      exportFn: () => exportPNG(grid, currentTheme, textPattern),
+    },
     {
       id: 'x-banner',
       title: 'X / Twitter Banner',

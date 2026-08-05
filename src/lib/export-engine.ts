@@ -301,6 +301,10 @@ function drawCanvasBanner(
   link.click();
 }
 
+export function exportPNG(grid: CalendarGrid, theme: any, title: string = 'LEGACY') {
+  drawCanvasBanner(grid, theme, title, 1200, 400, `git_legacy_artwork_${grid.year}.png`);
+}
+
 export function exportTwitterBanner(grid: CalendarGrid, theme: any, title: string = 'LEGACY') {
   drawCanvasBanner(grid, theme, title, 1500, 500, `git_legacy_twitter_banner_${grid.year}.png`);
 }
