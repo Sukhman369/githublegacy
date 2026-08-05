@@ -238,27 +238,39 @@ function drawCanvasBanner(
   ctx.lineWidth = 2;
   ctx.strokeRect(10, 10, width - 20, height - 20);
 
-  // Grid dimensions calculation
-  const availableW = width - 160;
-  const cellW = Math.min(22, Math.max(8, Math.floor(availableW / 53)));
+  // Dynamic cell and grid dimensions calculation
+  const paddingX = Math.max(40, Math.floor(width * 0.08));
+  const paddingY = Math.max(40, Math.floor(height * 0.15));
+  const availableW = width - paddingX * 2;
+  const availableH = height - paddingY * 2 - 100; // Account for titles and footer
+
+  const maxCellFromWidth = Math.floor(availableW / 53);
+  const maxCellFromHeight = Math.floor(availableH / 7);
+  const cellW = Math.max(8, Math.min(32, Math.min(maxCellFromWidth, maxCellFromHeight)));
   const cellH = cellW;
-  const gap = 3;
-  const gridW = 53 * (cellW + gap);
-  const gridH = 7 * (cellH + gap);
+  const gap = Math.max(3, Math.floor(cellW / 6));
+
+  const gridW = 53 * (cellW + gap) - gap;
+  const gridH = 7 * (cellH + gap) - gap;
 
   const startX = Math.floor((width - gridW) / 2);
-  const startY = Math.floor((height - gridH) / 2) + (height > 600 ? 40 : 15);
+  const startY = Math.floor((height - gridH) / 2) + Math.floor(height * 0.02);
+
+  // Scaled Typography
+  const titleFontSize = Math.max(20, Math.floor(height * 0.035));
+  const subtitleFontSize = Math.max(12, Math.floor(height * 0.018));
+  const footerFontSize = Math.max(12, Math.floor(height * 0.018));
 
   // Header Title
-  ctx.font = 'bold 24px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+  ctx.font = `bold ${titleFontSize}px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`;
   ctx.fillStyle = theme.isDark ? '#f0f6fc' : '#1f2328';
   ctx.textAlign = 'center';
-  ctx.fillText(`GitLegacy • ${title} (${grid.year})`, width / 2, startY - 35);
+  ctx.fillText(`GitLegacy • ${title} (${grid.year})`, width / 2, startY - Math.floor(titleFontSize * 2));
 
   // Subtitle
-  ctx.font = '14px SFMono-Regular, Consolas, monospace';
+  ctx.font = `${subtitleFontSize}px SFMono-Regular, Consolas, monospace`;
   ctx.fillStyle = theme.isDark ? '#8b949e' : '#656d76';
-  ctx.fillText(`GitHub Contribution Planning Studio`, width / 2, startY - 15);
+  ctx.fillText(`GitHub Contribution Planning Studio`, width / 2, startY - Math.floor(subtitleFontSize * 1.2));
 
   // Render Grid Cells
   grid.weeks.forEach((week, wIdx) => {
@@ -269,7 +281,7 @@ function drawCanvasBanner(
       ctx.fillStyle = theme.levels[day.level];
       ctx.beginPath();
       if (ctx.roundRect) {
-        ctx.roundRect(x, y, cellW, cellH, Math.max(1, Math.floor(cellW / 4)));
+        ctx.roundRect(x, y, cellW, cellH, Math.max(2, Math.floor(cellW / 4)));
       } else {
         ctx.rect(x, y, cellW, cellH);
       }
@@ -278,9 +290,9 @@ function drawCanvasBanner(
   });
 
   // Footer Branding
-  ctx.font = 'bold 13px -apple-system, BlinkMacSystemFont, sans-serif';
+  ctx.font = `bold ${footerFontSize}px -apple-system, BlinkMacSystemFont, sans-serif`;
   ctx.fillStyle = '#10b981';
-  ctx.fillText('Designed with gitlegacy.co', width / 2, startY + gridH + 35);
+  ctx.fillText('Designed with gitlegacy.co', width / 2, startY + gridH + Math.floor(footerFontSize * 2.5));
 
   // Trigger Download
   const link = document.createElement('a');
