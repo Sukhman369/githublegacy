@@ -133,7 +133,7 @@ export const SocialShareModal: React.FC<SocialShareModalProps> = ({
   const modalContent = (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn">
       <div
-        className={`relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl border shadow-2xl transition-all p-6 sm:p-7 space-y-6 ${
+        className={`relative w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-3xl border shadow-2xl transition-all p-6 sm:p-8 space-y-6 ${
           isDarkMode
             ? 'bg-slate-900 border-slate-800 text-white'
             : 'bg-white border-slate-200 text-slate-900'
@@ -205,7 +205,7 @@ export const SocialShareModal: React.FC<SocialShareModalProps> = ({
                         </p>
                       </div>
                     </div>
-                    <span className="text-[10px] font-bold font-mono px-2 py-0.5 rounded-full bg-white/10 text-white border border-white/20">
+                    <span className="text-[10px] font-bold font-mono px-2 py-0.5 rounded-full bg-white/10 text-white border border-white/20 whitespace-nowrap shrink-0">
                       {preset.ratio}
                     </span>
                   </div>
