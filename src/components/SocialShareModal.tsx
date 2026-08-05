@@ -3,18 +3,27 @@
 import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
 import {
-  Share2,
   Copy,
   Check,
   X,
   Code2,
   Sparkles,
-  ExternalLink,
   Download,
+  Image as ImageIcon,
+  Monitor,
+  Maximize2,
+  Square,
+  Layers,
 } from 'lucide-react';
 import { CalendarGrid } from '../types/calendar';
 import { getThemeById } from '../lib/theme-config';
-import { exportTwitterBanner, exportLinkedInBanner, exportInstagramPost } from '../lib/export-engine';
+import {
+  exportTwitterBanner,
+  exportLinkedInBanner,
+  exportInstagramPost,
+  exportFullHDBanner,
+  exportUltraHDBanner,
+} from '../lib/export-engine';
 
 interface SocialShareModalProps {
   isOpen: boolean;
@@ -37,22 +46,21 @@ export const SocialShareModal: React.FC<SocialShareModalProps> = ({
 }) => {
   const [copiedText, setCopiedText] = useState(false);
   const [copiedMarkdown, setCopiedMarkdown] = useState(false);
-  const [copiedHtml, setCopiedHtml] = useState(false);
+  const [downloadedFormat, setDownloadedFormat] = useState<string | null>(null);
 
   if (!isOpen || typeof window === 'undefined') return null;
 
   const currentTheme = getThemeById(themeId);
-  const siteUrl = typeof window !== 'undefined' ? window.location.origin : 'https://gitlegacy.co';
-  const shareText = `Just designed custom contribution graph artwork for my GitHub profile using @GitLegacy! 🚀\n\nPattern: "${textPattern}" (${year})\nCheck it out or plan your own:`;
+  const isPublicHost =
+    typeof window !== 'undefined' &&
+    !window.location.hostname.includes('localhost') &&
+    !window.location.hostname.includes('127.0.0.1');
+  const siteUrl = isPublicHost ? window.location.origin : 'https://gitlegacy.co';
+
   const shareUrl = `${siteUrl}/tools/art-studio?text=${encodeURIComponent(textPattern)}&year=${year}&theme=${themeId}`;
-
-  const twitterShareUrl = `https://x.com/intent/post?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
-  const linkedinShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`;
-
   const markdownSnippet = `[![My Git Canvas](${siteUrl}/api/badge?text=${encodeURIComponent(textPattern)}&year=${year}&theme=${themeId})](${shareUrl})`;
-  const htmlSnippet = `<a href="${shareUrl}"><img src="${siteUrl}/api/badge?text=${encodeURIComponent(textPattern)}&year=${year}&theme=${themeId}" alt="GitLegacy Contribution Artwork" /></a>`;
 
-  const handleCopy = (text: string, type: 'text' | 'markdown' | 'html') => {
+  const handleCopy = (text: string, type: 'text' | 'markdown') => {
     navigator.clipboard.writeText(text);
     if (type === 'text') {
       setCopiedText(true);
@@ -60,16 +68,72 @@ export const SocialShareModal: React.FC<SocialShareModalProps> = ({
     } else if (type === 'markdown') {
       setCopiedMarkdown(true);
       setTimeout(() => setCopiedMarkdown(false), 2000);
-    } else if (type === 'html') {
-      setCopiedHtml(true);
-      setTimeout(() => setCopiedHtml(false), 2000);
     }
   };
 
+  const triggerExport = (formatId: string, exportFn: () => void) => {
+    exportFn();
+    setDownloadedFormat(formatId);
+    setTimeout(() => setDownloadedFormat(null), 2500);
+  };
+
+  const bannerPresets = [
+    {
+      id: 'x-banner',
+      title: 'X / Twitter Banner',
+      resolution: '1500 × 500 px',
+      ratio: '3:1 Aspect',
+      badge: 'Profile Header',
+      color: 'from-sky-500/20 to-blue-600/10 border-sky-500/30 text-sky-400',
+      icon: ImageIcon,
+      exportFn: () => exportTwitterBanner(grid, currentTheme, textPattern),
+    },
+    {
+      id: 'linkedin-cover',
+      title: 'LinkedIn Cover Banner',
+      resolution: '1584 × 396 px',
+      ratio: '4:1 Panoramic',
+      badge: 'Career Header',
+      color: 'from-blue-600/20 to-indigo-600/10 border-blue-500/30 text-blue-400',
+      icon: Layers,
+      exportFn: () => exportLinkedInBanner(grid, currentTheme, textPattern),
+    },
+    {
+      id: 'instagram-post',
+      title: 'Square Social Post',
+      resolution: '1080 × 1080 px',
+      ratio: '1:1 Square',
+      badge: 'Instagram / Feed',
+      color: 'from-fuchsia-500/20 to-rose-500/10 border-fuchsia-500/30 text-fuchsia-400',
+      icon: Square,
+      exportFn: () => exportInstagramPost(grid, currentTheme, textPattern),
+    },
+    {
+      id: 'full-hd',
+      title: 'Full HD Widescreen',
+      resolution: '1920 × 1080 px',
+      ratio: '16:9 1080p',
+      badge: 'Wallpaper / Slide',
+      color: 'from-emerald-500/20 to-teal-600/10 border-emerald-500/30 text-emerald-400',
+      icon: Monitor,
+      exportFn: () => exportFullHDBanner(grid, currentTheme, textPattern),
+    },
+    {
+      id: '4k-ultra',
+      title: '4K Ultra HD Showcase',
+      resolution: '3840 × 2160 px',
+      ratio: '4K Crisp',
+      badge: 'Ultra HD Canvas',
+      color: 'from-purple-500/20 to-amber-500/10 border-purple-500/30 text-purple-300',
+      icon: Maximize2,
+      exportFn: () => exportUltraHDBanner(grid, currentTheme, textPattern),
+    },
+  ];
+
   const modalContent = (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md animate-fadeIn">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn">
       <div
-        className={`relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl border shadow-2xl transition-all p-6 ${
+        className={`relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl border shadow-2xl transition-all p-6 sm:p-7 space-y-6 ${
           isDarkMode
             ? 'bg-slate-900 border-slate-800 text-white'
             : 'bg-white border-slate-200 text-slate-900'
@@ -78,7 +142,7 @@ export const SocialShareModal: React.FC<SocialShareModalProps> = ({
         {/* Close Button */}
         <button
           onClick={onClose}
-          className={`absolute top-4 right-4 p-2 rounded-full transition-colors ${
+          className={`absolute top-5 right-5 p-2 rounded-full transition-colors ${
             isDarkMode
               ? 'hover:bg-slate-800 text-slate-400 hover:text-white'
               : 'hover:bg-slate-100 text-slate-500 hover:text-slate-900'
@@ -89,93 +153,87 @@ export const SocialShareModal: React.FC<SocialShareModalProps> = ({
         </button>
 
         {/* Modal Header */}
-        <div className="flex items-center gap-3 mb-6">
-          <div className="p-3 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 text-slate-950 shadow-md">
+        <div className="flex items-center gap-3.5 border-b pb-5 border-slate-800/80">
+          <div className="p-3 rounded-2xl bg-gradient-to-br from-emerald-400 via-teal-500 to-cyan-500 text-slate-950 shadow-lg shadow-emerald-500/20 shrink-0">
             <Sparkles className="w-6 h-6" />
           </div>
           <div>
-            <h2 className="text-xl font-extrabold tracking-tight">Export & Brag</h2>
+            <h2 className="text-xl sm:text-2xl font-black tracking-tight flex items-center gap-2">
+              <span>Export Artwork & Banners</span>
+            </h2>
             <p className={`text-xs ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
-              Share your contribution artwork on social media or embed it in your GitHub README.
+              Download high-resolution graphics for your profile headers, slides, or README embeds.
             </p>
           </div>
         </div>
 
-        {/* Social Share Buttons */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
-          <a
-            href={twitterShareUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2.5 py-3 px-4 rounded-xl font-bold text-sm bg-black hover:bg-slate-900 text-white border border-slate-800 shadow-lg transition-all transform hover:-translate-y-0.5"
-          >
-            <svg className="w-4 h-4 fill-current text-white" viewBox="0 0 24 24">
-              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-            </svg>
-            <span>Share on X</span>
-            <ExternalLink className="w-3.5 h-3.5 opacity-70" />
-          </a>
+        {/* High-Res Social Banners Suite */}
+        <div className="space-y-3">
+          <div className="flex items-center justify-between">
+            <label className={`text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 ${
+              isDarkMode ? 'text-emerald-400' : 'text-emerald-600'
+            }`}>
+              <ImageIcon className="w-3.5 h-3.5" />
+              <span>High-Res Artwork Banners & Wallpapers</span>
+            </label>
+            <span className="text-[11px] font-mono text-slate-400">Retina 2x Crisp PNG</span>
+          </div>
 
-          <a
-            href={linkedinShareUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2.5 py-3 px-4 rounded-xl font-bold text-sm bg-blue-600 hover:bg-blue-500 text-white shadow-lg transition-all transform hover:-translate-y-0.5"
-          >
-            <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-              <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.25V10.9H6.46M7.86 6.72a1.4 1.4 0 1 0 0 2.8 1.4 1.4 0 0 0 0-2.8z" />
-            </svg>
-            <span>Share on LinkedIn</span>
-            <ExternalLink className="w-3.5 h-3.5 opacity-70" />
-          </a>
-        </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {bannerPresets.map((preset) => {
+              const IconComp = preset.icon;
+              const isDownloaded = downloadedFormat === preset.id;
 
-        {/* High-Res Banner Quick Exports */}
-        <div className="mb-6 space-y-2">
-          <label className={`text-xs font-bold uppercase tracking-wider ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
-            High-Res Social Banners
-          </label>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-            <button
-              onClick={() => exportTwitterBanner(grid, currentTheme, textPattern)}
-              className={`flex items-center justify-center gap-1.5 py-2 px-2.5 rounded-lg text-xs font-semibold border transition-all hover:scale-[1.02] ${
-                isDarkMode
-                  ? 'bg-slate-800/80 border-slate-700 hover:bg-slate-700 text-slate-200'
-                  : 'bg-slate-100 border-slate-300 hover:bg-slate-200 text-slate-800'
-              }`}
-            >
-              <Download className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
-              <span>X Banner (1500x500)</span>
-            </button>
+              return (
+                <div
+                  key={preset.id}
+                  className={`p-4 rounded-2xl border bg-gradient-to-br transition-all hover:scale-[1.02] flex flex-col justify-between space-y-3 ${preset.color} ${
+                    isDarkMode ? 'bg-slate-950/80' : 'bg-slate-50'
+                  }`}
+                >
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-center gap-2.5">
+                      <div className="p-2 rounded-xl bg-slate-900/60 border border-white/10 shrink-0">
+                        <IconComp className="w-4 h-4 text-white" />
+                      </div>
+                      <div>
+                        <h4 className="text-xs font-black tracking-tight text-white">
+                          {preset.title}
+                        </h4>
+                        <p className="text-[11px] font-mono text-slate-300">
+                          {preset.resolution}
+                        </p>
+                      </div>
+                    </div>
+                    <span className="text-[10px] font-bold font-mono px-2 py-0.5 rounded-full bg-white/10 text-white border border-white/20">
+                      {preset.ratio}
+                    </span>
+                  </div>
 
-            <button
-              onClick={() => exportLinkedInBanner(grid, currentTheme, textPattern)}
-              className={`flex items-center justify-center gap-1.5 py-2 px-2.5 rounded-lg text-xs font-semibold border transition-all hover:scale-[1.02] ${
-                isDarkMode
-                  ? 'bg-slate-800/80 border-slate-700 hover:bg-slate-700 text-slate-200'
-                  : 'bg-slate-100 border-slate-300 hover:bg-slate-200 text-slate-800'
-              }`}
-            >
-              <Download className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
-              <span>LinkedIn Cover (1584x396)</span>
-            </button>
-
-            <button
-              onClick={() => exportInstagramPost(grid, currentTheme, textPattern)}
-              className={`flex items-center justify-center gap-1.5 py-2 px-2.5 rounded-lg text-xs font-semibold border transition-all hover:scale-[1.02] ${
-                isDarkMode
-                  ? 'bg-slate-800/80 border-slate-700 hover:bg-slate-700 text-slate-200'
-                  : 'bg-slate-100 border-slate-300 hover:bg-slate-200 text-slate-800'
-              }`}
-            >
-              <Download className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
-              <span>Instagram Post (1080x1080)</span>
-            </button>
+                  <button
+                    onClick={() => triggerExport(preset.id, preset.exportFn)}
+                    className="w-full py-2 px-3 rounded-xl text-xs font-bold bg-white/10 hover:bg-white/20 text-white border border-white/20 flex items-center justify-center gap-2 transition-all shadow-md active:scale-95"
+                  >
+                    {isDownloaded ? (
+                      <>
+                        <Check className="w-3.5 h-3.5 text-emerald-400" />
+                        <span>Downloaded!</span>
+                      </>
+                    ) : (
+                      <>
+                        <Download className="w-3.5 h-3.5 text-emerald-400" />
+                        <span>Download Banner</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              );
+            })}
           </div>
         </div>
 
         {/* GitHub README Badge Embed Snippets */}
-        <div className="space-y-4">
+        <div className="space-y-4 pt-2 border-t border-slate-800/80">
           <div className="space-y-1.5">
             <div className="flex items-center justify-between">
               <span className={`text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
@@ -184,15 +242,15 @@ export const SocialShareModal: React.FC<SocialShareModalProps> = ({
               </span>
               <button
                 onClick={() => handleCopy(markdownSnippet, 'markdown')}
-                className="text-xs font-semibold text-emerald-500 hover:underline flex items-center gap-1"
+                className="text-xs font-semibold text-emerald-400 hover:underline flex items-center gap-1"
               >
                 {copiedMarkdown ? (
                   <>
-                    <Check className="w-3 h-3" /> Copied!
+                    <Check className="w-3.5 h-3.5 text-emerald-400" /> Copied!
                   </>
                 ) : (
                   <>
-                    <Copy className="w-3 h-3" /> Copy Snippet
+                    <Copy className="w-3.5 h-3.5" /> Copy Snippet
                   </>
                 )}
               </button>
@@ -213,15 +271,15 @@ export const SocialShareModal: React.FC<SocialShareModalProps> = ({
               </span>
               <button
                 onClick={() => handleCopy(shareUrl, 'text')}
-                className="text-xs font-semibold text-emerald-500 hover:underline flex items-center gap-1"
+                className="text-xs font-semibold text-emerald-400 hover:underline flex items-center gap-1"
               >
                 {copiedText ? (
                   <>
-                    <Check className="w-3 h-3" /> Copied!
+                    <Check className="w-3.5 h-3.5 text-emerald-400" /> Copied!
                   </>
                 ) : (
                   <>
-                    <Copy className="w-3 h-3" /> Copy Link
+                    <Copy className="w-3.5 h-3.5" /> Copy Link
                   </>
                 )}
               </button>
