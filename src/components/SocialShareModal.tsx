@@ -20,7 +20,6 @@ import { getThemeById } from '../lib/theme-config';
 import {
   exportTwitterBanner,
   exportLinkedInBanner,
-  exportInstagramPost,
   exportFullHDBanner,
 } from '../lib/export-engine';
 
@@ -96,16 +95,6 @@ export const SocialShareModal: React.FC<SocialShareModalProps> = ({
       color: 'from-blue-600/20 to-indigo-600/10 border-blue-500/30 text-blue-400',
       icon: Layers,
       exportFn: () => exportLinkedInBanner(grid, currentTheme, textPattern),
-    },
-    {
-      id: 'instagram-post',
-      title: 'Square Social Post',
-      resolution: '1080 × 1080 px',
-      ratio: '1:1 Square',
-      badge: 'Instagram / Feed',
-      color: 'from-fuchsia-500/20 to-rose-500/10 border-fuchsia-500/30 text-fuchsia-400',
-      icon: Square,
-      exportFn: () => exportInstagramPost(grid, currentTheme, textPattern),
     },
     {
       id: 'full-hd',
