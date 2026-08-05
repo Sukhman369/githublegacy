@@ -22,7 +22,6 @@ import {
   exportLinkedInBanner,
   exportInstagramPost,
   exportFullHDBanner,
-  exportUltraHDBanner,
 } from '../lib/export-engine';
 
 interface SocialShareModalProps {
@@ -117,16 +116,6 @@ export const SocialShareModal: React.FC<SocialShareModalProps> = ({
       color: 'from-emerald-500/20 to-teal-600/10 border-emerald-500/30 text-emerald-400',
       icon: Monitor,
       exportFn: () => exportFullHDBanner(grid, currentTheme, textPattern),
-    },
-    {
-      id: '4k-ultra',
-      title: '4K Ultra HD Showcase',
-      resolution: '3840 × 2160 px',
-      ratio: '4K Crisp',
-      badge: 'Ultra HD Canvas',
-      color: 'from-purple-500/20 to-amber-500/10 border-purple-500/30 text-purple-300',
-      icon: Maximize2,
-      exportFn: () => exportUltraHDBanner(grid, currentTheme, textPattern),
     },
   ];
 

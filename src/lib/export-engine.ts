@@ -305,7 +305,3 @@ export function exportFullHDBanner(grid: CalendarGrid, theme: any, title: string
   drawCanvasBanner(grid, theme, title, 1920, 1080, `git_legacy_full_hd_${grid.year}.png`);
 }
 
-export function exportUltraHDBanner(grid: CalendarGrid, theme: any, title: string = 'LEGACY') {
-  drawCanvasBanner(grid, theme, title, 3840, 2160, `git_legacy_4k_ultra_hd_${grid.year}.png`);
-}
-
