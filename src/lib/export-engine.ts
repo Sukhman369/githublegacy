@@ -301,6 +301,60 @@ function drawCanvasBanner(
   link.click();
 }
 
+export function generateSVG(
+  grid: CalendarGrid,
+  theme: { isDark: boolean; levels: [string, string, string, string, string] },
+  title: string = 'LEGACY'
+): string {
+  const cellW = 12;
+  const cellH = 12;
+  const gap = 3;
+  const paddingX = 40;
+  const paddingTop = 60;
+  const paddingBottom = 40;
+
+  const gridW = 53 * (cellW + gap) - gap;
+  const gridH = 7 * (cellH + gap) - gap;
+  const width = gridW + paddingX * 2;
+  const height = gridH + paddingTop + paddingBottom;
+
+  const bgColor = theme.isDark ? '#0d1117' : '#ffffff';
+  const textColor = theme.isDark ? '#f0f6fc' : '#1f2328';
+  const subtextColor = theme.isDark ? '#8b949e' : '#656d76';
+
+  let rects = '';
+  grid.weeks.forEach((week, wIdx) => {
+    week.days.forEach((day, dIdx) => {
+      const x = paddingX + wIdx * (cellW + gap);
+      const y = paddingTop + dIdx * (cellH + gap);
+      const color = theme.levels[day.level];
+      rects += `<rect x="${x}" y="${y}" width="${cellW}" height="${cellH}" rx="2" ry="2" fill="${color}" />\n`;
+    });
+  });
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
+  <rect width="100%" height="100%" fill="${bgColor}" rx="12" />
+  <text x="${width / 2}" y="30" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-weight="bold" font-size="16" fill="${textColor}" text-anchor="middle">GitLegacy • ${title} (${grid.year})</text>
+  <text x="${width / 2}" y="46" font-family="SFMono-Regular, Consolas, monospace" font-size="10" fill="${subtextColor}" text-anchor="middle">GitHub Contribution Planning Studio</text>
+  <g>
+    ${rects}
+  </g>
+  <text x="${width / 2}" y="${height - 15}" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="bold" font-size="11" fill="#10b981" text-anchor="middle">Designed with gitlegacy.co</text>
+</svg>`;
+}
+
+export function exportSVG(grid: CalendarGrid, theme: any, title: string = 'LEGACY') {
+  if (typeof window === 'undefined') return;
+  const svgString = generateSVG(grid, theme, title);
+  const blob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = `git_legacy_artwork_${grid.year}.svg`;
+  link.click();
+  URL.revokeObjectURL(url);
+}
+
 export function exportPNG(grid: CalendarGrid, theme: any, title: string = 'LEGACY') {
   drawCanvasBanner(grid, theme, title, 1200, 400, `git_legacy_artwork_${grid.year}.png`);
 }

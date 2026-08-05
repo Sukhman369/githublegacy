@@ -19,6 +19,7 @@ import { CalendarGrid } from '../types/calendar';
 import { getThemeById } from '../lib/theme-config';
 import {
   exportPNG,
+  exportSVG,
   exportTwitterBanner,
   exportLinkedInBanner,
   exportFullHDBanner,
@@ -86,6 +87,16 @@ export const SocialShareModal: React.FC<SocialShareModalProps> = ({
       color: 'from-emerald-500/20 to-cyan-600/10 border-emerald-500/30 text-emerald-400',
       icon: ImageIcon,
       exportFn: () => exportPNG(grid, currentTheme, textPattern),
+    },
+    {
+      id: 'svg-vector',
+      title: 'Vector SVG Graphic',
+      resolution: 'Scalable Vector',
+      ratio: 'Infinite Scale',
+      badge: 'SVG Vector',
+      color: 'from-purple-500/20 to-pink-600/10 border-purple-500/30 text-purple-300',
+      icon: Code2,
+      exportFn: () => exportSVG(grid, currentTheme, textPattern),
     },
     {
       id: 'x-banner',
