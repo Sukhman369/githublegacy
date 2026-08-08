@@ -13,7 +13,7 @@ interface TechBadge {
   logo: string;
   color: string;
   labelColor?: string;
-  category: 'frontend' | 'backend' | 'languages' | 'databases' | 'devops' | 'marketing';
+  category: 'frontend' | 'backend' | 'languages' | 'mobile' | 'databases' | 'devops' | 'marketing';
 }
 
 const TECH_BADGES: TechBadge[] = [
@@ -60,6 +60,17 @@ const TECH_BADGES: TechBadge[] = [
   { name: 'Ruby on Rails', logo: 'rubyonrails', color: 'D30001', category: 'backend' },
   { name: '.NET', logo: 'dotnet', color: '512BD4', category: 'backend' },
   { name: 'GraphQL', logo: 'graphql', color: 'E10098', category: 'backend' },
+
+  // Mobile Application Development
+  { name: 'React Native', logo: 'react', color: '61DAFB', category: 'mobile' },
+  { name: 'Flutter', logo: 'flutter', color: '02569B', category: 'mobile' },
+  { name: 'Swift (iOS)', logo: 'swift', color: 'F05138', category: 'mobile' },
+  { name: 'Kotlin (Android)', logo: 'kotlin', color: '7F52FF', category: 'mobile' },
+  { name: 'Expo', logo: 'expo', color: '000000', category: 'mobile' },
+  { name: 'Ionic', logo: 'ionic', color: '3880FF', category: 'mobile' },
+  { name: 'Capacitor', logo: 'capacitor', color: '119DFF', category: 'mobile' },
+  { name: 'App Store', logo: 'appstore', color: '0D96F6', category: 'mobile' },
+  { name: 'Google Play', logo: 'googleplay', color: '414141', category: 'mobile' },
 
   // Databases & Storage
   { name: 'PostgreSQL', logo: 'postgresql', color: '4169E1', category: 'databases' },
@@ -375,6 +386,7 @@ export default function BadgesStudioPage() {
               { id: 'languages', label: 'Languages' },
               { id: 'frontend', label: 'Frontend & UI' },
               { id: 'backend', label: 'Backend' },
+              { id: 'mobile', label: 'Mobile Application Development' },
               { id: 'databases', label: 'Databases' },
               { id: 'devops', label: 'DevOps & Cloud' },
               { id: 'marketing', label: 'Digital Marketing & SEO' },
